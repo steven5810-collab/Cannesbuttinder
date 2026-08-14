@@ -1,0 +1,2277 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+const DATA = [{y:'2022',t:'Grand Prix',ti:'LONG LIVE THE PRINCE',b:'KIYAN PRINCE FOUNDATION, EA SPORTS, QPR, MATCH ATTAX',a:'ENGINE LONDON',u:'https://www.dandad.org/awards/professional/2022/236020/long-live-the-prince/'},
+{y:'2022',t:'Grand Prix',ti:'THE LOST CLASS',b:'CHANGE THE REF INC.',a:'LEO BURNETT CHICAGO',u:'https://clios.com/awards/winner/creative-use-of-data/change-the-ref-inc-/the-lost-class-115490'},
+{y:'2022',t:'Grand Prix',ti:'DYSLEXIC THINKING',b:'VIRGIN',a:'FCB INFERNO LONDON',u:'https://vimeo.com/698541488'},
+{y:'2022',t:'Grand Prix',ti:'SHAH RUKH KHAN',b:'MY-AD – CADBURY CELEBRATIONS',a:'OGILVY MUMBAI',u:'https://clios.com/awards/winner/experience-activation/cadbury-celebrations/shah-rukh-khan-my-ad-108283'},
+{y:'2022',t:'Grand Prix',ti:'DOT PAD. THE FIRST SMART TACTILE GRAPHICS DISPLAY.',b:'DOT',a:'SERVICEPLAN MUNICH',u:'https://www.youtube.com/watch?v=DaxlpMj1sxU'},
+{y:'2022',t:'Grand Prix',ti:'SPEAKING IN COLOR',b:'SHERWIN-WILLIAMS COIL COATINGS',a:'WUNDERMAN THOMPSON MINNEAPOLIS',u:'https://www.lbbonline.com/work/65554'},
+{y:'2022',t:'Grand Prix',ti:'PIÑATEX',b:'DOLE SUNSHINE COMPANY + ANANAS ANAM',a:'L&C NEW YORK',u:'https://clios.com/awards/winner/design-craft/dole-sunshine-company-x-ananas-anam/pi%C3%B1atex-116436'},
+{y:'2022',t:'Grand Prix',ti:'THIGHSTOP',b:'WINGSTOP',a:'LEO BURNETT CHICAGO',u:'https://www.contagious.com/news-and-views/cannes-lions-creative-commerce-winners-2022'},
+{y:'2022',t:'Grand Prix',ti:'DATA TIENDA',b:'WECAPITAL',a:'DDB MEXICO MEXICO CITY',u:'https://www.youtube.com/watch?v=tnJ3h0-fFNQ'},
+{y:'2022',t:'Grand Prix',ti:'CONTRACT FOR CHANGE',b:'ABINBEV',a:'FCB CHICAGO',u:'https://www.youtube.com/watch?v=N-3qvzNLCOc'},
+{y:'2022',t:'Grand Prix',ti:'THE BREAKAWAY: THE FIRST ECYCLING TEAM FOR PRISONERS',b:'DECATHLON',a:'BBDO BELGIUM MOLENBEEK-SAINT-JEAN',u:'https://www.youtube.com/watch?v=1M3b225D_8E'},
+{y:'2022',t:'Grand Prix',ti:'PORTUGUESE (RE)CONSTITUTION',b:'PENGUIN BOOKS',a:'FCB LISBON',u:'https://www.youtube.com/watch?v=V8KIjpTOlwI'},
+{y:'2022',t:'Grand Prix',ti:'BACKUP UKRAINE',b:'POLYCAM X UNESCO',a:'VIRTUE WORLDWIDE NEW YORK',u:'https://www.youtube.com/watch?v=QXWD76b5IBw'},
+{y:'2022',t:'Grand Prix',ti:'LESS TALK, MORE BITCOIN',b:'COINBASE',a:'ACCENTURE SONG NEW YORK',u:'https://www.youtube.com/watch?v=vo0qymOX1kg'},
+{y:'2022',t:'Grand Prix',ti:'EAT A SWEDE',b:'SWEDISH FOOD FEDERATION',a:'MCCANN STOCKHOLM',u:'https://mccann.se/project/eat-a-swede'},
+{y:'2022',t:'Grand Prix',ti:'THIS IS NOT AMERICA FT. IBEYI',b:'RESIDENTE',a:'DOOMSDAY ENTERTAINMENT LOS ANGELES',u:'https://www.youtube.com/watch?v=GK87AKIPyZY'},
+{y:'2022',t:'Grand Prix',ti:'NIKESYNC',b:'NIKE',a:'R/GA LONDON',u:'http://www.november-romeo.com/work#/nike-women/'},
+{y:'2022',t:'Grand Prix',ti:'ESCAPE FROM THE OFFICE',b:'APPLE',a:'SMUGGLER CENTRAL LA',u:'https://www.youtube.com/watch?v=GC5Gmkn92Bg'},
+{y:'2022',t:'Grand Prix',ti:'SUPER.HUMAN.',b:'PARALYMPICS / C4',a:'SOMESUCH LONDON',u:'https://clios.com/awards/winner/audio-craft/channel-4-paralympics/super-human--106078'},
+{y:'2022',t:'Grand Prix',ti:'THE WISH',b:'PENNY',a:'SERVICEPLAN MUNICH',u:'https://vimeo.com/682906027'},
+{y:'2022',t:'Grand Prix',ti:'LIL SUGAR',b:'MASTER OF DISGUISE – HIP HOP PUBLIC HEALTH',a:'AREA 23 NEW YORK',u:'https://www.dandad.org/awards/professional/2022/235817/lil-sugar-master-of-disguise/'},
+{y:'2022',t:'Grand Prix',ti:'SAVE RALPH',b:'HUMANE SOCIETY INTERNATIONAL',a:'HUMANE SOCIETY INTERNATIONAL WASHINGTON',u:'https://www.youtube.com/watch?v=G393z8s8nFY'},
+{y:'2022',t:'Grand Prix',ti:'THE KILLER PACK',b:'MAXX FLASH',a:'VMLY&R MUMBAI',u:'https://www.dandad.org/awards/professional/2022/235525/the-killer-pack/'},
+{y:'2022',t:'Grand Prix',ti:'HOPE REEF',b:'MARS',a:'AMV BBDO LONDON',u:'https://www.youtube.com/watch?v=6Dca7H1xHV4'},
+{y:'2022',t:'Grand Prix',ti:'ONE HOUSE TO SAVE MANY',b:'SUNCORP GROUP',a:'LEO BURNETT SYDNEY',u:'https://clios.com/awards/winner/public-relations/suncorp-group/one-house-to-save-many-113513'},
+{y:'2022',t:'Grand Prix',ti:'REAL TONE',b:'GOOGLE',a:'GOOGLE MOUNTAIN VIEW',u:'https://www.dandad.org/awards/professional/2022/236075/real-tone/'},
+{y:'2022',t:'Grand Prix',ti:'LIQUID BILLBOARD',b:'ADIDAS',a:'RED HAVAS MIDDLE EAST DUBAI',u:'https://www.dandad.org/awards/professional/2022/235408/adidas-liquid-billboard/'},
+{y:'2022',t:'Grand Prix',ti:'I WILL ALWAYS BE ME',b:'DELL TECHNOLOGIES & INTEL',a:'VMLY&R NEW YORK',u:'https://clios.com/health/winner/experience-activation-health-wellness/dell-technologies-intel/i-will-always-be-me-119444'},
+{y:'2022',t:'Grand Prix',ti:'THE ELECTIONS EDITION',b:'ANNAHAR NEWSPAPER',a:'IMPACT BBDO DUBAI',u:'https://www.dandad.org/awards/professional/2022/236134/the-elections-edition/'},
+{y:'2022',t:'Grand Prix',ti:'THE UNFILTERED HISTORY TOUR',b:'VICE',a:'DENTSU CREATIVE BENGALURU',u:'https://www.dandad.org/awards/professional/2022/235521/the-unfiltered-history-tour/'},
+{y:'2022',t:'Grand Prix',ti:'THE MISSING CHAPTER',b:'PROCTER & GAMBLE',a:'LEO BURNETT MUMBAI',u:'https://www.lbbonline.com/work/65329'},
+{y:'2022',t:'Gold',ti:'FLAGS OF GENEROSITY',b:'CADBURY',a:'OGILVY SINGAPORE',u:'https://www.dandad.org/awards/professional/2022/236167/flags-of-generosity/'},
+{y:'2022',t:'Gold',ti:'BETTER WITH PEPSI',b:'PEPSI',a:'ALMA DDB MIAMI',u:'https://www.dandad.org/awards/professional/2022/235445/better-with-pepsi/'},
+{y:'2022',t:'Gold',ti:'THE ART OF STEALING',b:'NETFLIX',a:'GONG GLIWICE',u:'https://www.youtube.com/watch?v=bG6oDlZ9M1k'},
+{y:'2022',t:'Gold',ti:'SCRATCHBOARDS',b:'ACTIVISION',a:'DAVID MADRID',u:'https://vimeo.com/711422363'},
+{y:'2022',t:'Gold',ti:'THE REFUGEE JATOBA',b:'INSTITUTIONAL',a:'AFRICA DDB SÃO PAULO',u:'https://www.dandad.org/awards/professional/2022/236427/the-refugee-jatoba/'},
+{y:'2022',t:'Gold',ti:'THE ART OF SELF EXAMINATION',b:'MACMA',a:'DAVID BUENOS AIRES',u:'https://www.ogilvy.com/work/art-self-examination'},
+{y:'2022',t:'Gold',ti:'NONARTIFICAL MEXICO',b:'BURGER KING',a:'WE BELIEVERS BROOKLYN',u:'https://vimeo.com/720733122'},
+{y:'2022',t:'Gold',ti:'WILMORE FUNERAL HOME',b:'STARMED HEALTHCARE',a:'STARMED HEALTHCARE CHARLOTTE',u:'https://clios.com/awards/winner/out-of-home/starmed-healthcare/wilmore-funeral-home-107958'},
+{y:'2022',t:'Gold',ti:'PLASTIC FISHING TOURNAMENT',b:'CORONA',a:'WE BELIEVERS BROOKLYN',u:'https://www.youtube.com/watch?v=Adj9kwFC7qg'},
+{y:'2022',t:'Gold',ti:'DRAW KETCHUP',b:'KRAFT HEINZ',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2021/235025/heinz-draw-ketchup/'},
+{y:'2022',t:'Gold',ti:'THE TRASH COLLECTION 2021',b:'IKEA',a:'TRY OSLO',u:'https://www.dandad.org/awards/professional/2022/235639/the-trash-collection-2021/'},
+{y:'2022',t:'Gold',ti:'REVERSE SELFIE',b:'DOVE',a:'OGILVY LONDON',u:'http://julianaparacencio.com/#/dove-reverse-selfie/'},
+{y:'2022',t:'Gold',ti:'A SONG FOR EVERY CMO',b:'SPOTIFY',a:'FCB NEW YORK',u:'https://www.jamestmeiser.com/spotify-cmo-songs'},
+{y:'2022',t:'Gold',ti:'JAB JAB',b:'DISTELL',a:'GREY JOHANNESBURG',u:'https://youtu.be/fT4OP1mceCY'},
+{y:'2022',t:'Gold',ti:'LETTERS FOR A LAW',b:'FUNDACIÓN EL HERBOLOGO',a:'BBDO HUECHURABA',u:'https://www.youtube.com/watch?v=VH6vOZbAQ8w'},
+{y:'2022',t:'Gold',ti:'EYEDAR',b:'HORIZON THERAPEUTICS',a:'AREA 23 NEW YORK',u:'https://eye-dar.com/'},
+{y:'2022',t:'Gold',ti:'STAYBL',b:'GERMAN PARKINSON ASSOCIATION',a:'HAVAS NEW YORK',u:'https://www.lbbonline.com/work/64979'},
+{y:'2022',t:'Gold',ti:'PROJECT CONVEY',b:'COX COMMUNICATIONS',a:'COX COMMUNICATIONS ATLANTA',u:'https://www.youtube.com/watch?v=X_jGSLqGy-Y'},
+{y:'2022',t:'Gold',ti:'TOUGH TURBAN',b:'HARLEY-DAVIDSON',a:'ZULU ALPHA KILO TORONTO',u:'https://www.dandad.org/awards/professional/2022/235460/tough-turban/'},
+{y:'2022',t:'Gold',ti:'THE NIGHT IS YOUNG',b:'HEINEKEN',a:'PUBLICIS MILAN',u:'https://www.youtube.com/watch?v=akxfPV-A_C0'},
+{y:'2022',t:'Gold',ti:'MORNING AFTER ISLAND',b:'GRUPO ESTRATÉGICO GE PAE',a:'OGILVY HONDURAS',u:'https://www.youtube.com/watch?v=l3PLNZq7hgY'},
+{y:'2022',t:'Gold',ti:'DAVID\'S UNUSABLES',b:'MOTOR NEURONE DISEASE ASSOCIATION',a:'SPECIAL AUCKLAND',u:'https://www.dandad.org/awards/professional/2022/235687/davids-unusables/'},
+{y:'2022',t:'Gold',ti:'RIO CARNAVAL: NEW BRAND',b:'RIO CARNAVAL',a:'TATIL DESIGNING IDEAS RIO DE JANEIRO',u:'https://www.behance.net/gallery/142681547/Rio-Carnaval'},
+{y:'2022',t:'Gold',ti:'THE BILLION DOLLAR COLLECTION',b:'H&M FOUNDATION',a:'PRIME WEBER SHANDWICK STOCKHOLM',u:'https://clios.com/awards/winner/design-craft/h-m-foundation/the-billion-dollar-collection-116737'},
+{y:'2022',t:'Gold',ti:'CO2AT',b:'AZGARD 9',a:'THIS IS PACIFICA PORTO',u:'https://www.behance.net/gallery/121002359/CO2AT'},
+{y:'2022',t:'Gold',ti:'PARA EXPANSION',b:'CANADIAN PARALYMPIC COMMITTEE',a:'BBDO TORONTO',u:'https://vimeo.com/722008822'},
+{y:'2022',t:'Gold',ti:'LESSO LESSONS',b:'ROTO & THE MINISTRY OF HEALTH KENYA',a:'OGILVY AFRICA NAIROBI',u:'https://www.dandad.org/awards/professional/2022/235787/lesso-lessons/'},
+{y:'2022',t:'Gold',ti:'BLACK',b:'OWNED FRIDAY 2021 – GOOGLE',a:'GOOGLE NEW YORK',u:'https://www.dandad.org/awards/professional/2021/234203/google-black-owned-friday/'},
+{y:'2022',t:'Gold',ti:'MCENROE VS MCENROE',b:'AB INBEV',a:'FCB NEW YORK USA',u:'https://www.youtube.com/watch?v=J4fwDtC6AtM'},
+{y:'2022',t:'Gold',ti:'OPEN SPACES',b:'BURBERRY',a:'RIFF RAFF FILMS LONDON',u:'https://www.youtube.com/watch?v=iCbfq_-cd-g'},
+{y:'2022',t:'Gold',ti:'THE SPIDER AND THE WINDOW',b:'SAMSUNG ELECTRONICS GMBH',a:'LEO BURNETT FRANKFURT',u:'https://clios.com/awards/winner/design-craft/samsung/the-spider-and-the-window-112951'},
+{y:'2022',t:'Gold',ti:'BEAUTIFUL MUTATIONS',b:'THE AD MUSEUM TOKYO / YOSHIDA HIDEO MEMORIAL FOUNDATION',a:'DENTSU INC. TOKYO',u:'https://clios.com/awards/winner/109121'},
+{y:'2022',t:'Gold',ti:'MINECRAFT',b:'MINECRAFT',a:'BOLD NOA STOCKHOLM',u:'https://boldscandinavia.com/work/minecraft/'},
+{y:'2022',t:'Gold',ti:'VICTORIA CEMPASÚCHIL: THE TASTE OF REUNION',b:'VICTORIA',a:'OGILVY MEXICO CITY',u:'https://vimeo.com/642724134'},
+{y:'2022',t:'Gold',ti:'MYTHIC QUEST: CORPORATE GRUBHUB CARD LEAK',b:'APPLE TV+',a:'APPLE TV+ CULVER CITY',u:'https://vimeo.com/723957897'},
+{y:'2022',t:'Gold',ti:'TOXIC INFLUENCE',b:'DOVE',a:'OGILVY LONDON',u:'https://grandi-ideas.com/work/the-nosnow-globe-3b2zh-83spb-ezczh-en6bf-dfxl6'},
+{y:'2022',t:'Gold',ti:'LOS SANTOS +3ºC',b:'GREENPEACE',a:'VMLY&R SÃO PAULO',u:'https://igorpontes.work/los-santos-3c'},
+{y:'2022',t:'Gold',ti:'LIL JIF PROJECT',b:'JIF',a:'PUBLICIS NEW YORK',u:'https://www.dandad.org/awards/professional/2022/235513/lil-jif-project/'},
+{y:'2022',t:'Gold',ti:'FANCY LIKE',b:'APPLEBEE\'S',a:'GREY NEW YORK',u:'https://vimeo.com/722384191'},
+{y:'2022',t:'Gold',ti:'NATIVE SPORTSCASTERS',b:'BUDWEISER',a:'WE BELIEVERS BROOKLYN',u:'https://vimeo.com/720739604'},
+{y:'2022',t:'Gold',ti:'STUCK IN THE 80S',b:'GUARANÁ ANTARCTICA',a:'SOKO SÃO PAULO',u:'https://www.youtube.com/watch?v=QkHf4ezQZTU'},
+{y:'2022',t:'Gold',ti:'THE FOAMY HAIRCUT',b:'BRAHMA BEER',a:'AFRICA DDB SÃO PAULO',u:'https://www.youtube.com/watch?v=lpbEV4--hCI'},
+{y:'2022',t:'Gold',ti:'DOJACODE',b:'GIRLS WHO CODE',a:'MOJO SUPERMARKET NEW YORK',u:'https://www.youtube.com/watch?v=D3Phbpa7qTg'},
+{y:'2022',t:'Gold',ti:'HACK MARKET',b:'BACK MARKET',a:'MARCEL PARIS',u:'https://www.youtube.com/watch?v=J2Y66Av5Cuk'},
+{y:'2022',t:'Gold',ti:'BURGER GLITCH',b:'BURGER KING',a:'DAVID SÃO PAULO',u:'https://www.youtube.com/watch?v=RMupjKmO45Q'},
+{y:'2022',t:'Gold',ti:'THE MOLDY WHOPPER',b:'BURGER KING',a:'INGO STOCKHOLM/DAVID MIAMI/PUBLICIS BUCHAREST',u:'https://vimeo.com/403743534'},
+{y:'2022',t:'Gold',ti:'THE TAMPON BOOK',b:'THE FEMALE COMPANY',a:'SCHOLZ & FRIENDS BERLIN',u:'https://youtu.be/la9_7orA3pM'},
+{y:'2022',t:'Gold',ti:'COURAGE IS BEAUTIFUL',b:'DOVE',a:'OGILVY LONDON',u:'https://clios.com/awards/winner/fashion-beauty/dove/courage-is-beautiful-85306'},
+{y:'2022',t:'Gold',ti:'PROJECT UNDERSTOOD',b:'GOOGLE',a:'FCB TORONTO',u:'https://clios.com/awards/winner/creative-use-of-data/canadian-down-syndrome-society/project-understood-88688'},
+{y:'2022',t:'Gold',ti:'UNDERCOVER AVATAR',b:'ASSOCIATION ENFANT BLEU',a:'HAVAS SPORTS & ENTERTAINMENT PARIS',u:'https://clios.com/awards/winner/experience-activation/enfant-bleu/undercover-avatar-87533'},
+{y:'2022',t:'Gold',ti:'DISCOVER THE ORIGINALS',b:'VISIT SWEDEN',a:'FORSMAN & BODENFORS GOTHENBURG',u:'https://clios.com/awards/winner/integrated-campaign/visit-sweden/discover-the-originals-116914'},
+{y:'2022',t:'Gold',ti:'A CHAT AWAY FROM EVERYTHING',b:'ITAU',a:'GREY ARGENTINA BUENOS AIRES',u:'https://www.lbbonline.com/work/59784'},
+{y:'2022',t:'Gold',ti:'THE EYE TRACKER',b:'SUPERMAX ONLINE',a:'DE LA CRUZ OGILVY GUAYNABO',u:'https://www.ogilvy.com/work/eye-tracker'},
+{y:'2022',t:'Gold',ti:'REDUCE THE RIDE',b:'D\'IETEREN',a:'HAPPINESS, AN FCB ALLIANCE BRUSSELS',u:'https://www.dandad.org/awards/professional/2022/235617/reduce-the-ride/'},
+{y:'2022',t:'Gold',ti:'HETZJAEGER. ANTIFASCIST ALGORITHMS.',b:'LAUT GEGEN NAZIS E.V.',a:'PHILIPP UND KEUNTJE HAMBURG',u:'https://vimeo.com/723960426'},
+{y:'2022',t:'Gold',ti:'THE BLACK ELEVATION MAP',b:'BLACK & ABROAD',a:'PERFORMANCE ART TORONTO',u:'https://www.youtube.com/watch?v=hrCLlX-W6F8'},
+{y:'2022',t:'Gold',ti:'INVALUABLE FOOD',b:'MADRID FUSION',a:'LEO BURNETT MADRID',u:'https://www.dandad.org/awards/professional/2022/236089/invaluable-food/'},
+{y:'2022',t:'Gold',ti:'APOLOGIZE THE RAINBOW',b:'SKITTLES',a:'DDB CHICAGO',u:'https://www.youtube.com/watch?v=i_kxj8dhdjo'},
+{y:'2022',t:'Gold',ti:'THE NOMINATE ME SELFIE',b:'POLITICAL SHAKTI + THE TIMES OF INDIA',a:'FCB INDIA DELHI',u:'https://www.youtube.com/watch?v=oC0WcNpfVWA'},
+{y:'2022',t:'Gold',ti:'CIRKULÄR',b:'IKEA',a:'HJALTELIN STAHL, PART OF ACCENTURE SONG COPENHAGEN',u:'http://nicolaidimon.dk/ikea.html'},
+{y:'2022',t:'Gold',ti:'SAMSUNG ITEST',b:'SAMSUNG',a:'DDB NEW ZEALAND AUCKLAND',u:'https://www.dandad.org/awards/professional/2022/235588/samsung-itest/'},
+{y:'2022',t:'Gold',ti:'FORD VERY GAY RAPTOR',b:'FORD',a:'FORD BRENTWOOD',u:'https://www.youtube.com/watch?v=6bpTflJ6yUw'},
+{y:'2022',t:'Gold',ti:'CHATPAT',b:'SOS CHILDREN\'S VILLAGES INDIA',a:'FCB INDIA DELHI',u:'https://www.youtube.com/watch?v=tLKemBtvHnw'},
+{y:'2022',t:'Gold',ti:'BRIDE ARMOR',b:'AB INBEV',a:'OGILVY SOUTH AFRICA JOHANNESBURG',u:'https://mikemartin.myportfolio.com/noexcuse-bride-armour'},
+{y:'2022',t:'Gold',ti:'AAMI REST TOWNS',b:'AAMI',a:'OGILVY AUSTRALIA MELBOURNE',u:'https://vimeo.com/549154490'},
+{y:'2022',t:'Gold',ti:'THE AD BREAK CHAMPIONSHIP: GTI HIJACK',b:'VOLKSWAGEN',a:'DDB SYDNEY',u:'https://www.dandad.org/awards/professional/2022/235340/the-ad-break-championship-gti-hijack/'},
+{y:'2022',t:'Gold',ti:'BREAKING SIRENS',b:'AMNESTY INTERNATIONAL',a:'BAR OGILVY LISBON',u:'https://www.ogilvy.com/work/breaking-sirens'},
+{y:'2022',t:'Gold',ti:'GUN SURVIVOR REVIEWS',b:'GUNS DOWN AMERICA',a:'ENERGY BBDO CHICAGO',u:'https://vimeo.com/709153307'},
+{y:'2022',t:'Gold',ti:'VIENNA STRIPS ON ONLYFANS',b:'VIENNA TOURIST BOARD',a:'JUNG VON MATT DONAU VIENNA',u:'https://www.youtube.com/watch?v=37SOf1LJIa0'},
+{y:'2022',t:'Gold',ti:'THE BVG HEMPTICKET: COME HOME, CALM DOWN.',b:'BVG',a:'JUNG VON MATT AG HAMBURG',u:'https://clios.com/awards/winner/experience-activation/berliner-verkehrsbetriebe-bvg/the-bvg-hempticket-come-home-calm-down--113987'},
+{y:'2022',t:'Gold',ti:'#FLUTWEIN: OUR WORST VINTAGE',b:'AHR: A WINE REGION NEEDS HELP FOR REBUILDING E.V.',a:'SEVENONE ADFACTORY UNTERFOHRING',u:'https://vimeo.com/714012517'},
+{y:'2022',t:'Gold',ti:'9/12: THE UNTOLD STORY OF RECONNECTING NEW YORK',b:'VERIZON',a:'VERIZON NEW YORK',u:'https://www.dandad.org/awards/professional/2022/235449/912-the-untold-story-of-reconnecting-new-york/'},
+{y:'2022',t:'Gold',ti:'GENDER SWAP',b:'WOMEN IN GAMES',a:'BETC PARIS',u:'https://www.youtube.com/watch?v=LSZ4sVZMdlM'},
+{y:'2022',t:'Gold',ti:'BMW: NOTHING BUT SHEER JOY',b:'BMW',a:'TBWA\\JUICE CHINA BEIJING',u:'https://www.youtube.com/watch?v=4zMnRlTI9zI'},
+{y:'2022',t:'Gold',ti:'LU FROM MAGALU',b:'MAGAZINE LUIZA',a:'OGILVY SÃO PAULO',u:'https://www.ogilvy.com/work/lu-magalu'},
+{y:'2022',t:'Gold',ti:'THE FIRST META SNEAKER',b:'UNDER ARMOUR',a:'BERLIN CAMERON NEW YORK',u:'https://www.youtube.com/watch?v=UUOOptCMh0U'},
+{y:'2022',t:'Gold',ti:'DETECTIVES',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.youtube.com/watch?v=3MvkcZx_0rg'},
+{y:'2022',t:'Gold',ti:'CONVERGENCE STATION',b:'MEOW WOLF',a:'BISCUIT FILMWORKS LOS ANGELES',u:'https://clios.com/awards/winner/116253'},
+{y:'2022',t:'Gold',ti:'WHEN HARRY MET SANTA',b:'POSTEN: THE NORWEGIAN POSTAL SERVICE',a:'POL OSLO',u:'https://www.youtube.com/watch?v=nDLumk_rQQw'},
+{y:'2022',t:'Gold',ti:'SHOT ON IPHONE 13 PRO: THE COMEBACK',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB SHANGHAI',u:'https://www.youtube.com/watch?v=Me3PEs88pOU'},
+{y:'2022',t:'Gold',ti:'#TURNTOCOLD',b:'TIDE',a:'SAATCHI & SAATCHI NEW YORK',u:'https://www.daniellobaton.net/turntocold'},
+{y:'2022',t:'Gold',ti:'SEE MY SKIN',b:'VASELINE',a:'EDELMAN NEW YORK',u:'https://www.edelman.com/work/vaseline-see-my-skin'},
+{y:'2022',t:'Gold',ti:'SIGNAL FOR HELP',b:'CANADIAN WOMEN\'S FOUNDATION',a:'JUNIPER PARK\\TBWA TORONTO',u:'https://www.lbbonline.com/news/problem-solved-how-a-simple-hand-gesture-turned-into-a-globally-recognised-signal-for-help-for-women'},
+{y:'2022',t:'Gold',ti:'DON\'T EVER LEAVE ME',b:'LACTA',a:'OGILVY ATHENS',u:'https://www.youtube.com/watch?v=xlzEfsAOct8'},
+{y:'2022',t:'Silver',ti:'THE BIGGER CRASH',b:'HYUNDAI GLOBAL',a:'JUNG VON MATT AG HAMBURG',u:'https://vimeo.com/675774795'},
+{y:'2022',t:'Silver',ti:'THE DAY',b:'AFTER-WOMEN\'S-DAY NEWSPAPERS – RAPARIGAS DA BOLA',a:'HAVAS LISBON',u:'https://www.bernardotavares.com.br/raparigas'},
+{y:'2022',t:'Silver',ti:'MAKE SPACE',b:'IKEA',a:'OGILVY BANGKOK',u:'https://www.ogilvyasia.com/advertising/ogilvy-bangkok-wins-silver-for-ikea/'},
+{y:'2022',t:'Silver',ti:'PIXELESS',b:'THE HEINEKEN COMPANY',a:'HEINEKEN LIMA',u:'https://vimeo.com/705385563'},
+{y:'2022',t:'Silver',ti:'NEVERENDING CHASE',b:'AFFINITY-ULTIMA',a:'HAVAS MILAN',u:'https://www.youtube.com/watch?v=Je6O6Hzb4-E'},
+{y:'2022',t:'Silver',ti:'BIHAR: CHOOSING TOMORROW',b:'BBK FOUNDATION',a:'BBK FOUNDATION BILBAO',u:'https://www.youtube.com/watch?v=SBEV9jjNbGM'},
+{y:'2022',t:'Silver',ti:'STARAOKE',b:'PRIME VIDEO',a:'OGILVY MILAN',u:'https://www.ogilvy.com/work/staraoke'},
+{y:'2022',t:'Silver',ti:'THE GENDERLESS CHEER',b:'HEINEKEN',a:'PUBLICIS MILAN',u:'https://www.behance.net/gallery/142867411/The-Genderless-Cheer'},
+{y:'2022',t:'Silver',ti:'INSTANT LEICA',b:'LEICA',a:'HILL HOLIDAY BOSTON',u:'https://www.dandad.org/awards/professional/2022/235851/instant-leica/'},
+{y:'2022',t:'Silver',ti:'ROCKIN MAMAS',b:'ROLLING STONE',a:'VMLY&R MILAN',u:'https://www.behance.net/gallery/139791623/Rolling-Stone-Rockin-Mamas'},
+{y:'2022',t:'Silver',ti:'NEW ICONIC KISSES',b:'MERCADO LIVRE',a:'GUT SÃO PAULO',u:'https://clios.com/awards/winner/public-relations/mercado-livre-ebazar/new-iconic-kisses-112994'},
+{y:'2022',t:'Silver',ti:'THE COCA',b:'COLA BEATCAN CAMPAIGN – COCA-COLA',a:'FCB SOUTH AFRICA',u:'https://www.behance.net/gallery/119709203/Coca-Cola-Beat-Can-Campaign'},
+{y:'2022',t:'Silver',ti:'ROYALTY',b:'FREE BOT – BUDWEISER',a:'DAVID BOGOTÁ',u:'https://www.youtube.com/watch?v=SSvy7sxATUo'},
+{y:'2022',t:'Silver',ti:'AUDITORIAL',b:'GOOGLE',a:'R/GA LONDON',u:'https://clios.com/awards/winner/digital-mobile/google/google-auditorial-114570'},
+{y:'2022',t:'Silver',ti:'THE PRINGLESONIC CHIP',b:'PRINGLES',a:'GREY LONDON',u:'https://www.youtube.com/watch?v=Rjyj0V9JeVA'},
+{y:'2022',t:'Silver',ti:'NOW YOU KNOW',b:'ABBOTT',a:'ANOMALY NEW YORK',u:'https://www.youtube.com/watch?v=80BVDFifPd0'},
+{y:'2022',t:'Silver',ti:'HOUSE RULES',b:'EVOFEM',a:'MCCANN HEALTH PARSIPPANY',u:'https://clios.com/health/winner/film-pharmaceutical/phexxi/house-rules-119706'},
+{y:'2022',t:'Silver',ti:'ADELI',b:'UNIPADS',a:'VMLY&R MUMBAI',u:'https://www.youtube.com/watch?v=FaBpmFrK21U'},
+{y:'2022',t:'Silver',ti:'I DON\'T REMEMBER',b:'ALMA',a:'HOY BUENOS AIRES',u:'https://vimeo.com/712862114'},
+{y:'2022',t:'Silver',ti:'TEENAGE DREAM',b:'SANDY HOOK PROMISE',a:'BBDO NEW YORK',u:'https://www.youtube.com/watch?v=T254_J8Vcvw'},
+{y:'2022',t:'Silver',ti:'NON FUNGIBLE TESTICLES',b:'MOVEMBER',a:'MRM NEW YORK',u:'http://cargocollective.com/jessepotack/MOVEMBER'},
+{y:'2022',t:'Silver',ti:'THE VIRTUAL NODULE',b:'AMARO',a:'VMLY&R SÃO PAULO',u:'https://vimeo.com/719609998'},
+{y:'2022',t:'Silver',ti:'CHORNOBYL VANISHING LOGO',b:'STATE AGENCY OF UKRAINE ON EXCLUSION ZONE MANAGEMENT',a:'THE OTHER LAND KYIV',u:'https://www.youtube.com/watch?v=Mzce4MifgBQ'},
+{y:'2022',t:'Silver',ti:'WE HOCKEY',b:'ARIZONA COYOTES',a:'MULLENLOWE U.S. LOS ANGELES',u:'https://vimeo.com/714394666'},
+{y:'2022',t:'Silver',ti:'SEA LEVEL RE',b:'BOOT – TRETORN',a:'FORSMAN & BODENFORS GOTHENBURG',u:'https://www.dandad.org/awards/professional/2022/236217/sea-level-re-boot/'},
+{y:'2022',t:'Silver',ti:'SPICE UP YOUR VALENTINE\'S DAY',b:'LE CHOCOLAT DES FRANCAIS',a:'TBWA PARIS',u:'https://www.dandad.org/awards/professional/2022/236269/spice-up-your-valentines-day/'},
+{y:'2022',t:'Silver',ti:'THE TOKYO TOILET',b:'THE NIPPON FOUNDATION',a:'THE NIPPON FOUNDATION TOKYO',u:'https://www.youtube.com/watch?v=TjouGyWXVM0'},
+{y:'2022',t:'Silver',ti:'TOUCH CARD',b:'MASTERCARD',a:'MCCANN NEW YORK',u:'https://earn.mccannworldgroup.com/issuetwo-work/touch-card'},
+{y:'2022',t:'Silver',ti:'NATIONAL MAGAZINE AWARDS',b:'NATIONAL MAGAZINE AWARDS FOUNDATION',a:'RETHINK TORONTO',u:'https://clios.com/awards/winner/design/national-magazine-awards-foundation/national-magazine-awards-108352'},
+{y:'2022',t:'Silver',ti:'REJECTED ALES',b:'MATILDA BAY',a:'HOWATSON + COMPANY SYDNEY',u:'https://www.dandad.org/awards/professional/2022/236288/rejected-ales/'},
+{y:'2022',t:'Silver',ti:'E',b:'NTERPRETERS – PILSEN CALLAO',a:'FAHRENHEIT DDB LIMA',u:'https://www.youtube.com/watch?v=iWBh_H4q1qM'},
+{y:'2022',t:'Silver',ti:'THE VIRTUAL HEINEKEN SILVER',b:'HEINEKEN',a:'PUBLICIS ITALY MILAN',u:'https://www.behance.net/gallery/144009779/Virtual-Heineken-Silver'},
+{y:'2022',t:'Silver',ti:'ADIDAS OZWORLD',b:'ADIDAS',a:'JAM3 TORONTO',u:'https://www.behance.net/gallery/140627741/OZWORLD-HYPEREEL'},
+{y:'2022',t:'Silver',ti:'WE WILL BECOME BETTER',b:'LGBTNET.ORG',a:'HALAL AMSTERDAM',u:'https://www.youtube.com/watch?v=hGRkKVPpcvU'},
+{y:'2022',t:'Silver',ti:'ONE',b:'WHATSAPP',a:'ICONOCLAST BERLIN',u:'https://vimeo.com/659334960'},
+{y:'2022',t:'Silver',ti:'#WETHE15',b:'INTERNATIONAL PARALYMPIC COMMITTEE',a:'ADAM&EVEDDB LONDON',u:'https://www.youtube.com/watch?v=7w7w8UVeZSw'},
+{y:'2022',t:'Silver',ti:'THE CRY',b:'30 MILLIONS D\'AMIS FONDATION',a:'ALTMANN + PACREAU PARIS',u:'https://www.youtube.com/watch?v=duIWNQ_mNME'},
+{y:'2022',t:'Silver',ti:'THIS IS OUR BBC',b:'BBC',a:'BBC CREATIVE LONDON',u:'https://vimeo.com/704164651'},
+{y:'2022',t:'Silver',ti:'SKATE NATION GHANA',b:'FACEBOOK',a:'CUT+RUN NEW YORK',u:'https://www.youtube.com/watch?v=E_ysoCP1UcI'},
+{y:'2022',t:'Silver',ti:'CAN\'T NEGOTIATE THE MELTING POINT OF ICE',b:'WWF',a:'NOMINT LONDON',u:'https://clios.com/awards/winner/film-craft-animation/wwf/can-t-negotiate-the-melting-point-of-ice-108647'},
+{y:'2022',t:'Silver',ti:'A FUTURE BEGINS',b:'CHIPOTLE',a:'OBSERVATORY LOS ANGELES',u:'https://www.youtube.com/watch?v=HnwzRmqbWwE'},
+{y:'2022',t:'Silver',ti:'CHILLBOARDS',b:'COORS',a:'DDB CHICAGO',u:'https://www.youtube.com/watch?v=U4Xgphq6zpQ'},
+{y:'2022',t:'Silver',ti:'SOUND TOUR',b:'SPOTIFY JAPAN',a:'GEOMETRY OGILVY JAPAN TOKYO',u:'https://www.youtube.com/watch?v=uicV-6vCYRs'},
+{y:'2022',t:'Silver',ti:'A SILENT FROWN',b:'CHARLIE CHAPLIN FOUNDATION',a:'DDB MUDRA MUMBAI',u:'https://www.brandinginasia.com/celebrating-the-life-of-charlie-chaplin-with-new-book-a-silent-frown/'},
+{y:'2022',t:'Silver',ti:'SEEN FROM A MINI',b:'MINI',a:'TBWA\\BELGIUM ZAVENTEM',u:'https://www.youtube.com/watch?v=77xQwdJH-JY'},
+{y:'2022',t:'Silver',ti:'HENS BEHIND THE LENS',b:'VITAL FARMS',a:'PREACHER AUSTIN',u:'https://www.youtube.com/watch?v=4Qhizi9_ngQ'},
+{y:'2022',t:'Silver',ti:'DR. RICK WILL SEE YOU NOW',b:'PROGRESSIVE INSURANCE',a:'ARNOLD WORLDWIDE BOSTON',u:'https://clios.com/awards/winner/experience-activation/progressive-insurance/dr-rick-will-see-you-now-108913'},
+{y:'2022',t:'Silver',ti:'NATIONAL ROAST DAY',b:'WENDY\'S',a:'VMLY&R KANSAS CITY',u:'https://www.vmlyr.com/work/nationalroastday'},
+{y:'2022',t:'Silver',ti:'CODED: THE HIDDEN LOVE OF J.C. LEYENDECKER',b:'P&G',a:'PROCTER & GAMBLE CINCINNATI',u:'https://www.dandad.org/awards/professional/2022/236004/coded-the-hidden-love-of-jc-leyendecker/'},
+{y:'2022',t:'Silver',ti:'DUBBING THE MOVIE',b:'DUNHUANG ACADEMY + TENCENT PICTURES',a:'TENCENT SHENZHEN',u:'https://www.dandad.org/awards/professional/2022/235719/dubbing-the-movie/'},
+{y:'2022',t:'Silver',ti:'MASTER JI',b:'BYJU\'S',a:'BYJU\'S BENGALURU',u:'https://clios.com/awards/winner/film-craft-copywriting/byju-s/master-ji-a-teacher-s-day-tribute-115779'},
+{y:'2022',t:'Silver',ti:'WHAT WHACK WEARS',b:'ADOBE',a:'PEREIRA O\'DELL SAN FRANCISCO',u:'https://clios.com/music/winner/branded-entertainment-content/adobe/what-whack-wears-116822'},
+{y:'2022',t:'Silver',ti:'INDUSTRY BABY',b:'COLUMBIA RECORDS',a:'LONDON ALLEY LOS ANGELES',u:'https://www.youtube.com/watch?v=UTHLKHL_whs'},
+{y:'2022',t:'Silver',ti:'SONHO',b:'NEGO BALA',a:'AKQA SÃO PAULO',u:'https://www.youtube.com/watch?v=tmSiW5prmFo'},
+{y:'2022',t:'Silver',ti:'BLACK BUSINESS BEATS',b:'MERCADO LIVRE',a:'GUT SÃO PAULO',u:'https://www.dandad.org/awards/professional/2022/235619/black-business-beats-e-commerce-cultural-experiences/'},
+{y:'2022',t:'Silver',ti:'FIFA21 X MIDNIGHT RAMADAN LEAGUE',b:'EA GAMES',a:'ADAM&EVEDDB LONDON',u:'https://adamandeveddb.com/work/ea-sports-fifa21-x-midnight-ramadan-league'},
+{y:'2022',t:'Silver',ti:'I\'M POSSIBLE BILLBOARDS',b:'ADIDAS',a:'HAVAS MIDDLE EAST DUBAI',u:'https://www.youtube.com/watch?v=hF5Ue7VG0_k'},
+{y:'2022',t:'Silver',ti:'SAMSUNG FASTFRAME',b:'SAMSUNG',a:'CHEIL AMSTERDAM',u:'https://www.youtube.com/watch?v=wCnUIhFLhfQ'},
+{y:'2022',t:'Silver',ti:'THE SACRIFICE',b:'THE MOST DANGEROUS SURF TOURNAMENT – GREEN PEACE',a:'MCCANN SANTIAGO',u:'https://vimeo.com/699520183'},
+{y:'2022',t:'Silver',ti:'GAMER ASYLUM',b:'ARTOTEL GROUP',a:'OGILVY SINGAPORE',u:'https://guicamargos.com/ARTOTEL-GAMER-ASYLUM'},
+{y:'2022',t:'Silver',ti:'DOT GO. THE FIRST OBJECT INTERACTION APP FOR THE VISUALLY IMPAIRED.',b:'DOT',a:'SERVICEPLAN GERMANY MUNICH',u:'https://www.youtube.com/watch?v=KeOX9Kyj-iI'},
+{y:'2022',t:'Silver',ti:'BOTTEGA FOR BOTTEGAS',b:'BOTTEGA VENETA',a:'PUBLICIS ITALY MILAN',u:'https://clios.com/awards/winner/fashion-beauty/bottega-veneta/bottega-for-bottegas-114348'},
+{y:'2022',t:'Silver',ti:'HUMAN MEAT BURGER',b:'OUMPH!',a:'LOLA MULLENLOWE MADRID',u:'https://vimeo.com/654533550'},
+{y:'2022',t:'Silver',ti:'THE UNWASTED BEER',b:'HEINEKEN',a:'PUBLICIS ITALY MILAN',u:'https://vimeo.com/722307672'},
+{y:'2022',t:'Silver',ti:'HEINZ HOT DOG PACT',b:'HEINZ',a:'RETHINK TORONTO',u:'https://clios.com/awards/winner/113118'},
+{y:'2022',t:'Silver',ti:'GREETING MILK',b:'MAEIL DAIRIES CO. ,LTD',a:'INNORED SEOUL',u:'https://ascentialcdn.filespin.io/api/v1/conversion/c68760b978a34bb5803d2197d842bde7'},
+{y:'2022',t:'Silver',ti:'CHILD MARRIAGE PREVENTION LOAN',b:'IPDC FINANCE LTD. & AMAL FOUNDATION',a:'GREY BANGLADESH DHAKA',u:'https://www.youtube.com/watch?v=xXXw7HHZ2y0'},
+{y:'2022',t:'Silver',ti:'HOW CREATIVITY HELPED AB INBEV TO GROW',b:'AB INBEV',a:'AB INBEV NEW YORK',u:'https://youtu.be/B_srDTcZiR8'},
+{y:'2022',t:'Silver',ti:'THE BUDWEISER ENERGY COLLECTIVE',b:'BUDWEISER',a:'AB INBEV NEW YORK',u:'https://youtu.be/N3v9KjF9neo'},
+{y:'2022',t:'Silver',ti:'DREAM DROP',b:'ONTARIO LOTTERY AND GAMING CORPORATION',a:'FCB CANADA TORONTO',u:'https://www.lbbonline.com/news/olg-and-canadian-brand-mr-saturday-collab-turns-clothes-into-lottery-tickets'},
+{y:'2022',t:'Silver',ti:'FAVORITE FOOD SOY SAUCE',b:'DENTO DESIGN KOBO INC.',a:'HAKUHODO INC. TOKYO',u:'https://www.fabbaloo.com/news/design-of-the-week-smart-soy-sauce-lid'},
+{y:'2022',t:'Silver',ti:'TRAPPED IN THE 90S',b:'IKEA',a:'MCCANN SPAIN MADRID',u:'https://www.youtube.com/watch?v=FP6K1ArwOWw'},
+{y:'2022',t:'Silver',ti:'THE INHERITANCE PASS',b:'YELLOWSTONE FOREVER',a:'HAVAS CHICAGO',u:'https://www.youtube.com/watch?v=sUkkikPi6ak'},
+{y:'2022',t:'Silver',ti:'CAN\'T TOUCH THIS',b:'CHEETOS',a:'GOODBY SILVERSTEIN & PARTNERS SAN FRANCISCO',u:'https://goodbysilverstein.com/work/cant-touch-this'},
+{y:'2022',t:'Silver',ti:'THE ISLAND',b:'THREE',a:'BOYS + GIRLS DUBLIN',u:'https://boysandgirls.ie/work/the-island/'},
+{y:'2022',t:'Silver',ti:'MICHELOB ULTRA COURTSIDE',b:'AB INBEV',a:'FCB NEW YORK / DENTSU NEW YORK',u:'https://www.dandad.org/awards/professional/2021/235074/michelob-ultra-courtside/'},
+{y:'2022',t:'Silver',ti:'SICK BEATS',b:'WOOJER',a:'AREA 23, AN IPG HEALTH NETWORK COMPANY NEW YORK',u:'https://www.dandad.org/awards/professional/2021/234290/sick-beats/'},
+{y:'2022',t:'Silver',ti:'THE SMILE THAT CHANGED AN INDUSTRY',b:'COLGATE-PALMOLIVE',a:'VMLY&R PARIS',u:'https://www.vmlyr.com/en-fr/france/work/colgate-palmolive-and-vmlyr-unveils-new-smile-stories-campaign'},
+{y:'2022',t:'Silver',ti:'CRIME INTERRUPTED',b:'AUSTRALIAN FEDERAL POLICE',a:'HOST HAVAS SYDNEY',u:'https://www.hosthavas.com/work/crime-interrupted'},
+{y:'2022',t:'Silver',ti:'WHOPPER HEIST',b:'BURGER KING',a:'WE BELIEVERS BROOKLYN',u:'https://www.youtube.com/watch?v=os6benkSlCo'},
+{y:'2022',t:'Silver',ti:'JERSEY PAY',b:'CORONA',a:'VMLY&R COMMERCE MEXICO MEXICO CITY',u:'https://www.youtube.com/watch?v=cR160YMFC6A'},
+{y:'2022',t:'Silver',ti:'505 MIGRANTS',b:'FRANCE TERRE D\'ASILE / WATIZAT',a:'TBWA PARIS',u:'https://youtu.be/IY4ZC4g8qVg'},
+{y:'2022',t:'Silver',ti:'QUEST FOR DYSLEXIA',b:'SAMSUNG',a:'CHEIL WORLDWIDE BEIJING',u:'https://www.youtube.com/watch?v=P8WjPB20y5k'},
+{y:'2022',t:'Silver',ti:'HANDLE WITH I DON\'T CARE',b:'STRAHL',a:'APRIIL BERGEN',u:'https://www.adsoftheworld.com/campaigns/handle-with-i-don-t-care'},
+{y:'2022',t:'Silver',ti:'BLACK CHARACTERS',b:'REVISTA RAÇA',a:'FCB BRASIL SÃO PAULO',u:'http://glossyinc.com/2022/05/10/black-characters/'},
+{y:'2022',t:'Silver',ti:'THE REAL AIRDROP',b:'GARENA',a:'AKQA SÃO PAULO',u:'https://vimeo.com/708747033'},
+{y:'2022',t:'Silver',ti:'CHICKENSTOCK',b:'KFC',a:'TBWA\\RAAD DUBAI',u:'https://www.youtube.com/watch?v=1JpXzpjBJCE'},
+{y:'2022',t:'Silver',ti:'FNAC: ALGORITHM',b:'FNAC',a:'PUBLICIS CONSEIL PARIS',u:'https://www.shootonline.com/video/best-work-you-may-never-see-publicis-conseils-campaign-fnac-looks-free-culture-algorithms'},
+{y:'2022',t:'Silver',ti:'HEINZ HIDDEN SPOTS',b:'HEINZ',a:'GUT SÃO PAULO',u:'https://www.youtube.com/watch?v=j47Q4I3-f1I'},
+{y:'2022',t:'Silver',ti:'BEYOND BINARY CODE',b:'SPARK',a:'COLENSO BBDO AUCKLAND',u:'https://www.youtube.com/watch?v=r9u95st2V9Y'},
+{y:'2022',t:'Silver',ti:'BOYCOTT ADS',b:'HEINEKEN',a:'PUBLICIS ITALY MILAN',u:'https://www.youtube.com/watch?v=eQj6y3tpkBI'},
+{y:'2022',t:'Silver',ti:'HELLO LITERALLY EVERYONE',b:'TWITTER',a:'TWITTER SAN FRANCISCO',u:'https://clios.com/awards/winner/115489'},
+{y:'2022',t:'Silver',ti:'RESTORY',b:'CANON BELGIUM',a:'HAPPINESS, AN FCB ALLIANCE BRUSSELS',u:'https://www.youtube.com/watch?v=QNwSKzrGlYI'},
+{y:'2022',t:'Silver',ti:'PERK DISCLAIMERS',b:'CADBURY PERK',a:'OGILVY MUMBAI',u:'https://www.youtube.com/watch?v=aReOtbu5-SA'},
+{y:'2022',t:'Silver',ti:'THE INEVITABLE NEWS',b:'THE COLUMBIA JOURNALISM REVIEW',a:'AREA 23, AN IPG HEALTH NETWORK COMPANY NEW YORK',u:'https://clios.com/health/winner/design-craft-health-wellness/the-columbia-journalism-review/the-inevitable-news-119672'},
+{y:'2022',t:'Silver',ti:'VODACOM ANTI',b:'HIJACK AD\'S – VODACOM',a:'VMLY&R JOHANNESBURG',u:'https://www.behance.net/gallery/146672683/Vodacom-Anti-Hijack-Ads-Cannes-2022-Winner'},
+{y:'2022',t:'Silver',ti:'THE IMPOSSIBLE COMBO',b:'BURGER KING',a:'DAVID SÃO PAULO',u:'https://www.dandad.org/awards/professional/2022/235425/the-impossible-combo/'},
+{y:'2022',t:'Silver',ti:'MIKE\'S IN A BEER WORLD',b:'AB INBEV',a:'FCB NEW YORK USA',u:'https://vimeo.com/708415115'},
+{y:'2022',t:'Silver',ti:'THE RESELL TAG',b:'SAMSØE SAMSØE',a:'UNCLE GREY COPENHAGEN',u:'https://www.youtube.com/watch?v=RB9s1LhePLw'},
+{y:'2022',t:'Silver',ti:'HOW TO EXPLAIN?',b:'BURGER KING',a:'DAVID SÃO PAULO',u:'https://www.luanasilva.me/beats-zodiac-1-3'},
+{y:'2022',t:'Silver',ti:'SUNBREW',b:'CORONA',a:'DAVID MIAMI',u:'https://www.ogilvy.com/work/sunshine-anytime'},
+{y:'2022',t:'Silver',ti:'OUTLAW RUNNERS',b:'DISTANCE',a:'BETC PARIS',u:'https://www.dandad.org/awards/professional/2022/236479/outlaw-runners/'},
+{y:'2022',t:'Silver',ti:'BLACK BEAUTY IS BEAUTY',b:'SEPHORA',a:'R/GA NEW YORK',u:'https://clios.com/awards/winner/public-relations/sephora/sephora-black-beauty-is-beauty-113622'},
+{y:'2022',t:'Silver',ti:'REVERSE RENEGADE',b:'CHAMPION',a:'ENERGY BBDO CHICAGO',u:'https://www.lbbonline.com/news/champion-celebrates-iconic-franchise-with-reverse-weave-week'},
+{y:'2022',t:'Silver',ti:'THE TRUTH WINS',b:'REPORTERS WITHOUT BORDERS',a:'DDB GERMANY BERLIN',u:'https://www.youtube.com/watch?v=enGJmBM4DHE'},
+{y:'2022',t:'Silver',ti:'SAVE IT SEE IT',b:'MICHELOB ULTRA',a:'GUT MIAMI',u:'https://clios.com/awards/winner/direct/michelob-ultra/save-it-see-it-116763'},
+{y:'2022',t:'Silver',ti:'13 MINUTES',b:'CZECH INSURANCE ASSOCIATION',a:'MCCANN PRAGUE',u:'https://vimeo.com/651664569'},
+{y:'2022',t:'Silver',ti:'BLESS YOUR F*ING COOCH',b:'EOS',a:'MISCHIEF @ NO FIXED ADDRESS BROOKLYN',u:'https://clios.com/awards/winner/social-media/eos/bless-your-f-ing-cooch-107808'},
+{y:'2022',t:'Silver',ti:'AQUAFRESH FORTUNE TELLING',b:'GLAXOSMITHKLINE CONSUMER HEALTHCARE JAPAN K.K',a:'GREY TOKYO',u:'https://ascentialcdn.filespin.io/api/v1/conversion/71443a9710d24abeac44c9b824046367'},
+{y:'2022',t:'Silver',ti:'THE TRAILER TROLL',b:'PRIME VIDEO',a:'MARCEL PARIS',u:'https://vimeo.com/723958057'},
+{y:'2022',t:'Silver',ti:'THE SOUND OF STORIES',b:'NETFLIX',a:'PUBLICIS ITALY MILAN',u:'https://www.youtube.com/watch?v=c-4o_LnfNXI'},
+{y:'2022',t:'Silver',ti:'THE TATTOO DUO OVER',b:'DUOLINGO',a:'BETC PARIS',u:'http://www.nickbakshi.com/#/tattooduoover/'},
+{y:'2022',t:'Silver',ti:'KFCOPYPASTE',b:'KFC',a:'PS21 MADRID',u:'https://www.youtube.com/watch?v=Fqynadukmko'},
+{y:'2022',t:'Silver',ti:'THE MICROPEDIA OF MICROAGGRESSIONS',b:'BLACK BUSINESS AND PROFESSIONAL ASSOCIATION, ET AL.',a:'ZULU ALPHA KILO TORONTO',u:'https://clios.com/health/winner/partnerships-collaborations-health-wellness/black-business-and-professional-association-et-al-/the-micropedia-of-microaggressions-118665'},
+{y:'2022',t:'Silver',ti:'TWITTER FEMININE ARABIC',b:'TWITTER',a:'VMLY&R COMMERCE MENA DUBAI',u:'https://www.youtube.com/watch?v=cratO2DPKdA'},
+{y:'2022',t:'Silver',ti:'EVEN MORE CONFUSING TIMES',b:'BURGER KING',a:'DAVID MADRID',u:'https://www.youtube.com/watch?v=PihoSfE13o4'},
+{y:'2022',t:'Silver',ti:'BEARS',b:'TWIX',a:'DDB CHICAGO',u:'https://www.youtube.com/watch?v=3p_cliI8rY0'},
+{y:'2022',t:'Silver',ti:'SPOTLIGHT',b:'MASTERCARD',a:'MJZ LOS ANGELES',u:'https://www.youtube.com/watch?v=XqloeDvSSgg'},
+{y:'2022',t:'Silver',ti:'AXA: BIRDERS',b:'AXA',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=SyDa_m4lNjc'},
+{y:'2022',t:'Silver',ti:'DEAR CUSTOMER',b:'HSBC',a:'DAVID BUENOS AIRES',u:'https://www.youtube.com/watch?v=5xMJtWFvMM8'},
+{y:'2022',t:'Silver',ti:'HELMET HAS ALWAYS BEEN A GOOD IDEA',b:'DANISH ROAD SAFETY COUNCIL',a:'&CO. / NOA COPENHAGEN',u:'https://www.youtube.com/watch?v=0m-c4GixUpg'},
+{y:'2022',t:'Silver',ti:'NORM\'S OLD PAL MILK',b:'OATLY',a:'OATLY MALMÖ',u:'https://www.youtube.com/watch?v=mtlX3UZm5Gc'},
+{y:'2022',t:'Silver',ti:'THE OFFICIAL TENNIS OF SIPSMITH GIN',b:'SIPSMITH',a:'OGILVY LONDON',u:'https://clios.com/awards/winner/film-craft-animation/sipsmith-gin/the-official-tennis-of-sipsmith-gin-116321'},
+{y:'2022',t:'Silver',ti:'JOY',b:'MGM RESORTS',a:'MCCANN NEW YORK',u:'https://clios.com/music/winner/use-of-music-in-film-video/mgm-resorts/joy-fountain-concerto--118142'},
+{y:'2022',t:'Silver',ti:'METAVERRRRRRR',b:'KRUNGSRI FIRST CHOICE',a:'LEO BURNETT BANGKOK',u:'https://www.youtube.com/watch?v=jQwI5lTN6Eg'},
+{y:'2022',t:'Silver',ti:'LOVE, LAWYERS AND THE GOVERNMENT',b:'FAMILY EQUALITY',a:'FURLINED SANTA MONICA',u:'https://www.youtube.com/watch?v=rw2TF90ctzc'},
+{y:'2022',t:'Silver',ti:'THE LIFT',b:'WINAMAX',a:'WANDA PRODUCTIONS SAINT-DENIS',u:'https://clios.com/music/winner/use-of-music-in-film-video/winamax/the-lift-109301'},
+{y:'2022',t:'Silver',ti:'THE DREAM',b:'HEROES OF TODAY PLATFORM',a:'DDB SPAIN MADRID',u:'https://www.youtube.com/watch?v=qv31ypEp7NM'},
+{y:'2022',t:'Silver',ti:'WELCOME TO THE ICELANDVERSE',b:'INSPIRED BY ICELAND',a:'SS+K NEW YORK',u:'https://www.youtube.com/watch?v=enMwwQy_noI'},
+{y:'2022',t:'Silver',ti:'CYCLE',b:'FREDA',a:'MCCANN SPAIN MADRID',u:'https://www.youtube.com/watch?v=Ti2palYVYP4'},
+{y:'2022',t:'Bronze',ti:'KFC IKEA',b:'KFC',a:'PS21 MADRID',u:'https://clios.com/awards/winner/112923'},
+{y:'2022',t:'Bronze',ti:'RON\'S',b:'BURGER KING',a:'PUBLICIS MONTREAL',u:'https://www.behance.net/gallery/146371989/Livraison-a-Domicile'},
+{y:'2022',t:'Bronze',ti:'MEAT?',b:'BURGER KING',a:'DAVID MADRID',u:'https://www.behance.net/gallery/138869291/Meat'},
+{y:'2022',t:'Bronze',ti:'CONFUSING TIMES',b:'BURGER KING',a:'DAVID MADRID',u:'https://www.behance.net/gallery/142230055/David-Madrid-Burger-King'},
+{y:'2022',t:'Bronze',ti:'12',b:'HOUR MARINATION – POPEYES',a:'GUT MIAMI',u:'https://www.tom-francesconi.com/12hourprints'},
+{y:'2022',t:'Bronze',ti:'UNCOMFORTABLE TRUTH',b:'HUMAN RIGHTS FOUNDATION',a:'TAXI TORONTO',u:'https://clios.com/awards/winner/fashion-beauty/human-rights-foundation/uncomfortable-truth-110597'},
+{y:'2022',t:'Bronze',ti:'FIGHT SEXISM WITH SEXISM',b:'URSULA KARVEN/ FRAUEN100',a:'THJNK HAMBURG',u:'https://www.dandad.org/awards/professional/2022/235443/fight-sexism-with-sexism/'},
+{y:'2022',t:'Bronze',ti:'THE PONCHO POSTER',b:'BRUSSELS MOBILITY',a:'MORTIERBRIGADE BRUSSELS',u:'https://mortierbrigade.com/cases/the-poncho-poster'},
+{y:'2022',t:'Bronze',ti:'DISCOVERY BILLBOARD',b:'TERRE DES HOMMES',a:'ACNE MILANO',u:'https://www.youtube.com/watch?v=LigXKHWn-_w'},
+{y:'2022',t:'Bronze',ti:'LA CASA DE PAPEL',b:'NETFLIX',a:'DAVID MADRID',u:'https://andreandsaulo.com/The-Truth-Is-Out-There'},
+{y:'2022',t:'Bronze',ti:'THE UNWEARABLE COLLECTION',b:'BOEHRINGER INGELHEIM',a:'AREA 23 NEW YORK',u:'https://clios.com/health/winner/design-craft-pharmaceutical/boehringer-ingelheim-unbranded-initiative/the-unwearable-collection-119682'},
+{y:'2022',t:'Bronze',ti:'LIFE, SCRIPTED',b:'CHICAGO INTERNATIONAL FILM FESTIVAL',a:'OGILVY CHICAGO',u:'https://www.dandad.org/awards/professional/2022/235186/life-scripted-a-series-of-location-based-out-of-home/'},
+{y:'2022',t:'Bronze',ti:'NYC SAYS GAY',b:'NEW YORK OFFICE OF THE MAYOR',a:'VMLY&R NEW YORK',u:'https://www.youtube.com/watch?v=whByoMtrb1A'},
+{y:'2022',t:'Bronze',ti:'REQRUITEMENT',b:'MCDONALD\'S',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=KZjBpC8HzDE'},
+{y:'2022',t:'Bronze',ti:'UNBREAKABLE COURTS',b:'INSTITUTIONAL',a:'AFRICA DDB SÃO PAULO',u:'https://joaoandbruno.com/Unbreakable-Courts'},
+{y:'2022',t:'Bronze',ti:'BALLOONS',b:'GRAND OPENING – MCDONALD\'S',a:'COSSETTE MONTREAL',u:'https://www.behance.net/gallery/125139839/McDonalds-Grand-Opening'},
+{y:'2022',t:'Bronze',ti:'TAKE THIS AD FOR A RUN',b:'GO OUTSIDE',a:'GO OUTSIDE SÃO PAULO',u:'https://www.youtube.com/watch?v=2yNBFAijxXQ'},
+{y:'2022',t:'Bronze',ti:'GUNS STATS',b:'CHANGE THE REF',a:'CHANGE THE REF PARKLAND',u:'https://www.youtube.com/watch?v=ADlLu6Iynzs'},
+{y:'2022',t:'Bronze',ti:'RECOLOUR THE RAINBOW',b:'SKITTLES',a:'ADAM&EVEDDB LONDON',u:'https://www.dandad.org/awards/professional/2022/236028/recolour-the-rainbow/'},
+{y:'2022',t:'Bronze',ti:'COLOURS OF PRIDE',b:'FONDATION EMERGENCE',a:'RETHINK TORONTO',u:'https://www.xavierblais.com/work/colours-of-pride'},
+{y:'2022',t:'Bronze',ti:'THE KETCHUP BAN',b:'CURTICE BROTHERS',a:'OGILVY FRANKFURT',u:'https://vimeo.com/675788810'},
+{y:'2022',t:'Bronze',ti:'THE REAL PROBLEM',b:'ATHOS',a:'VMLY&R SÃO PAULO',u:'http://leonardobarbosa.work/athos-the-real-problem'},
+{y:'2022',t:'Bronze',ti:'MOM BUT NOT HIS MOM',b:'BURGER KING',a:'DAVID MADRID',u:'https://vimeo.com/706915783'},
+{y:'2022',t:'Bronze',ti:'THE GRAND MASTER',b:'5 TAKABB',a:'PHENOMENA CO.BANGKOK',u:'https://www.youtube.com/watch?v=cg80M6mA5jk'},
+{y:'2022',t:'Bronze',ti:'THE TINY POCKET',b:'BAYER',a:'ALMAPBBDO SÃO PAULO',u:'https://vimeo.com/709085724'},
+{y:'2022',t:'Bronze',ti:'MEMORY TEST',b:'SUPRADYN',a:'MULLENLOWE LONDON',u:'https://vimeo.com/710750240'},
+{y:'2022',t:'Bronze',ti:'DIGNITY TO FLOW',b:'JOHNSON & JOHNSON',a:'WUNDERMAN THOMPSON SÃO PAULO',u:'https://clios.com/health/winner/audio-health-wellness/johnson-johnson/dignity-to-flow-119249'},
+{y:'2022',t:'Bronze',ti:'THE BATTLE INSIDE',b:'CRIS CANCER FOUNDATION',a:'CHEIL WORLDWIDE MADRID',u:'https://clios.com/health/winner/branded-entertainment-content-health-wellness/cris-cancer-foundation/the-battle-inside-119371'},
+{y:'2022',t:'Bronze',ti:'FIRST AID FOR HUMANITY',b:'BNP PARIBAS & THE POLISH RED CROSS',a:'VMLY&R WARSAW',u:'https://www.vmlyr.com/en-pl/poland/work/first-aid-humanity'},
+{y:'2022',t:'Bronze',ti:'POSTPARTUM UNDER PRESSURE',b:'UNILEVER',a:'DARK KITCHEN CREATIVES SÃO PAULO',u:'https://www.youtube.com/watch?v=w4OL5wPCXng'},
+{y:'2022',t:'Bronze',ti:'THE MINDSETS PAPER',b:'CANADIAN DOWN SYNDROME SOCIETY',a:'FCB TORONTO',u:'https://vimeo.com/672115247'},
+{y:'2022',t:'Bronze',ti:'PILL',b:'ID',a:'HEREZIE PARIS',u:'https://herezie.com/en/work/pill-id'},
+{y:'2022',t:'Bronze',ti:'JUST THE TWO OF US',b:'COORDOWN',a:'SMALL NEW YORK',u:'https://www.dandad.org/awards/professional/2022/235748/just-the-two-of-us-coordown-world-down-syndrome-day-2022/'},
+{y:'2022',t:'Bronze',ti:'LITTLE HEADHUNTERS POWERED BY LINKEDIN',b:'THE FOUNDATION K.I.D.S',a:'PUBLICIS WARSZAWA',u:'https://www.youtube.com/watch?v=uUsXS7QgHNI'},
+{y:'2022',t:'Bronze',ti:'DISEASE DILEMMAS',b:'GARVAN INSTITUTE OF MEDICAL RESEARCH',a:'DENTSU CREATIVE SYDNEY',u:'https://www.dandad.org/awards/professional/2022/235480/disease-dilemmas/'},
+{y:'2022',t:'Bronze',ti:'KHORTYTSIA: THE ISLAND OF A MYSTERY',b:'KHORTYTSIA ISLAND',a:'BICKERSTAFF.734 KYIV',u:'https://www.adsoftheworld.com/campaigns/the-island-of-a-mystery'},
+{y:'2022',t:'Bronze',ti:'THE POLYGRAPH',b:'CNN BRASIL',a:'ALMAPBBDO SÃO PAULO',u:'https://www.youtube.com/watch?v=18yNTS_mylQ'},
+{y:'2022',t:'Bronze',ti:'CIRCULAR DESIGN FOR FASHION',b:'ELLEN MACARTHUR FOUNDATION',a:'SID LEE MONTRÉAL',u:'https://www.behance.net/gallery/134967257/Circular-Design-for-Fashion'},
+{y:'2022',t:'Bronze',ti:'CAP THE TAP',b:'RECKITT-FINISH',a:'HAVAS TURKEY ISTANBUL',u:'https://www.bestadsontv.com/ad/136173/Finish-Cap-The-Tap'},
+{y:'2022',t:'Bronze',ti:'CAMERA SWITCHES',b:'GOOGLE',a:'GOOGLE MOUNTAIN VIEW',u:'https://www.youtube.com/watch?v=CSLv-dhVKxs'},
+{y:'2022',t:'Bronze',ti:'MOTHERLAND PRIDE',b:'KYIVPRIDE',a:'SAATCHI & SAATCHI UKRAINE KYIV',u:'https://www.dandad.org/awards/professional/2022/235906/motherland-pride/'},
+{y:'2022',t:'Bronze',ti:'TENO',b:'LUMIO',a:'LUMIO SAN FRANCISCO',u:'https://vimeo.com/470143286'},
+{y:'2022',t:'Bronze',ti:'SOULFUEL SAFE LAMP',b:'CHICKEN LICKEN',a:'JOE PUBLIC UNITED JOHANNESBURG',u:'https://clios.com/awards/winner/design/chicken-licken/soulfuel-safe-lamp-105868'},
+{y:'2022',t:'Bronze',ti:'NUGEN',b:'COLGATE-PALMOLIVE',a:'VMLY&R CAPE TOWN',u:'https://www.youtube.com/watch?v=IDpPz9lzaxU'},
+{y:'2022',t:'Bronze',ti:'FREEDOM GRAMS',b:'AROYA',a:'SERVICEPLAN MUNICH',u:'https://www.youtube.com/watch?v=kRTytP6UhDw'},
+{y:'2022',t:'Bronze',ti:'THÉO CURIN X LACOSTE',b:'LACOSTE',a:'BETC PARIS',u:'https://www.youtube.com/watch?v=d3J8vQZAVRM'},
+{y:'2022',t:'Bronze',ti:'AIRPODS: 3RD GENERATION',b:'APPLE',a:'APPLE SUNNYVALE',u:'https://www.youtube.com/watch?v=-5y2YqrlOr4'},
+{y:'2022',t:'Bronze',ti:'THE BOOKCASE FOR TOLERANCE',b:'ANNE FRANK HOUSE',a:'INNOCEAN WORLDWIDE EUROPE BERLIN',u:'https://www.dandad.org/awards/professional/2022/235725/the-bookcase-for-tolerance/'},
+{y:'2022',t:'Bronze',ti:'CHRISTMAS CLOWNS',b:'REAL PLAZA',a:'SENOR Z SAC LIMA',u:'https://www.youtube.com/watch?v=QxIj1aW-cLU'},
+{y:'2022',t:'Bronze',ti:'FIND YOUR OWN WAY',b:'OTSUKA',a:'DENTSU INC. TOKYO',u:'https://www.dandad.org/awards/professional/2022/236488/find-your-own-way/'},
+{y:'2022',t:'Bronze',ti:'SUPERMARC',b:'EDEKA',a:'JUNG VON MATT AG HAMBURG',u:'https://clios.com/awards/winner/film-craft-music-original/edeka/supermarc-115005'},
+{y:'2022',t:'Bronze',ti:'START UP: 45 YEARS OF APPLE SOUNDS',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.youtube.com/watch?v=OxJpZtp2ItE'},
+{y:'2022',t:'Bronze',ti:'DOIN\' LAPS',b:'APPLE',a:'APPLE SUNNYVALE',u:'https://www.youtube.com/watch?v=pJIKPzZTJXM'},
+{y:'2022',t:'Bronze',ti:'FUMBLE',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.youtube.com/watch?v=xJh3WIPUcOk'},
+{y:'2022',t:'Bronze',ti:'FLIP',b:'B&Q',a:'UNCOMMON CREATIVE STUDIO LONDON',u:'https://www.theinspiration.com/2022/05/bq-flip-by-uncommon-creative-studio/'},
+{y:'2022',t:'Bronze',ti:'THE TRUTH TAKES A JOURNALIST',b:'THE NEW YORK TIMES',a:'FINAL CUT NEW YORK',u:'https://www.youtube.com/watch?v=uAsmh7yuR3U'},
+{y:'2022',t:'Bronze',ti:'DAY AFTER DAY',b:'WHITE RIBBON',a:'BENSIMON BYRNE TORONTO',u:'https://www.youtube.com/watch?v=8sxuoD4hOZw'},
+{y:'2022',t:'Bronze',ti:'KFCINEMA',b:'KFC FRANCE',a:'HAVAS PARIS PUTEAUX',u:'https://clios.com/awards/winner/film-craft-sound-design/kfc-france/kfcinema-114563'},
+{y:'2022',t:'Bronze',ti:'WASTEMINSTER: A DOWNING STREET DISASTER',b:'GREENPEACE UK',a:'METHODNMADNESS SINGAPORE',u:'https://www.youtube.com/watch?v=Hr6RqGg6ExE'},
+{y:'2022',t:'Bronze',ti:'DRIVE2EXTREMES',b:'PORSCHE',a:'KEKO FZ-LLC DUBAI',u:'https://www.youtube.com/watch?v=CBRwF0LU3Ys'},
+{y:'2022',t:'Bronze',ti:'AN UNLIKELY FRIENDSHIP',b:'PRIME VIDEO',a:'PRIME VIDEO LONDON',u:'https://www.youtube.com/watch?v=KMmjYIW_4tE'},
+{y:'2022',t:'Bronze',ti:'NEW YEAR\'S EVE',b:'WHATSAPP',a:'COMPANY 3 LOS ANGELES',u:'https://www.youtube.com/watch?v=ppHFObAcBmc'},
+{y:'2022',t:'Bronze',ti:'NYPHIL',b:'NEW YORK PHILHARMONICS',a:'OGILVY NEW YORK',u:'https://www.ogilvy.com/work/nyphil'},
+{y:'2022',t:'Bronze',ti:'NO PETS ALLOWED',b:'LIVE LONG LIFE CO., LTD',a:'OGILVY BANGKOK',u:'https://www.illusion.co.th/no-pests-allowed'},
+{y:'2022',t:'Bronze',ti:'REBIRTH',b:'LEICA',a:'TBWA PARIS',u:'https://pbs.twimg.com/media/E5MiWm9WUAIThF0'},
+{y:'2022',t:'Bronze',ti:'8:46 FILMS',b:'P&G',a:'SATURDAY MORNING LOS ANGELES',u:'https://www.geoffedwards.me/846'},
+{y:'2022',t:'Bronze',ti:'FRIES! THE MOVIE',b:'SIR KENSINGTON\'S',a:'UNILEVER LONDON',u:'https://www.youtube.com/watch?v=RDtLH6HlKWA'},
+{y:'2022',t:'Bronze',ti:'GETTING LUIS MIGUEL ON BOARD',b:'PEPSICO MEXICO',a:'SLAP GLOBAL BUENOS AIRES',u:'https://www.youtube.com/watch?v=jfgmx1uVGDo'},
+{y:'2022',t:'Bronze',ti:'MARVEL TEASER OR TIDE AD?',b:'P&G',a:'SAATCHI & SAATCHI NEW YORK',u:'https://www.daniellobaton.net/tide-x-marvel'},
+{y:'2022',t:'Bronze',ti:'SERIES TOUR',b:'NETFLIX',a:'WOLF BCPP SANTIAGO',u:'https://www.behance.net/gallery/146627381/Series-Tour-Netflix-Chile'},
+{y:'2022',t:'Bronze',ti:'SNACKABLE SCREENS',b:'DORITOS/CHEETOS',a:'GOODBY SILVERSTEIN & PARTNERS SAN FRANCISCO',u:'https://vimeo.com/723958661'},
+{y:'2022',t:'Bronze',ti:'CODA PLAYLIST CURATED BY DEAF PEOPLE',b:'APPLE',a:'ROSEWOOD CREATIVE LOS ANGELES',u:'https://www.youtube.com/watch?v=8yc0mF8oMSM'},
+{y:'2022',t:'Bronze',ti:'CRISPY SUBTITLES',b:'LAY\'S',a:'HAPPINESS SAIGON',u:'https://www.youtube.com/watch?v=JLPZn8oMsz4'},
+{y:'2022',t:'Bronze',ti:'PEPSI HALFTIME ULTRA PASS',b:'PEPSI + VERIZON',a:'R/GA NEW YORK',u:'https://vimeo.com/723959881'},
+{y:'2022',t:'Bronze',ti:'TIMBIEBS',b:'TIM HORTONS',a:'GUT TORONTO',u:'https://www.gut.agency/work/timbiebs'},
+{y:'2022',t:'Bronze',ti:'PLAY HAS NO LIMITS FEAT. KENSHI YONEZU',b:'SONY',a:'SIX INC. TOKYO',u:'https://www.youtube.com/watch?v=4yuEnY9ItqA'},
+{y:'2022',t:'Bronze',ti:'GEICO "SCOOP!"',b:'GEICO',a:'THE MARTIN AGENCY RICHMOND',u:'https://vimeo.com/653028828'},
+{y:'2022',t:'Bronze',ti:'THE 9TH LANE',b:'LACOSTE',a:'BETC PARIS',u:'https://www.dandad.org/awards/professional/2022/235612/the-9th-lane/'},
+{y:'2022',t:'Bronze',ti:'AUSTRALIAN OPEN METAVERSE',b:'TENNIS AUSTRALIA',a:'RUN IT WILD MELBOURNE',u:'https://vimeo.com/723960197'},
+{y:'2022',t:'Bronze',ti:'THE PIRATE MATCH',b:'DIRECTVGO',a:'MIRUM AGENCY BRAZIL CURITIBA',u:'https://www.youtube.com/watch?v=ug241zgwTZM'},
+{y:'2022',t:'Bronze',ti:'THE UNIFORM THAT NEVER EXISTED',b:'CENTAURO',a:'TRACYLOCKE BRASIL SÃO PAULO',u:'https://clios.com/sports/winner/design/centauro-sports/the-uniform-that-never-existed-102008'},
+{y:'2022',t:'Bronze',ti:'ADD THE M',b:'YWCA',a:'RETHINK TORONTO',u:'https://www.youtube.com/watch?v=Yxule2f9h6Q'},
+{y:'2022',t:'Bronze',ti:'RENAULT PLUG',b:'INN – RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://youtu.be/A8kND6lr96k'},
+{y:'2022',t:'Bronze',ti:'HOMELESS IN THE METAVERSE',b:'ENTOURAGE',a:'TBWA PARIS',u:'https://www.youtube.com/watch?time_continue=2&v=r4P1UG7kCY4'},
+{y:'2022',t:'Bronze',ti:'PLASTICOFF',b:'WHIRLPOOL',a:'VMLY&R MEXICO MEXICO CITY',u:'https://www.youtube.com/watch?v=h8nAxntnzGc'},
+{y:'2022',t:'Bronze',ti:'VERTICAL BIKE',b:'HONDA',a:'OGILVY PERU LIMA',u:'https://www.youtube.com/watch?v=KDdip01YHxA'},
+{y:'2022',t:'Bronze',ti:'BEER DROPS',b:'MILLER BRANDS',a:'DDB CHICAGO',u:'https://www.kenpbates.com/miller-lite-beer-drops'},
+{y:'2022',t:'Bronze',ti:'HATE TO PROTECT',b:'GUIDES TAO',a:'TBWA PARIS',u:'https://www.dandad.org/awards/professional/2022/235676/hate-to-protect/'},
+{y:'2022',t:'Bronze',ti:'WIDEN THE SCREEN: THE PROGRAM',b:'PROCTER & GAMBLE',a:'GREY NEW YORK',u:'https://www.youtube.com/watch?v=PUHop5i8-f4'},
+{y:'2022',t:'Bronze',ti:'DIIA',b:'MINISTRY OF DIGITAL TRANSFORMATION OF UKRAINE',a:'FEDORIV AGENCY KYIV',u:'https://www.kyivpost.com/ukraine-politics/diia-ukraines-digital-success-story.html'},
+{y:'2022',t:'Bronze',ti:'SANTANDER WE STAND',b:'SANTANDER',a:'VMLY&R SÃO PAULO',u:'https://www.youtube.com/watch?v=kXtfqy9pQv8'},
+{y:'2022',t:'Bronze',ti:'THE SHOWROOM HOTELS',b:'LA REDOUTE',a:'FRED & FARID PARIS',u:'https://vimeo.com/716553189'},
+{y:'2022',t:'Bronze',ti:'GEAR UP',b:'BANK OF MONTREAL',a:'FCB CANADA TORONTO',u:'https://www.youtube.com/watch?v=BY4U9CzDq7E'},
+{y:'2022',t:'Bronze',ti:'VILLAGE ELECTRIQUE',b:'RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://clios.com/awards/winner/out-of-home/renault/electric-village-86197'},
+{y:'2022',t:'Bronze',ti:'THE TRAVIS SCOTT MEAL',b:'MCDONALD\'S',a:'WIEDEN+KENNEDY NEW YORK USA',u:'https://www.adsoftheworld.com/campaigns/the-travis-scott-meal'},
+{y:'2022',t:'Bronze',ti:'#STILLSPEAKINGUP',b:'PROPUESTA CÍVICA\\REPORTERS SANS FRONTIERES',a:'PUBLICIS MÉXICO LATVIA',u:'https://www.dandad.org/awards/professional/2021/234327/stillspeakingup/'},
+{y:'2022',t:'Bronze',ti:'CORONA THE MATCH OF AGES',b:'ABINBEV',a:'WE BELIEVERS NEW YORK',u:'https://www.oneclub.org/awards/theoneshow/-award/39596/the-match-of-ages'},
+{y:'2022',t:'Bronze',ti:'STAYFREE PROJECT FREE PERIOD',b:'JOHNSON & JOHNSON',a:'DDB MUDRA MUMBAI',u:'https://www.youtube.com/watch?v=oUK6ZGKfA6Q'},
+{y:'2022',t:'Bronze',ti:'SNCF HEXAGONAL',b:'SNCF NATIONAL RAILWAYS',a:'PUBLICIS CONSEIL PARIS',u:'https://vimeo.com/593688780'},
+{y:'2022',t:'Bronze',ti:'EMPTY CHAIRS',b:'BØRNS VILKÅR',a:'UNCLE GREY COPENHAGEN',u:'https://unclegrey.dk/work/borns-vilkar-tomme-stole/'},
+{y:'2022',t:'Bronze',ti:'SHUTTER ADS',b:'HEINEKEN',a:'PUBLICIS ITALY',u:'https://www.youtube.com/watch?v=tFSxwMvj_bc'},
+{y:'2022',t:'Bronze',ti:'STEVENAGE CHALLENGE',b:'BURGER KING',a:'DAVID MADRID',u:'https://vimeo.com/429907652'},
+{y:'2022',t:'Bronze',ti:'OREO THINS PROTECTION PROGRAM',b:'OREO',a:'THE COMMUNITY MIAMI',u:'https://clios.com/awards/winner/partnerships-collaborations/oreo/thins-protection-program-114068'},
+{y:'2022',t:'Bronze',ti:'DUBBING FACTORY',b:'PRIME VIDEO',a:'HEREZIE PARIS',u:'https://herezie.com/en/work/prime-video-dubbing-factory'},
+{y:'2022',t:'Bronze',ti:'ROBYN\'S UNDIES',b:'YELLOW',a:'HEYYOU AUCKLAND',u:'https://heyyou.co/work/yellow-things-just-got-brighter'},
+{y:'2022',t:'Bronze',ti:'ADS FOR EQUALITY',b:'META',a:'META SÃO PAULO',u:'https://vimeo.com/723959080'},
+{y:'2022',t:'Bronze',ti:'GREEN LIGHT SIGNAL',b:'NATIONAL GRID',a:'EDELMAN LONDON',u:'https://www.youtube.com/watch?v=xgizW-f-UhA'},
+{y:'2022',t:'Bronze',ti:'KETCHUP TO THE RESCUE',b:'CURTICE BROTHERS',a:'OGILVY GERMANY FRANKFURT',u:'https://www.youtube.com/watch?v=G6HNfIg3Kmc'},
+{y:'2022',t:'Bronze',ti:'ONE/SECOND/SUIT',b:'H&M',a:'UNCOMMON CREATIVE STUDIO LONDON',u:'https://www.youtube.com/watch?v=z7Vpgx0bdxo'},
+{y:'2022',t:'Bronze',ti:'NOT PARIS',b:'TRANSAVIA',a:'MARCEL PARIS',u:'https://youtu.be/pY6qDnilN28'},
+{y:'2022',t:'Bronze',ti:'MISSING STOCK',b:'INTERNATIONAL FOUNDATION FOR REUNION + MUDI 3D & AR STUDIO',a:'WUNDERMAN THOMPSON BOGOTÁ',u:'https://www.lbbonline.com/work/64828'},
+{y:'2022',t:'Bronze',ti:'3D PRINTED MEATBALLS',b:'IKEA',a:'INGO STOCKHOLM',u:'https://www.ogilvy.com/work/taste-future'},
+{y:'2022',t:'Bronze',ti:'THE MOST WANTED PORTRAIT',b:'ALCALDÍA DE SOACHA',a:'SANCHO BBDO BOGOTÁ',u:'https://clios.com/awards/winner/direct/alcald%C3%ADa-de-soacha/the-most-wanted-portrait-114204'},
+{y:'2022',t:'Bronze',ti:'AMASON LOGO',b:'AMAZON',a:'AMAZON SEATTLE',u:'https://joshoesmith.myportfolio.com/onstar'},
+{y:'2022',t:'Bronze',ti:'DUET DELIVERY',b:'BURGER KING',a:'DAVID SÃO PAULO',u:'https://www.ogilvy.com/work/duet-delivery'},
+{y:'2022',t:'Bronze',ti:'THE FIRST CAR SHOWROOM INSIDE A BUS',b:'KIA MOTORS',a:'OGILVY EL SALVADOR SAN SALVADOR',u:'https://www.youtube.com/watch?v=ZHKbjImAras'},
+{y:'2022',t:'Bronze',ti:'THE WARM WINTER LIVESTREAM',b:'UAE GOVERNMENT MEDIA OFFICE',a:'UAE GOVERNMENT MEDIA OFFICE DUBAI',u:'https://www2.dubailynx.com/winners/2022/media/entry.cfm?entryid=2222'},
+{y:'2022',t:'Bronze',ti:'I\'M HERE',b:'BIG ISSUE',a:'FOREVER BETA LONDON',u:'https://www.adsoftheworld.com/campaigns/i-m-here'},
+{y:'2022',t:'Bronze',ti:'IKEA: THE SUITCASE',b:'IKEA',a:'DDB MILAN',u:'https://www.youtube.com/watch?v=eM6C09bEyCw'},
+{y:'2022',t:'Bronze',ti:'MILLBOARD',b:'MERCEDES BENZ',a:'PUBLICIS GROUPE BENELUX BRUSSELS',u:'https://clios.com/awards/winner/out-of-home/mercedes-benz/millboard-111262'},
+{y:'2022',t:'Bronze',ti:'I AM WORKING',b:'STARBUCKS',a:'VMLY&R SÃO PAULO',u:'https://www.youtube.com/watch?v=ITdG8TX8YW4'},
+{y:'2022',t:'Bronze',ti:'MY NAME IS PETER',b:'WOMEN INC. AND BRANDEDU',a:'THE FAMILY AMSTERDAM THE NETHERLANDS',u:'https://vimeo.com/691451620'},
+{y:'2022',t:'Bronze',ti:'TIKTOKMMERCIALS',b:'DAVIVIENDA BANK',a:'LEO BURNETT BOGOTÁ',u:'https://vimeo.com/723960863'},
+{y:'2022',t:'Bronze',ti:'#REALVOICESOFPRIDE',b:'FELGTB',a:'EDELMAN SPAIN S.A. MADRID',u:'https://www.youtube.com/watch?v=4PnQCF7K8Sg'},
+{y:'2022',t:'Bronze',ti:'VERSUS',b:'SK-II',a:'MEDIACOM SINGAPORE',u:'https://www2.spikes.asia/winners/2022/media/'},
+{y:'2022',t:'Bronze',ti:'FEARLESS NIGHT',b:'HANDSAWAY',a:'TBWA PARIS',u:'https://www.youtube.com/watch?v=FQPwkTLrSfo'},
+{y:'2022',t:'Bronze',ti:'PAYWALL DOWN',b:'L\'OREAL PARIS',a:'WMCCANN SÃO PAULO',u:'https://www.adsoftheworld.com/campaigns/paywall-down'},
+{y:'2022',t:'Bronze',ti:'BERLIN\'S HEART STANDS STILL',b:'BVG',a:'JUNG VON MATT AG HAMBURG',u:'https://clios.com/awards/winner/branded-entertainment-content/berliner-verkehrsbetriebe-bvg/berlin-s-heart-stands-still--114477'},
+{y:'2022',t:'Bronze',ti:'ANTI LOOK: THE LIFE',b:'SAVING QR DESIGN – JOHANNITER',a:'SCHOLZ & FRIENDS BERLIN',u:'https://www.youtube.com/watch?v=aCqUfJbMlg0'},
+{y:'2022',t:'Bronze',ti:'ADIDAS NEO GYMNASTICS X JUST DANCE',b:'ADIDAS',a:'TBWA\\BOLT SHANGHAI',u:'https://www.youtube.com/watch?v=ov3rEd6apIs'},
+{y:'2022',t:'Bronze',ti:'TOGETHER THIS RAMADAN',b:'TESCO',a:'BBH LONDON',u:'https://www.lbbonline.com/news/how-tescos-ramadan-billboards-fill-up-as-the-sun-goes-down'},
+{y:'2022',t:'Bronze',ti:'#NOTCOMINGHOME',b:'NEWTOWN ACTION ALLIANCE',a:'SERVICEPLAN GERMANY MUNICH',u:'https://clios.com/awards/winner/film-craft-direction/newtown-action-alliance/notcominghome-107321'},
+{y:'2022',t:'Bronze',ti:'#SEEHERGREATNESS',b:'BUICK',a:'LEO BURNETT DETROIT',u:'https://leoburnett.com/news/buick-launches-see-her-greatness-campaign-for-ncaa-march-madness'},
+{y:'2022',t:'Bronze',ti:'SEE EQUAL #SHARETHELOAD',b:'PROCTER & GAMBLE',a:'BBDO INDIA MUMBAI',u:'https://www.youtube.com/watch?v=DA64FF7MR58'},
+{y:'2022',t:'Bronze',ti:'LOVE THE WORK MORE (QUYNH TRAN & TOAN MAI)',b:'',a:'',u:'https://youtu.be/ehYOvE-Sqfk'},
+{y:'2022',t:'Bronze',ti:'BEHIND THE MOST IMPORTANT JOB',b:'NAVENT',a:'TOGETHERWITH BUENOS AIRES',u:'https://ascentialcdn.filespin.io/api/v1/conversion/7f8f42f1842e49319cb686fff6a43b25'},
+{y:'2022',t:'Bronze',ti:'14 IS NOT OK',b:'ESTONIAN SEXUAL HEALTH ASSOCIATION',a:'OPTIMIST TALLINN',u:'https://www.youtube.com/watch?v=VDawsy_RfcU'},
+{y:'2022',t:'Bronze',ti:'UNBOX ME',b:'UNAIDS',a:'FCB INDIA DELHI',u:'https://www.youtube.com/watch?v=TolDmsBTv_Q'},
+{y:'2022',t:'Bronze',ti:'#FREECUTHBERT',b:'ALDI',a:'MCCANN MANCHESTER',u:'https://vimeo.com/709008833'},
+{y:'2022',t:'Bronze',ti:'A PIECE OF AJAX',b:'AFC AJAX',a:'ONE:NIL AMSTERDAM',u:'https://www2.eurobest.com/winners/2021/entertainment/'},
+{y:'2022',t:'Bronze',ti:'BLACKED OUT HISTORY',b:'ONTARIO BLACK HISTORY SOCIETY',a:'DDB CANADA TORONTO',u:'https://clios.com/awards/winner/direct/ontario-black-history-society/blackedouthistory-106925'},
+{y:'2022',t:'Bronze',ti:'AS EARLY AS FIVE',b:'DOVE | UNILEVER',a:'OGILVY LONDON',u:'https://www.youtube.com/watch?v=FGrfhOTxy4Q'},
+{y:'2022',t:'Bronze',ti:'BREADED CARS',b:'KFC',a:'PS21 MADRID',u:'https://www.youtube.com/watch?v=dAxYK0dUkjM'},
+{y:'2022',t:'Bronze',ti:'LIL DICKY QUARTERTIME SHOW',b:'GOPUFF',a:'MIRIMAR LOS ANGELES',u:'https://www.youtube.com/watch?v=uSlGgw2uiZo'},
+{y:'2022',t:'Bronze',ti:'TIKTOK TEACHERS',b:'FEMESOR',a:'DDB MEXICO MEXICO CITY',u:'https://www.youtube.com/watch?v=Pcf7EFVIH6A'},
+{y:'2022',t:'Bronze',ti:'TAG THE GAME',b:'OMO',a:'LOLA MULLENLOWE MADRID',u:'https://www.mullenlowegroup.com/our-work/tag-the-game/'},
+{y:'2022',t:'Bronze',ti:'NEVER SENT WITHOUT CONSENT',b:'BROOK',a:'GREY LONDON',u:'https://dazeandorla.cargo.site/Pop-Up-Penises'},
+{y:'2022',t:'Bronze',ti:'PAUSE IS POWER',b:'POWERADE',a:'PUBLICIS MEXICO MEXICO CITY',u:'https://www.youtube.com/watch?v=LYciKlYTmlQ'},
+{y:'2022',t:'Bronze',ti:'BEER FOR ALL',b:'BREWDOG',a:'DROGA5, PART OF ACCENTURE SONG LONDON',u:'https://www.youtube.com/watch?v=JQkFYLy1SwY'},
+{y:'2022',t:'Bronze',ti:'UNFILTERED',b:'SNICKERS',a:'BBDO NEW YORK',u:'https://www.youtube.com/watch?v=hD3WqYhopsw'},
+{y:'2022',t:'Bronze',ti:'RENAULT CARE SERVICE',b:'RENAULT',a:'RENAULT BOULOGNE-BILLANCOURT',u:'https://www.youtube.com/watch?v=ild9pdUN4UA'},
+{y:'2022',t:'Bronze',ti:'SUPERHERO',b:'MCDONALD\'S',a:'TBWA\\ESPAÑA MADRID',u:'https://www.youtube.com/watch?v=ZNo00_83ajA'},
+{y:'2022',t:'Bronze',ti:'MACHINE',b:'GUN MOUTH – BATTLEGROUNDS MOBILE INDIA',a:'DDB MUDRA MUMBAI',u:'https://www.youtube.com/watch?v=lGnNM1YPA4M'},
+{y:'2022',t:'Bronze',ti:'DOUBT DELIVERED',b:'META',a:'BBDO SAN FRANCISCO',u:'https://www.dandad.org/awards/professional/2022/235541/doubt-delivered/'},
+{y:'2022',t:'Bronze',ti:'A LOCKDOWN LOVE STORY',b:'HEINEKEN',a:'PUBLICIS ITALY MILAN',u:'https://www.youtube.com/watch?v=WWdLToHBZUk'},
+{y:'2022',t:'Bronze',ti:'IF THE EARTH COULD SWALLOW US WHOLE',b:'COW BRAND SOAP KYOSHINSHA CO., LTD.',a:'CANDY FILM OSAKA',u:'https://youtu.be/re2_HV4aafY'},
+{y:'2022',t:'Bronze',ti:'PARTY',b:'CHEERS',a:'GIGIL TAGUIG',u:'https://www.youtube.com/watch?v=ems2bvkkE_g'},
+{y:'2022',t:'Bronze',ti:'NEW FAIRIES',b:'NIKE',a:'WIEDEN+KENNEDY SÃO PAULO',u:'https://www.youtube.com/watch?v=rQ4cJZLTti4'},
+{y:'2022',t:'Bronze',ti:'THE WISDOM OF THE EAST',b:'5 TAKABB',a:'PHENOMENA CO. BANGKOK',u:'https://www.youtube.com/watch?v=uKjYwiUGLAk'},
+{y:'2022',t:'Bronze',ti:'HOPELINE19',b:'FRONTLINE19',a:'ADAM&EVEDDB LONDON',u:'https://www.dandad.org/awards/professional/2022/236481/hopeline19/'},
+{y:'2022',t:'Bronze',ti:'SUPER BOWL :60',b:'UBER EATS',a:'SPECIAL LOS ANGELES',u:'https://www.youtube.com/watch?v=40lbssFJS0k'},
+{y:'2022',t:'Bronze',ti:'THE UMBILICAL CORD',b:'EQUAL PAY DAY',a:'MORTIERBRIGADE BRUSSELS',u:'https://vimeo.com/696540679'},
+{y:'2022',t:'Bronze',ti:'THE ARRIVAL',b:'VOLKSWAGEN',a:'DDB PARIS',u:'https://www.lbbonline.com/work/64156'},
+{y:'2022',t:'Bronze',ti:'AN AD IN AN AD IN AN AD',b:'OATLY',a:'OATLY MALMÖ',u:'https://www.youtube.com/watch?v=J6xsJk2-6nA'},
+{y:'2022',t:'Bronze',ti:'VAX, WAX AND CHILLAX',b:'COORS BREWING COMPANY',a:'BISCUIT FILMWORKS LOS ANGELES',u:'https://vimeo.com/593356031'},
+{y:'2022',t:'Bronze',ti:'GOODIE BOX',b:'EVERYBODY EATS',a:'DDB NEW ZEALAND AUCKLAND',u:'https://www2.spikes.asia/winners/2022/media/entry.cfm?entryid=927'},
+{y:'2022',t:'Bronze',ti:'CASH EVERYWHERE',b:'SOULFTWARE SRL',a:'OGILVY LA PAZ',u:'https://youtu.be/zVNOJ3NaNpA'},
+{y:'2022',t:'Bronze',ti:'HAVE A WORD',b:'MAYOR OF LONDON',a:'OGILVY LONDON',u:'https://www.youtube.com/watch?v=ADBCtVDKIuY'},
+{y:'2023',t:'Grand Prix',ti:'FIFA 23 X TED LASSO',b:'EA SPORTS & APPLE',a:'APPLE CUPERTINO',u:'https://www.dandad.org/awards/professional/2023/237610/fifa-23-x-ted-lasso/'},
+{y:'2023',t:'Grand Prix',ti:'EART4',b:'B3 STOCK EXCHANGE & UNITED NATIONS GLOBAL COMPACT',a:'ALMAPBBDO SÃO PAULO',u:'https://vimeo.com/833350529'},
+{y:'2023',t:'Grand Prix',ti:'THE SUBCONSCIOUS ORDER',b:'HUNGERSTATION',a:'WUNDERMAN THOMPSON RIYADH',u:'https://clios.com/awards/winner/creative-commerce/hungerstation/the-subconscious-order-143400'},
+{y:'2023',t:'Grand Prix',ti:'THE ARTOIS PROBABILITY',b:'ANHEUSER-BUSCH INBEV STELLA ARTOIS',a:'GUT BUENOS AIRES',u:'https://juliandharold.com/stella-artois-probability'},
+{y:'2023',t:'Grand Prix',ti:'SHAH RUKH KHAN',b:'MY-AD – MONDELEZ',a:'OGILVY MUMBAI',u:'https://www.dandad.org/awards/professional/2022/235670/shah-rukh-khan-my-ad/'},
+{y:'2023',t:'Grand Prix',ti:'RENAULT PLUG',b:'INN – RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=tYnExAdLQpA'},
+{y:'2023',t:'Grand Prix',ti:'ADLAM: AN ALPHABET TO PRESERVE A CULTURE',b:'MICROSOFT',a:'MCCANN NEW YORK',u:'https://www.youtube.com/watch?v=1GRTS2sFqhY'},
+{y:'2023',t:'Grand Prix',ti:'NEVER DONE EVOLVING FEAT SERENA',b:'NIKE',a:'AKQA SÃO PAULO',u:'https://www.dandad.org/awards/professional/2023/237426/nike-50th-serena-vs-serena/'},
+{y:'2023',t:'Grand Prix',ti:'RUNNER 321',b:'ADIDAS',a:'FCB TORONTO',u:'https://www.youtube.com/watch?v=KSCvD-cL3zM'},
+{y:'2023',t:'Grand Prix',ti:'CLASH FROM THE PAST',b:'CLASH OF CLANS',a:'WIEDEN+KENNEDY PORTLAND',u:'https://www.thenicks.work/work/clash-from-the-past-j8sf2'},
+{y:'2023',t:'Grand Prix',ti:'BEAUTIFUL LIFE',b:'MICHAEL KIWANUKA',a:'SMUGGLER LONDON',u:'https://www.dandad.org/awards/professional/2023/237467/beautiful-life/'},
+{y:'2023',t:'Grand Prix',ti:'THE GREATEST',b:'APPLE',a:'SOMESUCH LOS ANGELES',u:'https://www.youtube.com/watch?v=8sX9IEHWRJ8'},
+{y:'2023',t:'Grand Prix',ti:'DREAMCASTER',b:'MICHELOB ULTRA',a:'FCB NEW YORK',u:'https://www.youtube.com/watch?v=zJ4Z2dIfa7U'},
+{y:'2023',t:'Grand Prix',ti:'RELAX, IT\'S IPHONE: R.I.P. LEON',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.youtube.com/watch?v=t2n0ykn4AKw'},
+{y:'2023',t:'Grand Prix',ti:'THE LAST PHOTO',b:'ITV X CALM',a:'ADAM&EVEDDB LONDON',u:'https://www.dandad.org/awards/professional/2023/237073/the-last-photo/'},
+{y:'2023',t:'Grand Prix',ti:'WE CRY TOGETHER',b:'PGLANG',a:'PGLANG LOS ANGELES',u:'https://www.youtube.com/watch?v=eAR2V7PZiIQ'},
+{y:'2023',t:'Grand Prix',ti:'KNOCK KNOCK',b:'KOREAN NATIONAL POLICE AGENCY',a:'CHEIL WORLDWIDE SEOUL',u:'https://www.youtube.com/watch?v=fcUIc4oTiUI'},
+{y:'2023',t:'Grand Prix',ti:'WORKING WITH CANCER',b:'MEMORIAL SLOAN KETTERING CANCER CENTER',a:'LA FOUNDATION PUBLICIS CHICAGO',u:'https://www.youtube.com/watch?v=XVBCkosETxM'},
+{y:'2023',t:'Grand Prix',ti:'ANNE DE GAULLE',b:'FONDATION ANNE DE GAULLE',a:'HAVAS PARIS',u:'https://clios.com/awards/winner/experience-activation/fondation-anne-de-gaulle/anne-de-gaulle-137794'},
+{y:'2023',t:'Grand Prix',ti:'THE LAST PERFORMANCE',b:'PARTNERS LIFE',a:'SPECIAL AUCKLAND',u:'https://www.youtube.com/watch?v=bWKWMcjA-68'},
+{y:'2023',t:'Grand Prix',ti:'MY JAPAN RAILWAY',b:'JR GROUP',a:'DENTSU INC., TOKYO',u:'https://www.lbbonline.com/work/86617'},
+{y:'2023',t:'Grand Prix',ti:'MOUTHPAD^',b:'AUGMENTAL',a:'WUNDERMAN THOMPSON LIMA',u:'https://www.wundermanthompson.com/work/mouthpad'},
+{y:'2023',t:'Grand Prix',ti:'#TURNYOURBACK',b:'DOVE',a:'OGILVY LONDON',u:'https://www.youtube.com/watch?v=pw73tgBmv0g'},
+{y:'2023',t:'Grand Prix',ti:'WORLD CUP DELIVERY',b:'PEDIDOS YA',a:'GUT BUENOS AIRES',u:'https://www.youtube.com/watch?v=WoGh0-RlrI8'},
+{y:'2023',t:'Grand Prix',ti:'A BRITISH ORIGINAL',b:'BRITISH AIRWAYS',a:'UNCOMMON CREATIVE STUDIO LONDON',u:'https://www.dandad.org/awards/professional/2023/237629/a-british-original/'},
+{y:'2023',t:'Grand Prix',ti:'SCROLLING THERAPY',b:'EUROFARMA',a:'DENTSU CREATIVE BUENOS AIRES',u:'https://vimeo.com/824353134'},
+{y:'2023',t:'Grand Prix',ti:'SELF LOVE BOUQUET',b:'DOORDASH',a:'GUT LOS ANGELES',u:'https://www.youtube.com/watch?v=f90ORAVPGSc'},
+{y:'2023',t:'Grand Prix',ti:'NEWSPAPERS INSIDE THE NEWSPAPER EDITION',b:'ANNAHAR NEWSPAPER',a:'IMPACT BBDO DUBAI',u:'https://www.dandad.org/awards/professional/2023/237571/newspapers-inside-the-newspaper/'},
+{y:'2023',t:'Grand Prix',ti:'PHONE IT IN',b:'SKINNY',a:'COLENSO BBDO AUCKLAND',u:'https://www.youtube.com/watch?v=lY6-VBCEr_o'},
+{y:'2023',t:'Grand Prix',ti:'FLIPVERTISING',b:'SAMSUNG',a:'CHEP NETWORK SYDNEY',u:'https://www.dandad.org/awards/professional/2023/236700/flipvertising/'},
+{y:'2023',t:'Grand Prix',ti:'WHERE TO SETTLE',b:'MASTERCARD',a:'MCCANN POLAND WARSAW',u:'https://www.youtube.com/watch?v=uO7gM9XlZQA'},
+{y:'2023',t:'Grand Prix',ti:'BRING HOME THE BUD',b:'BUDWEISER',a:'WIEDEN+KENNEDY NEW YORK',u:'https://www.youtube.com/watch?v=sI9YyjqBpg8'},
+{y:'2023',t:'Grand Prix',ti:'CORONA EXTRA LIME',b:'CORONA',a:'DRAFTLINE SHANGHAI',u:'https://www.youtube.com/watch?v=JO7vAisaRtw'},
+{y:'2023',t:'Grand Prix',ti:'THE FIRST DIGITAL NATION',b:'THE GOVERNMENT OF TUVALU',a:'THE MONKEYS PART OF ACCENTURE SONG SYDNEY',u:'https://www.dandad.org/awards/professional/2023/237208/the-first-digital-nation/'},
+{y:'2023',t:'Gold',ti:'#OPTINK',b:'JUNGE HELDEN E.V.',a:'MCCANN PARIS',u:'https://www.youtube.com/watch?v=w-DRxhi0jrc'},
+{y:'2023',t:'Gold',ti:'#PERIODSOMNIA',b:'BODYFORM LIBRESSE',a:'AMV BBDO LONDON',u:'https://www.youtube.com/watch?v=IVDpqih2KbI'},
+{y:'2023',t:'Gold',ti:'ABILITY SIGNS',b:'DECATHLON CANADA',a:'RETHINK TORONTO',u:'https://clios.com/sports/winner/design/decathlon-canada/ability-signs-123263'},
+{y:'2023',t:'Gold',ti:'AIRTEL 175 REPLAYED',b:'AIRTEL',a:'LEO BURNETT MUMBAI',u:'https://clios.com/awards/winner/experience-activation/airtel/airtel-175-replayed-143178'},
+{y:'2023',t:'Gold',ti:'APOLOGIZE THE RAINBOW',b:'SKITTLES',a:'DDB CHICAGO',u:'https://www.youtube.com/watch?v=i_kxj8dhdjo'},
+{y:'2023',t:'Gold',ti:'APPLE MUSIC SUPER BOWL HALFTIME SHOW: RIHANNA',b:'APPLE MUSIC',a:'APPLE LOS ANGELES',u:'https://vimeo.com/798530183'},
+{y:'2023',t:'Gold',ti:'A TRAIN OF MEMORIES',b:'SOTETSU',a:'SIX INC., TOKYO',u:'https://vimeo.com/837920407'},
+{y:'2023',t:'Gold',ti:'BABY SCAN',b:'MARMITE',a:'ADAM&EVEDDB LONDON',u:'https://adamandeveddb.com/work/born-lover'},
+{y:'2023',t:'Gold',ti:'BILL IT TO BEZOS',b:'JANE/FINCH COMMUNITY CENTRE',a:'ANGRY BUTTERFLY TORONTO',u:'https://www.dandad.org/awards/professional/2023/237593/bill-it-to-bezos/'},
+{y:'2023',t:'Gold',ti:'BLOCKBUSTER: UNTIL THE BITTER END',b:'BLOCKBUSTER',a:'ATLANTIC NEW YORK',u:'https://www.lbbonline.com/work/86429'},
+{y:'2023',t:'Gold',ti:'BREAD OF THE NATION',b:'AB INBEV SA',a:'OGILVY SOUTH AFRICA CAPE TOWN',u:'https://sandhyamathura.myportfolio.com/castle-lager'},
+{y:'2023',t:'Gold',ti:'CASHBACK FOR YOUR JERSEY\'S BACK',b:'FLASH BENEFÍCIOS',a:'FCB BRASIL',u:'https://www.dandad.org/awards/professional/2023/236954/cash-back-for-your-jerseys-back/'},
+{y:'2023',t:'Gold',ti:'CASH IN CASH OUT',b:'I AM OTHER',a:'ELECTRIC THEATRE COLLECTIVE LONDON',u:'https://www.youtube.com/watch?v=cKEwnhc8ItY'},
+{y:'2023',t:'Gold',ti:'CERTIFIED CARE',b:'RAID',a:'ENERGY BBDO CHICAGO',u:'https://www.youtube.com/watch?v=1ZOwLzkqhzA'},
+{y:'2023',t:'Gold',ti:'CERTIFIED HUMAN',b:'INTEL',a:'DENTSU CREATIVE CHICAGO',u:'https://vimeo.com/838833404'},
+{y:'2023',t:'Gold',ti:'CHIPOTLE DOPPELGÄNGER',b:'CHIPOTLE',a:'GALE NEW YORK',u:'https://www.youtube.com/watch?v=pbvrY_aK_lI'},
+{y:'2023',t:'Gold',ti:'DIRTY LAUNDRY',b:'ABAAD RESOURCE CENTER FOR GENDER EQUALITY',a:'LEO BURNETT BEIRUT',u:'https://www.youtube.com/watch?v=ng4pvoHXxTE'},
+{y:'2023',t:'Gold',ti:'DIVERSITREE',b:'CLARITIN',a:'ENERGY BBDO CHICAGO',u:'https://www.abigailchieppa.com/diversitree-claritin'},
+{y:'2023',t:'Gold',ti:'DOGS WITHOUT BORDERS',b:'SFBO FRENCH: BRAZILIAN SOCIETY OF ONCOLOGY',a:'VMLY&R NEW YORK',u:'https://www.lbbonline.com/work/85456'},
+{y:'2023',t:'Gold',ti:'DR. RICK WILL SEE YOU NOW',b:'PROGRESSIVE INSURANCE',a:'ARNOLD WORLDWIDE BOSTON',u:'https://www.dandad.org/awards/professional/2023/236523/dr-rick-will-see-you-now/'},
+{y:'2023',t:'Gold',ti:'DRAW KETCHUP',b:'KRAFT HEINZ',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2021/235025/heinz-draw-ketchup/'},
+{y:'2023',t:'Gold',ti:'EMBRACE THE ART OF DOING LESS',b:'UBER EATS',a:'MOTHER LONDON',u:'https://www.lbbonline.com/news/uber-eats-embraces-the-art-of-doing-less-in-mothers-campaign-directed-by-andreas-nilsson'},
+{y:'2023',t:'Gold',ti:'EVERYTHING THEY DIDN\'T TELL YOU',b:'BLACK WOMEN FOR WELLNESS LA',a:'AREA 23 AN IPG HEALTH NETWORK COMPANY NEW YORK',u:'https://www.dap.works/work/what-they-didnt-tell-you'},
+{y:'2023',t:'Gold',ti:'FABRIC OF ENGLAND',b:'SHOW RACISM THE RED CARD',a:'MCCANN LONDON',u:'https://clios.com/awards/winner/creative-use-of-data/show-racism-the-red-card/fabric-of-england-138142'},
+{y:'2023',t:'Gold',ti:'FIGHTING TO REMEMBER',b:'ZIKARON BASLON',a:'MCCANN TEL AVIV',u:'https://www.lbbonline.com/work/81680'},
+{y:'2023',t:'Gold',ti:'FILES OF FREEDOM',b:'MERCADO LIBRE',a:'GUT SÃO PAULO',u:'https://gabimarcatto.work/files-of-freedom'},
+{y:'2023',t:'Gold',ti:'FITCHIX',b:'HONEST EGGS CO.',a:'VMLY&R MELBOURNE',u:'https://vimeo.com/834607195'},
+{y:'2023',t:'Gold',ti:'GORILLAZ PRESENTS',b:'GORILLAZ',a:'GOOGLE NEW YORK',u:'https://www.youtube.com/watch?v=iFaKhtlBU7A'},
+{y:'2023',t:'Gold',ti:'GUARDED BUS STOP',b:'ELETROMIDIA',a:'ALMAPBBDO SÃO PAULO',u:'https://vimeo.com/833349198'},
+{y:'2023',t:'Gold',ti:'HE\'S COMING HOME',b:'WOMEN\'S AID',a:'HOUSE 337 LONDON',u:'https://www.dandad.org/awards/professional/2023/236781/womens-aid-hes-coming-home/'},
+{y:'2023',t:'Gold',ti:'HEAVEN FISH',b:'REGAL SPRING',a:'OGILVY HONDURAS TEGUCIGALPA',u:'https://www.youtube.com/watch?v=_nviy8MWCKg'},
+{y:'2023',t:'Gold',ti:'HIGH VALYRIAN LESSONS',b:'DUOLINGO',a:'DUOLINGO PITTSBURGH',u:'https://clios.com/awards/winner/integrated/duolingo/high-valyrian-lessons-132952'},
+{y:'2023',t:'Gold',ti:'HOME',b:'NIKE',a:'WIEDEN+KENNEDY LONDON',u:'https://www.dandad.org/awards/professional/2023/236703/home/'},
+{y:'2023',t:'Gold',ti:'ICELAND FOOD CLUB',b:'ICELAND FOODS',a:'KETCHUM LONDON',u:'https://vimeo.com/827338179'},
+{y:'2023',t:'Gold',ti:'INEQUALITY YOU CAN\'T IGNORE',b:'THE CHRYSALIS INITIATIVE',a:'EVERSANA INTOUCH NEW YORK',u:'https://www.dandad.org/awards/professional/2023/237556/inequality-you-cant-ignore/'},
+{y:'2023',t:'Gold',ti:'INTERFACE INTERRUPTION',b:'TUBI',a:'MISCHIEF @ NO FIXED ADDRESS NEW YORK',u:'https://www.dandad.org/awards/professional/2023/237403/interface-interruption/'},
+{y:'2023',t:'Gold',ti:'INVALUABLE FOOD',b:'MADRID FUSION',a:'LEO BURNETT MADRID',u:'https://www.dandad.org/awards/professional/2022/236089/invaluable-food/'},
+{y:'2023',t:'Gold',ti:'KETCHUP FRAUD',b:'HEINZ KETCHUP',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2023/237531/heinz-fraud-ketchup/'},
+{y:'2023',t:'Gold',ti:'LAP',b:'HONDA MOTO FRANCE',a:'DDB PARIS',u:'https://www.adsoftheworld.com/campaigns/the-beautiful-fail'},
+{y:'2023',t:'Gold',ti:'LEA',b:'KIMBERLY CLARK',a:'OGILVY SÃO PAULO',u:'https://clios.com/awards/winner/film/kimberly-clark/lea-137968'},
+{y:'2023',t:'Gold',ti:'LIFE EXTENDING STICKERS',b:'MAKRO',a:'GREY COLOMBIA BOGOTÁ',u:'https://www.youtube.com/watch?v=yK3ElXX5S6E'},
+{y:'2023',t:'Gold',ti:'LOS SANTOS +3ºC',b:'GREENPEACE',a:'VMLY&R SÃO PAULO',u:'https://www.youtube.com/watch?v=tMAbpsl7fz0'},
+{y:'2023',t:'Gold',ti:'LUNCHABUILD THIS',b:'LUNCHABLES',a:'GOODBY SILVERSTEIN & PARTNERS SAN FRANCISCO',u:'https://danielrighi.com/lunchabuildthis-2'},
+{y:'2023',t:'Gold',ti:'ME, MY AUTISM & I',b:'RECKITT AND AMBITIOUS ABOUT AUTISM',a:'HAVAS LONDON',u:'https://www.dandad.org/awards/professional/2023/237112/me-my-autism-i/'},
+{y:'2023',t:'Gold',ti:'MISSING MATOAKA',b:'MUSKRAT MAGAZINE',a:'BBDO TORONTO',u:'https://www.dandad.org/awards/professional/2023/237385/missing-matoaka/'},
+{y:'2023',t:'Gold',ti:'MORNING AFTER ISLAND',b:'GRUPO ESTRATÉGICO GE PAE',a:'OGILVY HONDURAS',u:'https://www.youtube.com/watch?v=l3PLNZq7hgY'},
+{y:'2023',t:'Gold',ti:'NIKE FC PRESENTS THE FOOTBALLVERSE',b:'NIKE',a:'WIEDEN+KENNEDY PORTLAND',u:'https://www.youtube.com/watch?v=FUd4dgL3ri4'},
+{y:'2023',t:'Gold',ti:'NXT LVL',b:'BANK OF MONTREAL',a:'FCB TORONTO',u:'https://fcbtoronto.com/our-work/bmo-nxt-lvl/'},
+{y:'2023',t:'Gold',ti:'OREO CHEAT COOKIES',b:'MONDELEZ EUROPE',a:'SAATCHI & SAATCHI DUSSELDORF',u:'https://clios.com/awards/winner/partnerships-collaborations/oreo/cheat-cookies-142614'},
+{y:'2023',t:'Gold',ti:'OREOCODES',b:'OREO',a:'VMLY&R COMMERCE NEW YORK',u:'https://www.vmlyrcommerce.com/our-work/oreocodes'},
+{y:'2023',t:'Gold',ti:'PAPA',b:'CANAL+',a:'BETC PARIS',u:'https://www.advert.ge/commercials/canal_plus/papa.html'},
+{y:'2023',t:'Gold',ti:'PRÊT À VOTER',b:'SOLAR IMPULSE',a:'PUBLICIS CONSEIL PARIS',u:'https://www.stevendaout.com/pret-a-voter'},
+{y:'2023',t:'Gold',ti:'RELAX, IT\'S IPHONE: ACTION MODE',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.youtube.com/watch?v=tRPqGf8nc4g'},
+{y:'2023',t:'Gold',ti:'ROCK STAR',b:'WORKDAY',a:'OGILVY LOS ANGELES',u:'https://www.ogilvy.com/work/rock-star'},
+{y:'2023',t:'Gold',ti:'ROSALIA MOTOMAMI LIVE EXPERIENCE ON TIKTOK',b:'TIKTOK',a:'TIKTOK SÃO PAULO',u:'https://www.dandad.org/awards/professional/2023/236873/rosalia-motomami-tiktok-live-performance/'},
+{y:'2023',t:'Gold',ti:'SCHOOLGIRL NEWSCASTERS',b:'EBM',a:'IMPACT BBDO DUBAI',u:'https://www.dandad.org/awards/professional/2023/237578/schoolgirl-newscasters/'},
+{y:'2023',t:'Gold',ti:'SECOND BEST',b:'IKEA',a:'DAVID MADRID + INGO HAMBURG',u:'http://www.solanoarica.com/ikea'},
+{y:'2023',t:'Gold',ti:'SEE MY SKIN',b:'VASELINE',a:'EDELMAN NEW YORK',u:'https://www.dandad.org/awards/professional/2023/237020/vaseline-see-my-skin/'},
+{y:'2023',t:'Gold',ti:'SHELLMET',b:'KOUSHI CHEMICAL INDUSTRY CO., LTD.',a:'TBWA\\HAKUHODO INC., TOKYO',u:'https://clios.com/health/winner/design-consumer-brand-health-initiative/koushi-chemical-industry-co-ltd-/shellmet-501944'},
+{y:'2023',t:'Gold',ti:'SHOUT',b:'TELEFÓNICA',a:'VMLY&R MEXICO CITY',u:'https://www.youtube.com/watch?v=HvAPYxorauc'},
+{y:'2023',t:'Gold',ti:'SPOKESCANDIES ON PAUSE',b:'M&M\'S',a:'BBDO NEW YORK',u:'https://www.bennerrawley.com/#/new-page-2/'},
+{y:'2023',t:'Gold',ti:'THE CEO',b:'NOBLEX/ PARAMOUNT+',a:'GUT BUENOS AIRES',u:'https://www.youtube.com/watch?v=qIgia31tPwg'},
+{y:'2023',t:'Gold',ti:'THE CLOSER',b:'HEINEKEN',a:'PUBLICIS ITALY | LEPUB MILAN',u:'https://rubenbarros.squarespace.com/thecloser'},
+{y:'2023',t:'Gold',ti:'THE CONGREGATION',b:'PODHER',a:'KLICK HEALTH TORONTO',u:'https://clios.com/health/winner/digital-mobile-social-media-craft-health-awareness/podher/the-congregation-501145'},
+{y:'2023',t:'Gold',ti:'THE COST OF BEAUTY',b:'DOVE MASTERBRAND',a:'OGILVY LONDON',u:'https://www.youtube.com/watch?v=2ngESNoacxM'},
+{y:'2023',t:'Gold',ti:'THE COST OF GOLD',b:'URIHI YANOMAMI ASSOCIAÇÃO',a:'DM9 SÃO PAULO',u:'https://www.youtube.com/watch?v=cAWJ6VHMZ7Y'},
+{y:'2023',t:'Gold',ti:'THE FOAMY HAIRCUT',b:'BRAHMA BEER',a:'AFRICA DDB SÃO PAULO',u:'https://www.youtube.com/watch?v=lpbEV4--hCI'},
+{y:'2023',t:'Gold',ti:'THE FORGOTTEN TEAM',b:'MEO',a:'DENTSU CREATIVE LISBON',u:'https://www.dandad.org/awards/professional/2023/237165/the-forgotten-team/'},
+{y:'2023',t:'Gold',ti:'THE LIFE COLLECTION 2022',b:'IKEA',a:'TRY AS OSLO',u:'https://vimeo.com/837551313'},
+{y:'2023',t:'Gold',ti:'THE MOST BEAUTIFUL SOUND',b:'AMERICAN SOCIETY OF CLINICAL ONCOLOGY',a:'GREY NEW YORK',u:'https://clios.com/health/winner/audio-craft-pharmaceutical/american-society-of-clinical-oncology-asco/the-most-beautiful-sound-502451'},
+{y:'2023',t:'Gold',ti:'THE POSTPONED DAY',b:'LALCEC',a:'GREY ARGENTINA BUENOS AIRES',u:'https://www.dandad.org/awards/professional/2023/237265/the-postponed-day/'},
+{y:'2023',t:'Gold',ti:'TRANSPARENCY CARD',b:'CONGRESSO EM FOCO',a:'AKQA SÃO PAULO',u:'https://www.akqa.com/work/congresso-em-foco/transparency-card/'},
+{y:'2023',t:'Gold',ti:'UNEXPECTED ENCOUNTERS',b:'LACOSTE',a:'BETC PARIS',u:'https://www.dandad.org/awards/professional/2023/236754/unexpected-encounters/'},
+{y:'2023',t:'Gold',ti:'UNTANGLING THE POLITICS OF HAIR',b:'STIR',a:'FCB INDIA GURUGRAM',u:'https://www.stirworld.com/see-features-stir-and-fcb-india-win-gold-at-cannes-industry-craft-lions-2023'},
+{y:'2023',t:'Gold',ti:'WE DIDN\'T WRITE THIS CAMPAIGN',b:'NOTMILK',a:'MRM WORLDWIDE SANTIAGO',u:'https://www.youtube.com/watch?v=TqGwmOgR3Qc'},
+{y:'2023',t:'Gold',ti:'WELL',b:'BEING INDEX – NIKKEI INC.',a:'DENTSU INC TOKYO',u:'https://vimeo.com/838831531'},
+{y:'2023',t:'Gold',ti:'WHO: A THREAD MOVIE',b:'PRIME VIDEO',a:'HEREZIE PARIS',u:'https://clios.com/awards/winner/branded-entertainment-content/prime-video/who-a-thread-movie-135468'},
+{y:'2023',t:'Gold',ti:'WRAPPED ON PLATFORM EXPERIENCE',b:'SPOTIFY IN-HOUSE',a:'SPOTIFY IN-HOUSE NEW YORK',u:'https://clios.com/awards/winner/creative-use-of-data/spotify-in-house/wrapped-on-platform-experience-143147'},
+{y:'2023',t:'Silver',ti:'#BRINGBACK2011',b:'OREO INDIA',a:'LEO BURNETT MUMBAI',u:'https://www.dandad.org/awards/professional/2023/236565/bringback2011/'},
+{y:'2023',t:'Silver',ti:'#KEEPTHEGREY',b:'DOVE',a:'EDELMAN TORONTO',u:'https://clios.com/awards/winner/public-relations/unilever/dove-keep-the-grey-139190'},
+{y:'2023',t:'Silver',ti:'#RACISMOZERO',b:'UNIVERSITY ZUMBI DOS PALMARES',a:'GREY SÃO PAULO',u:'https://www.adsoftheworld.com/campaigns/receipts-of-respect'},
+{y:'2023',t:'Silver',ti:'#STANDUPTOJEWISHHATE',b:'FOUNDATION TO COMBAT ANTISEMITISM',a:'MINDSHARE NEW YORK',u:'https://youtu.be/5FcbYSinaJs'},
+{y:'2023',t:'Silver',ti:'#UNEXAMINABLE',b:'THE VIF NETWORK',a:'DDB ROMANIA BUCHAREST',u:'https://www.roxananita.com/vif-unexaminable'},
+{y:'2023',t:'Silver',ti:'0.0 BARRIERS',b:'HEINEKEN',a:'LE PUB SÃO PAULO',u:'https://vimeo.com/835260187'},
+{y:'2023',t:'Silver',ti:'1000 SLIDES',b:'GLOBANT',a:'GUT BUENOS AIRES',u:'https://www.youtube.com/watch?v=zuHq15s6HSc'},
+{y:'2023',t:'Silver',ti:'A PROMO NOBODY\'S HEARD OF',b:'MCDONALD\'S',a:'LEO BURNETT PANAMA CITY',u:'https://www.youtube.com/watch?v=4ULOquuWIcM'},
+{y:'2023',t:'Silver',ti:'ARE YOU PRESS WORTHY?',b:'COLUMBIA JOURNALISM REVIEW',a:'TBWA\\CHIAT\\DAY NEW YORK CITY',u:'https://www.dandad.org/awards/professional/2023/237618/are-you-press-worthy/'},
+{y:'2023',t:'Silver',ti:'BALLOTS AGAINST BULLETS: SURVIVORS',b:'CHANGE THE REF',a:'ALMA DDB FLORIDA',u:'https://clios.com/awards/winner/138893'},
+{y:'2023',t:'Silver',ti:'BEER POWER',b:'HEINEKEN',a:'LE PUB SÃO PAULO',u:'https://youtu.be/Ej_ZNICICFk'},
+{y:'2023',t:'Silver',ti:'BLACK COACHES',b:'TELEFÓNICA',a:'VMLY&R SÃO PAULO',u:'https://www.youtube.com/watch?time_continue=1&v=KAwJh8wFE48'},
+{y:'2023',t:'Silver',ti:'BLIND SEATS',b:'MUSIC VIBE & FUN TICKET',a:'MULLENLOWE SSP3 MEXICO CITY',u:'https://www.lbbonline.com/work/86468'},
+{y:'2023',t:'Silver',ti:'BRICK BOOK',b:'PRIMOSFERA',a:'THIS IS PACIFICA PORTO',u:'https://www.behance.net/gallery/169859765/Brick-Book'},
+{y:'2023',t:'Silver',ti:'BUNDY MIXER',b:'BUNDABERG',a:'LEO BURNETT SYDNEY',u:'https://www.dandad.org/awards/professional/2023/237061/bundy-mixer/'},
+{y:'2023',t:'Silver',ti:'BUSCAPÉ. BACK TO THE CITY OF GOD.',b:'TELEFÓNICA VIVO & MOTOROLA',a:'VMLY&R SÃO PAULO',u:'https://www.dandad.org/awards/professional/2023/237747/buscape-back-to-the-city-of-god/'},
+{y:'2023',t:'Silver',ti:'CAROL FOR CHARITY',b:'MINISTRY OF FOREIGN AFFAIRS OF UKRAINE ZELENSKA FOUNDATION',a:'SAATCHI & SAATCHI UKRAINE KYIV',u:'https://www.youtube.com/watch?v=fJGIpu-wmzg'},
+{y:'2023',t:'Silver',ti:'CHATPAT',b:'SOS CHILDREN\'S VILLAGES',a:'FCB CHICAGO',u:'https://www.youtube.com/watch?v=8eU3CEOoFbk'},
+{y:'2023',t:'Silver',ti:'CHEETLE IN CHEADLE',b:'CHEETOS',a:'CITIZEN RELATIONS TORONTO',u:'https://clios.com/awards/winner/creative-effectiveness/cheetos/cheetle-in-cheadle-140694'},
+{y:'2023',t:'Silver',ti:'CHICKEN WARS',b:'POPEYE\'S LOUISIANA KITCHEN',a:'GSD&M AUSTIN',u:'https://clios.com/awards/winner/integrated-campaign/popeyes-louisiana-kitchen/chicken-wars-81562'},
+{y:'2023',t:'Silver',ti:'CHRISTMAS ALWAYS FINDS ITS WAY',b:'COCA-COLA',a:'GREY NEW YORK',u:'https://www.wpp.com/en/featured/work/2023/05/grey-coca-cola-christmas-always-finds-a-way'},
+{y:'2023',t:'Silver',ti:'CORRECT THE INTERNET',b:'TEAM HEROINE',a:'DDB NEW ZEALAND AUCKLAND',u:'https://vimeo.com/830686096'},
+{y:'2023',t:'Silver',ti:'COVER HITS',b:'SIDACTION',a:'THE GOOD COMPANY PARIS',u:'https://thegoodco.fr/en/work/les-tubes-qui-protegent'},
+{y:'2023',t:'Silver',ti:'CRY FOR THE LAW',b:'TETA & TETA SPAIN',a:'LOLA MULLENLOWE MADRID',u:'https://www.youtube.com/watch?v=cXCGpjFzwCg'},
+{y:'2023',t:'Silver',ti:'DASHBOARD BILLBOARDS',b:'ŠKODA',a:'NORD DDB STOCKHOLM',u:'https://www.youtube.com/watch?v=Z4JT7S1j0-M'},
+{y:'2023',t:'Silver',ti:'DEALS STUCK IN TIME',b:'MCDONALD\'S',a:'NORD DDB STOCKHOLM',u:'https://www.youtube.com/watch?v=RxcCgbEiVSg'},
+{y:'2023',t:'Silver',ti:'DEPZMAN: LIFE CUT SHORT',b:'THE JOSHUA RIBERA FOUNDATION',a:'MCCANN LONDON',u:'https://www.youtube.com/watch?v=2Bc9x4IjhWY'},
+{y:'2023',t:'Silver',ti:'DOT PAD. THE FIRST TACTILE GRAPHICS DISPLAY FOR HEALTHCARE.',b:'DOT INCORPORATION',a:'SERVICEPLAN MUNICH',u:'https://clios.com/awards/winner/design/dot/dot-pad-the-first-smart-tactile-graphics-display--132121'},
+{y:'2023',t:'Silver',ti:'DREAM BARS',b:'ONTARIO LOTTERY AND GAMING CORPORATION',a:'FCB TORONTO',u:'https://vimeo.com/836880393'},
+{y:'2023',t:'Silver',ti:'DYICTA',b:'DIGITAL YOUTH ICT ACADEMY',a:'FCB AFRICA JOHANNESBURG',u:'https://www.dandad.org/awards/professional/2023/237066/dyicta-logo-design/'},
+{y:'2023',t:'Silver',ti:'EAT LIKE A CHAMP',b:'PEDIDOS YA',a:'GUT BUENOS AIRES',u:'https://www.youtube.com/watch?v=UngoRRBvN6w'},
+{y:'2023',t:'Silver',ti:'EVS ON SCREEN',b:'GENERAL MOTORS NETFLIX',a:'THE COMMUNITY MIAMI',u:'https://clios.com/entertainment/winner/television-series-public-relations/netflix-and-general-motors/evs-on-screen-148456'},
+{y:'2023',t:'Silver',ti:'FAQ YOU: AN EDUCATIONAL REVOLUTION',b:'OHHH! FOUNDATION',a:'LOVED HAMBURG',u:'https://www.dandad.org/awards/professional/2023/236990/faq-you-an-educational-revolution/'},
+{y:'2023',t:'Silver',ti:'FRIES CLAIMS',b:'MCDONALD\'S',a:'LEO BURNETT LONDON',u:'https://www.youtube.com/watch?v=girlZTzMMFQ'},
+{y:'2023',t:'Silver',ti:'FURPHY, WHAT THE TRUCK?!',b:'FURPHY',a:'THINKERBELL MELBOURNE',u:'https://lucasandjack.com/furphy'},
+{y:'2023',t:'Silver',ti:'GEORGINA\'S BILLBOARD COLLECTION',b:'NETFLIX',a:'DAVID MADRID',u:'https://vimeo.com/837534532'},
+{y:'2023',t:'Silver',ti:'GUT HEALTH',b:'DUTCHIE',a:'OGILVY BANGKOK',u:'https://www.youtube.com/watch?v=hHYQ13fA1WI'},
+{y:'2023',t:'Silver',ti:'HACK MARKET',b:'BACK MARKET',a:'MARCEL PARIS',u:'https://www.youtube.com/watch?v=J2Y66Av5Cuk'},
+{y:'2023',t:'Silver',ti:'HAVE A WORD',b:'MAYOR OF LONDON',a:'OGILVY LONDON',u:'https://www.dandad.org/awards/professional/2023/237658/have-a-word/'},
+{y:'2023',t:'Silver',ti:'HEART STOPPING',b:'BRITISH HEART FOUNDATION',a:'PHD WORLDWIDE LONDON',u:'https://youtu.be/bVgGEfATeWU'},
+{y:'2023',t:'Silver',ti:'HEINZ A.I. KETCHUP',b:'KRAFT HEINZ',a:'RETHINK TORONTO',u:'https://clios.com/awards/winner/digital-mobile/kraft-heinz/a-i-ketchup-135941'},
+{y:'2023',t:'Silver',ti:'HOME OF THOUGHTFUL GIFTING',b:'JOHN LEWIS & PARTNERS',a:'ADAM&EVEDDB LONDON',u:'https://youtu.be/LVBeU9kjNN0'},
+{y:'2023',t:'Silver',ti:'HOUSE OF LEGENDS',b:'SICKKIDS FOUNDATION',a:'COSSETTE TORONTO',u:'https://www.youtube.com/watch?v=I-Q8vNwjBIg'},
+{y:'2023',t:'Silver',ti:'I\'M A CRIMINAL',b:'GIRLS NOT BRIDES',a:'MEDIA.MONKS MEXICO CITY',u:'https://www.youtube.com/watch?v=8BqoEL2oeQM'},
+{y:'2023',t:'Silver',ti:'I\'M NEALE DANIHER',b:'FIGHTMND',a:'CLEMENGER BBDO SYDNEY',u:'https://www.dandad.org/awards/professional/2023/237626/im-neale-daniher/'},
+{y:'2023',t:'Silver',ti:'RIDICULOUS EXCUSES NOT TO BE INCLUSIVE',b:'COORDOWN',a:'INDIANA PRODUCTION COMPANY MILAN',u:'https://www.youtube.com/watch?v=6NBJ3GIUTps'},
+{y:'2023',t:'Silver',ti:'IKEA BABYBOOM',b:'IKEA',a:'TRY AS OSLO',u:'https://www.behance.net/gallery/169037773/IKEA-The-Name-Catalogue'},
+{y:'2023',t:'Silver',ti:'ILLITERATE ADS',b:'PEPCO',a:'VMLY&R BUCHAREST',u:'https://youtu.be/SzdiGuJz4pA'},
+{y:'2023',t:'Silver',ti:'IMMORTAL',b:'ROYAL ONTARIO MUSEUM (ROM)',a:'BROKEN HEART LOVE AFFAIR TORONTO',u:'https://www.google.com/search?q=IMMORTAL+ROYAL+ONTARIO+MUSEUM'},
+{y:'2023',t:'Silver',ti:'INFLATION PROOF PRIZE',b:'MERCADO PAGO',a:'GUT BUENOS AIRES',u:'https://www.youtube.com/watch?v=Va4tX4XtpoY'},
+{y:'2023',t:'Silver',ti:'INFLUENCERS\' FRIENDS',b:'POKER',a:'DDB COLOMBIA BOGOTÁ',u:'https://www.oneclub.org/awards/theoneshow/-award/49343/influencers-friends'},
+{y:'2023',t:'Silver',ti:'INSIDE JOBS',b:'VOLKSWAGEN GROUP FRANCE',a:'DDB PARIS',u:'https://clios.com/awards/winner/media/volkswagen-group-france/inside-jobs-138519'},
+{y:'2023',t:'Silver',ti:'I SEE COKE',b:'THE COCA-COLA COMPANY',a:'VMLY&R COMMERCE NEW YORK',u:'https://www.youtube.com/watch?v=7RAeGU1MQAA'},
+{y:'2023',t:'Silver',ti:'JOBST IRREGULAR BOLD',b:'JOBST',a:'PUBLICIS•POKE LONDON',u:'https://www.creativebrief.com/agency/publicisopoke/work/irregular-bold'},
+{y:'2023',t:'Silver',ti:'KAMASUTRA +',b:'SIDACTION',a:'THE GOOD COMPANY PARIS',u:'https://vimeo.com/831893819'},
+{y:'2023',t:'Silver',ti:'KAMI',b:'DOWN SYNDROME INTERNATIONAL',a:'FORSMAN & BODENFORS SINGAPORE',u:'https://www.rachelkennedy.net/work/kami'},
+{y:'2023',t:'Silver',ti:'KNOCK AT THE CABIN',b:'CANON USA',a:'FCB CHICAGO',u:'https://vimeo.com/827372728'},
+{y:'2023',t:'Silver',ti:'LAS DIABLILLAS',b:'MAJOR LEAGUE BASEBALL',a:'MAJOR LEAGUE BASEBALL NEW YORK',u:'https://vimeo.com/760173169'},
+{y:'2023',t:'Silver',ti:'LAY\'S SMART FARM',b:'LAY\'S',a:'LEO BURNETT MUMBAI',u:'https://www.youtube.com/watch?v=bY1LkIbS0xw'},
+{y:'2023',t:'Silver',ti:'LEGACY OF TOMORROW',b:'ARTIFICIAL ROME GMBH',a:'METAVERSE FASHION WEEK BERLIN',u:'https://vimeo.com/819440042'},
+{y:'2023',t:'Silver',ti:'LIFE SUBTITLED',b:'CHICAGO INTERNATIONAL FILM FESTIVAL',a:'OGILVY CHICAGO',u:'https://www.ogilvy.com/work/life-subtitled'},
+{y:'2023',t:'Silver',ti:'LU FROM MAGALU',b:'MAGAZINE LUIZA',a:'OGILVY SÃO PAULO',u:'https://www.ogilvy.com/work/lu-magalu'},
+{y:'2023',t:'Silver',ti:'MAKING INACCESSIBLE ACCESSIBLE',b:'ARIEL',a:'LANDOR & FITCH HAMBURG',u:'https://youtu.be/aWZ25MHjnOI'},
+{y:'2023',t:'Silver',ti:'MAYO MCHACK',b:'HELLMANN\'S',a:'EDELMAN LONDON',u:'https://www.lbbonline.com/news/hellmanns-mayo-mchack-finds-a-way-for-mcdonalds-customers-to-finally-have-mayo-with-their-fries'},
+{y:'2023',t:'Silver',ti:'MCDRIP',b:'MCDONALD\'S',a:'NORD DDB HELSINKI',u:'https://www.lbbonline.com/work/85991'},
+{y:'2023',t:'Silver',ti:'MCENROE VS MCENROE',b:'AB INBEV',a:'FCB NEW YORK',u:'https://www.youtube.com/watch?v=J4fwDtC6AtM'},
+{y:'2023',t:'Silver',ti:'MICHELOB GUY',b:'AB INBEV MICHELOB ULTRA',a:'MICHELOB ULTRA NEW YORK',u:'https://www.dandad.org/awards/professional/2023/236720/michelob-guy/'},
+{y:'2023',t:'Silver',ti:'MIND\'S EYE',b:'MND ASSOCIATION DEEPAI AMYLYX PHARMACEUTICALS',a:'AREA 23 AN IPG HEALTH NETWORK COMPANY NEW YORK',u:'https://youtu.be/JsluUy0MBp0'},
+{y:'2023',t:'Silver',ti:'MISSING STUDENTS',b:'UNICEF BRAZIL',a:'ARTPLAN COMUNICACAO S/A RIO DE JANEIRO',u:'https://www.adsoftheworld.com/campaigns/missing-students'},
+{y:'2023',t:'Silver',ti:'MISSION: WHOPPER',b:'BURGER KING',a:'DAVID SÃO PAULO',u:'https://www.ogilvy.com/work/mission-whopper'},
+{y:'2023',t:'Silver',ti:'MONCLER 70. THE BRAND OF EXTRAORDINARY',b:'MONCLER',a:'WESAYHI BRIDGE OF WEIR',u:'https://www.youtube.com/watch?v=p93dRUJaEn0'},
+{y:'2023',t:'Silver',ti:'MOUTHPAD^',b:'AUGMENTAL',a:'WUNDERMAN THOMPSON LIMA',u:'https://www.lbbonline.com/work/85626'},
+{y:'2023',t:'Silver',ti:'NATIVA METER',b:'BAVARIA',a:'L&C NEW YORK',u:'https://vimeo.com/826374716'},
+{y:'2023',t:'Silver',ti:'NATURAL INTELLIGENCE',b:'NIKON',a:'CIRCUS GREY LIMA',u:'https://www.youtube.com/watch?v=W4zl5UhkTds'},
+{y:'2023',t:'Silver',ti:'NORMALIZE IT!',b:'OATLY',a:'OATLY MALMO',u:'https://www.youtube.com/watch?v=Z8-3bnJPPu4'},
+{y:'2023',t:'Silver',ti:'NRA CHILDREN\'S MUSEUM',b:'CHANGE THE REF',a:'OGILVY CHICAGO',u:'https://www.dandad.org/awards/professional/2023/237567/nra-childrens-museum/'},
+{y:'2023',t:'Silver',ti:'OREOCODES',b:'OREO',a:'VMLY&R COMMERCE NEW YORK',u:'https://www.vmlyrcommerce.com/our-work/oreocodes'},
+{y:'2023',t:'Silver',ti:'OR TRAVEL ON CLEARTRIP',b:'CLEARTRIP',a:'TALENTED.AGENCY BANGALORE',u:'https://youtu.be/TU7mCrfot0c'},
+{y:'2023',t:'Silver',ti:'PIÑATEX',b:'DOLE SUNSHINE COMPANY + ANANAS ANAM',a:'L&C NEW YORK',u:'https://clios.com/awards/winner/design-craft/dole-sunshine-company-x-ananas-anam/pi%C3%B1atex-116436'},
+{y:'2023',t:'Silver',ti:'PLAN (A)',b:'AFRISAM BLACKSTUDIO',a:'PROMISE JOHANNESBURG',u:'https://vimeo.com/726650995'},
+{y:'2023',t:'Silver',ti:'PORTUGUESE (RE)CONSTITUTION',b:'PENGUIN BOOKS',a:'FCB LISBON',u:'https://www.youtube.com/watch?v=V8KIjpTOlwI'},
+{y:'2023',t:'Silver',ti:'POWER YOUR HOLIDAY',b:'OCEAN SPRAY',a:'ORCHARD NEW YORK',u:'https://www.youtube.com/watch?v=NpJ7mcm8MnY'},
+{y:'2023',t:'Silver',ti:'QUIET THE NOISE',b:'APPLE',a:'ICONOCLAST LOS ANGELES',u:'https://www.advert.ge/en/commercials/apple/quiet_the_noise.html'},
+{y:'2023',t:'Silver',ti:'RAISE YOUR ARCHES',b:'MCDONALD\'S',a:'LEO BURNETT LONDON',u:'https://www.youtube.com/watch?v=Zt336MYMY2c'},
+{y:'2023',t:'Silver',ti:'REACTOR',b:'WOODKID',a:'SMUGGLER LOS ANGELES',u:'https://www.youtube.com/watch?v=q1RnoheRuDg'},
+{y:'2023',t:'Silver',ti:'REDESIGNING FOR E',b:'NCLUSION – PLAZA VEA',a:'FAHRENHEIT DDB LIMA',u:'https://www.contagious.com/news-and-views/campaign-of-the-week-supermarket-creates-low-res-website-so-rural-customers-can-shop-online'},
+{y:'2023',t:'Silver',ti:'RED RIVER FARM',b:'PETA',a:'HOUSE 337 LONDON',u:'https://www.shootonline.com/video/best-work-you-may-never-see-house-337-blinkink-director-will-wightman-address-animal-cruelty'},
+{y:'2023',t:'Silver',ti:'ROCKY',b:'LADBROKES',a:'LADBROKES GIBRALTAR',u:'https://www.dandad.org/awards/professional/2023/237002/rocky/'},
+{y:'2023',t:'Silver',ti:'SAFELIST',b:'TELEFÓNICA',a:'VMLY&R SANTIAGO',u:'https://vimeo.com/723760259'},
+{y:'2023',t:'Silver',ti:'SAMSUNG UNFEAR',b:'SAMSUNG SPAIN',a:'CHEIL WORLDWIDE MADRID',u:'https://www.youtube.com/watch?v=IY8QiOcKeqM'},
+{y:'2023',t:'Silver',ti:'SAVE THE FAVELA',b:'KONDZILLA RECORDS',a:'BETC HAVAS SÃO PAULO',u:'https://www.adsoftheworld.com/campaigns/save-the-favela'},
+{y:'2023',t:'Silver',ti:'SECOND OPPORTUNITY LEAGUE',b:'CORONA',a:'WE BELIEVERS NEW YORK',u:'https://www.youtube.com/watch?v=VzfytTzB6mE'},
+{y:'2023',t:'Silver',ti:'SELF',b:'CHECK OUT – K-LYNN',a:'LEO BURNETT DUBAI',u:'https://www.youtube.com/watch?v=X_6n2Qkf0CE'},
+{y:'2023',t:'Silver',ti:'SMART PLANTS',b:'PLANT DROP',a:'MCCANN LONDON',u:'https://vimeo.com/829158504'},
+{y:'2023',t:'Silver',ti:'SOLE MUSIC',b:'SOLE MUSIC',a:'‿ AND US DUBAI',u:'https://www.dandad.org/awards/professional/2023/236529/sole-music/'},
+{y:'2023',t:'Silver',ti:'SPELLBOUND BY SWEDEN',b:'VISIT SWEDEN',a:'PRIME WEBER SHANDWICK STOCKHOLM',u:'https://clios.com/awards/winner/public-relations/visit-sweden/spellbound-by-sweden-139854'},
+{y:'2023',t:'Silver',ti:'STAIN NOT SHAME',b:'ZEVA FASHION',a:'SCANAD NAIROBI',u:'https://www.wpp.com/en/featured/work/2023/06/scanad-zeva-fashions-stain-not-shame'},
+{y:'2023',t:'Silver',ti:'SUPER FAN COLLECTION',b:'SPOTIFY',a:'NORD DDB STOCKHOLM',u:'https://www.youtube.com/watch?v=IIomuE0Wj6M'},
+{y:'2023',t:'Silver',ti:'THE 257 YEAR CALENDAR',b:'PNC BANK',a:'DEUTSCH NEW YORK',u:'https://limberish.com/pnc'},
+{y:'2023',t:'Silver',ti:'THE BEST',b:'SELLER CONSTITUTION – MERCADO LIBRE',a:'GUT SÃO PAULO',u:'https://www.dandad.org/awards/professional/2023/237497/mercado-livre-the-best-seller-constitution/'},
+{y:'2023',t:'Silver',ti:'THE BIOCHAR PROJECT BY LAY\'S',b:'LAY\'S',a:'LEO BURNETT MUMBAI',u:'https://www.youtube.com/watch?v=tZvfMdaH_MM'},
+{y:'2023',t:'Silver',ti:'THE BRAKE ROOM',b:'CHICK-FIL-A',a:'MCCANN NEW YORK',u:'https://www.jasonmckean.com/work/the-brake-room'},
+{y:'2023',t:'Silver',ti:'THE CHEAP DRIVER',b:'ST1',a:'GARBERGS KOMMUNIKATION STOCKHOLM',u:'https://vimeo.com/780315279'},
+{y:'2023',t:'Silver',ti:'THE EXILED TEAM',b:'BRAHMA BEER',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://www.youtube.com/watch?v=zN7TCf9qh98'},
+{y:'2023',t:'Silver',ti:'THE FUTURE IS BLACK',b:'RAÇA MAGAZINE',a:'FCB BRASIL SÃO PAULO',u:'https://www.dandad.org/awards/professional/2023/237488/the-future-is-black/'},
+{y:'2023',t:'Silver',ti:'THE GAMING CAP',b:'DELL TECHNOLOGIES',a:'VMLY&R SÃO PAULO',u:'https://lbbonline.com/work/85413'},
+{y:'2023',t:'Silver',ti:'THE GREATEST GUIDE TO JOCHOS & BURGERS',b:'BIMBO',a:'VECTORB MCCANN MEXICO CITY',u:'https://www.youtube.com/watch?v=Qo3MPn4BT_U'},
+{y:'2023',t:'Silver',ti:'THE GREATEST STORY EVER WORN',b:'LEVI\'S',a:'DROGA5 PART OF ACCENTURE SONG NEW YORK',u:'https://droga5.com/work/levis/'},
+{y:'2023',t:'Silver',ti:'THE HEINZJACK',b:'HEINZ',a:'FP7 MCCANN DUBAI',u:'https://www.youtube.com/watch?v=ZBJaDuN-rHE'},
+{y:'2023',t:'Silver',ti:'THE HOLIDAY TRAIN',b:'MONTEFIORE EINSTEIN',a:'ALTO NEW YORK',u:'https://www.lbbonline.com/work/76837'},
+{y:'2023',t:'Silver',ti:'THE HOMELESS GALLERY',b:'HINZ&KUNZT / HAMBURGER KUNSTHALLE',a:'PHILIPP UND KEUNTJE HAMBURG',u:'https://vimeo.com/800505210'},
+{y:'2023',t:'Silver',ti:'THE HORNICULTURAL SOCIETY',b:'RELATE',a:'OGILVY LONDON',u:'https://www.dandad.org/awards/professional/2023/237098/the-hornicultural-society/'},
+{y:'2023',t:'Silver',ti:'THE IMPOSSIBLE CAMPUS',b:'CINEGO',a:'DDB BUDAPEST',u:'https://vimeo.com/820226994'},
+{y:'2023',t:'Silver',ti:'THE LOUDEST CALL',b:'WHITELION',a:'OGILVY AUSTRALIA SYDNEY',u:'https://vimeo.com/827046034'},
+{y:'2023',t:'Silver',ti:'THE MOST IMPORTANT MEAL OF THE NIGHT',b:'BURGER KING',a:'DAVID NEW YORK',u:'https://www.moreiraestudio.com/david-new-york-burger-king/'},
+{y:'2023',t:'Silver',ti:'THE MYTH',b:'WIEDEN+KENNEDY PORTLAND',a:'WIEDEN+KENNEDY PORTLAND',u:'https://www.youtube.com/watch?v=ZWvlhPB71UU'},
+{y:'2023',t:'Silver',ti:'THE NEW HOUSE OF COMMUNICATION',b:'SERVICEPLAN GERMANY',a:'SERVICEPLAN MUNICH',u:'https://www.oneclub.org/awards/theoneshow/-award/47979/the-new-house-of-communication'},
+{y:'2023',t:'Silver',ti:'THE OFFICE CLEANERS',b:'HEINEKEN',a:'PUBLICIS ITALY | LEPUB MILAN',u:'https://www.youtube.com/watch?v=9XtBsYxFpSg'},
+{y:'2023',t:'Silver',ti:'THE ONE EXHIBITION',b:'FOTOGLOBAL',a:'DM9 SÃO PAULO',u:'https://www.vicrocha.com/work/exhibit1'},
+{y:'2023',t:'Silver',ti:'THE OUTSIDE IN EXPERIMENT',b:'HORIZON THERAPEUTICS',a:'AREA 23 AN IPG HEALTH NETWORK COMPANY NEW YORK',u:'https://winners.webbyawards.com/2023/video/performance-craft/technical-achievement/256513/the-outside-in-experiment'},
+{y:'2023',t:'Silver',ti:'THE PRIDE RESEARCH',b:'HAVAIANAS',a:'MEDIA.MONKS SÃO PAULO',u:'https://bruno-bacci.squarespace.com/prideresearch'},
+{y:'2023',t:'Silver',ti:'THE PRINGLES NPC',b:'PRINGLES',a:'GREY LONDON',u:'https://clios.com/awards/winner/branded-entertainment-content/pringles-kellogg-s/npc-142609'},
+{y:'2023',t:'Silver',ti:'THE RABBIT HOLE',b:'SOS INTERNATIONAL',a:'SOS INTERNATIONAL GLENDALE',u:'https://vimeo.com/715841302'},
+{y:'2023',t:'Silver',ti:'THERE\'S NOTHING COMIC ABOUT DYSLEXIA',b:'DYSLEXIA SCOTLAND',a:'INNOCEAN BERLIN',u:'http://www.nohafahmy.com/#/nothing-comic-about-dyslexia/'},
+{y:'2023',t:'Silver',ti:'THE RELUCTANT SHANTY',b:'AUSTRALIA FOR UNHCR',a:'FINCH SYDNEY',u:'https://www.youtube.com/watch?v=UPB0kiPUcpc'},
+{y:'2023',t:'Silver',ti:'THE SINGULARITY',b:'SQUARESPACE',a:'SQUARESPACE NEW YORK',u:'https://www.youtube.com/watch?v=mManLnHyyek'},
+{y:'2023',t:'Silver',ti:'THE SNACK THAT JINGLES BACK',b:'GOLDFISH',a:'SAATCHI & SAATCHI NEW YORK',u:'https://www.dandad.org/awards/professional/2023/236988/goldfish-jingle/'},
+{y:'2023',t:'Silver',ti:'THE TAX FREE BAGEL',b:'PHILADELPHIA CREAM CHEESE',a:'GUT MIAMI',u:'https://www.rarepaircreative.com/copy-of-cheesecake-is-everything'},
+{y:'2023',t:'Silver',ti:'THE UNBURNABLE BOOK',b:'PENGUIN BOOKS RANDOM HOUSE',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2023/236615/the-unburnable-book/'},
+{y:'2023',t:'Silver',ti:'THROUGH THEIR EYES',b:'MAYBELLINE NEW YORK',a:'HERO MELBOURNE',u:'https://www.contagious.com/news-and-views/maybelline-gaming-experiment'},
+{y:'2023',t:'Silver',ti:'TIDE LUCKY JERSEY',b:'TIDE',a:'SAATCHI & SAATCHI NEW YORK',u:'https://vimeo.com/814308242'},
+{y:'2023',t:'Silver',ti:'TIME',b:'FIGHTERS PROGRAM – RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://www.lbbonline.com/work/85258'},
+{y:'2023',t:'Silver',ti:'TRAFFIC STOP',b:'NATIVE',a:'M/H SAN FRANCISCO',u:'https://www.dandad.org/awards/professional/2023/237388/traffic-stop/'},
+{y:'2023',t:'Silver',ti:'TRENDING 2 TABLE',b:'VOILÀ BY SOBEYS',a:'FCB TORONTO',u:'https://clios.com/awards/winner/media/voil%C3%A0/trending-2-table-140268'},
+{y:'2023',t:'Silver',ti:'TR FOR TEACHER',b:'NAVNEET',a:'FCB INTERFACE MUMBAI',u:'https://www.lbbonline.com/news/navneet-education-honours-teachers-with-the-title-tr-in-campaign-from-fcb-interface'},
+{y:'2023',t:'Silver',ti:'TRUCSS',b:'TRUCSS',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://www.adsoftheworld.com/campaigns/trucss'},
+{y:'2023',t:'Silver',ti:'TURNSTILE TURBINES',b:'IBERDROLA',a:'WEBER SHANDWICK PARIS',u:'https://www.youtube.com/watch?v=j-hCfL3HF6k'},
+{y:'2023',t:'Silver',ti:'UNBRANDED MENU',b:'MCDONALD\'S',a:'LEO BURNETT MANILA',u:'https://www.dandad.org/awards/professional/2023/237581/unbranded-menu/'},
+{y:'2023',t:'Silver',ti:'UNDER A ROCK',b:'LOKELMA',a:'21GRAMS NEW YORK',u:'https://clios.com/health/winner/film-craft-pharmaceutical/lokelma/under-a-rock-503157'},
+{y:'2023',t:'Silver',ti:'UNVEIL',b:'PANASONIC',a:'SPOON TOKYO',u:'https://clios.com/awards/winner/film-craft-production-design/panasonic/unveil-133856'},
+{y:'2023',t:'Silver',ti:'WALL STREET BALLS',b:'TESTICULAR CANCER SOCIETY',a:'FP7 MCCANN DUBAI',u:'https://clios.com/health/winner/direct-health-awareness-advocacy/testicular-cancer-society/wall-street-balls-500986'},
+{y:'2023',t:'Silver',ti:'WEDNESDAY HATES MARKETING',b:'NETFLIX',a:'NETFLIX MARKETING PARTNERSHIPS LOS ANGELES',u:'https://clios.com/awards/winner/integrated/wednesday-on-netflix/wednesday-hates-marketing-141813'},
+{y:'2023',t:'Silver',ti:'WELCOME TO NIKE JUKU',b:'NIKE JAPAN',a:'AOI PRO. INC. TOKYO',u:'https://vimeo.com/699691470'},
+{y:'2023',t:'Silver',ti:'WINDOW SHOPPING',b:'IKEA',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2023/236744/window-shopping/'},
+{y:'2023',t:'Silver',ti:'X SPEEDPORTAL RICK & MORTY',b:'ADIDAS',a:'TBWA\\NEBOKO AMSTERDAM',u:'https://www.youtube.com/watch?v=sE6Ox3ikCMU'},
+{y:'2023',t:'Bronze',ti:'50+',b:'POPEYES',a:'RESTAURANT BRANDS INTERNATIONAL MIAMI',u:'https://youtu.be/bWVslr8HQ3Y'},
+{y:'2023',t:'Bronze',ti:'900 MINUTES FOR EQUALITY',b:'CORONA',a:'WE BELIEVERS NEW YORK',u:'https://www.youtube.com/watch?v=W0NyQv5xVM4'},
+{y:'2023',t:'Bronze',ti:'ADOPT A STRAY',b:'FRESH STEP',a:'FCB CHICAGO',u:'https://vimeo.com/827371737'},
+{y:'2023',t:'Bronze',ti:'A HAND BALL THAT COULD SAVE YOUR LIFE',b:'BORUSSIA DORTMUND',a:'ACCENTURE SONG HAMBURG',u:'https://clios.com/health/winner/public-relations-consumer-brand-health-initiative/borussia-dortmund/a-hand-ball-that-could-save-your-life--501994'},
+{y:'2023',t:'Bronze',ti:'ANYTHING FOR THE TASTE',b:'KFC',a:'OGILVY SOUTH AFRICA JOHANNESBURG',u:'https://www.ogilvy.com/work/anything-taste'},
+{y:'2023',t:'Bronze',ti:'ANYTIME ANYTIME',b:'ANYTIME FITNESS',a:'MISCHIEF @ NO FIXED ADDRESS NEW YORK',u:'https://vimeo.com/812123348'},
+{y:'2023',t:'Bronze',ti:'A SEAT IN THE SUN',b:'DOVE',a:'SOKO SÃO PAULO',u:'https://vimeo.com/819235564'},
+{y:'2023',t:'Bronze',ti:'BACKUP UKRAINE',b:'POLYCAM X UNESCO',a:'VIRTUE WORLDWIDE NEW YORK',u:'https://www.youtube.com/watch?v=QXWD76b5IBw'},
+{y:'2023',t:'Bronze',ti:'BALCONY',b:'CASH APP',a:'CASH APP NEW YORK',u:'https://www.youtube.com/watch?v=c84RHTQ7JyI'},
+{y:'2023',t:'Bronze',ti:'BAR EXPERIENCE',b:'HEINEKEN',a:'PUBLICIS ITALY | LEPUB MILAN',u:'https://www.youtube.com/watch?v=RN0Dz5sFHBQ'},
+{y:'2023',t:'Bronze',ti:'BEAUTIFUL PANIC',b:'THE AD MUSEUM TOKYO',a:'DENTSU INC., TOKYO',u:'https://youtu.be/UW7gN5k10PA'},
+{y:'2023',t:'Bronze',ti:'BE AWARE OF THE DOGS',b:'MUSTI GROUP',a:'MUSTI GROUP HELSINKI',u:'https://www.adsoftheworld.com/campaigns/be-aware-of-the-dogs'},
+{y:'2023',t:'Bronze',ti:'BORDERLESS WEDDINGS',b:'AEROMÉXICO',a:'AEROMÉXICO MEXICO CITY',u:'https://youtu.be/JCo_GAGhTds'},
+{y:'2023',t:'Bronze',ti:'BOSS FACE STICKER',b:'HALLS',a:'DAVID MADRID',u:'https://vimeo.com/826699854'},
+{y:'2023',t:'Bronze',ti:'BOTTLE TILES',b:'AREQUIPEÑA AB INBEV',a:'BACKUS AB INBEV LIMA',u:'https://www.youtube.com/watch?v=kDeq2J7QwlY'},
+{y:'2023',t:'Bronze',ti:'BURGER GLITCH',b:'BURGER KING',a:'DAVID SÃO PAULO',u:'https://renatosimon.com.br/Burger-Glitch'},
+{y:'2023',t:'Bronze',ti:'BUY MY CANCER',b:'ALIVIA CANCER FOUNDATION',a:'OGILVY WARSAW',u:'https://clios.com/awards/winner/digital-mobile-social-media-craft/alivia-cancer-foundation/buy-my-cancer-143254'},
+{y:'2023',t:'Bronze',ti:'CALL ME WITH TIMOTHEE CHALAMET',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.dandad.org/awards/professional/2023/237267/call-me-with-timothee-chalamet-apple-tv/'},
+{y:'2023',t:'Bronze',ti:'CHAMPIONS LEAGUE CRASHERS',b:'PEPSICO PURCHASE',a:'SLAP GLOBAL NEW YORK',u:'https://vimeo.com/807948933'},
+{y:'2023',t:'Bronze',ti:'CHANGE THE BILL',b:'NATIVE WOMEN\'S ASSOCIATION OF CANADA',a:'TAXI CANADA TORONTO',u:'https://www.lbbonline.com/work/85357'},
+{y:'2023',t:'Bronze',ti:'CLIMATE REALISM',b:'WWF GERMANY',a:'LEO BURNETT FRANKFURT',u:'https://youtu.be/z-Qlv9pI3Ok'},
+{y:'2023',t:'Bronze',ti:'COCA',b:'COLA MAGIC AUDIOS – THE COCA-COLA COMPANY',a:'OGILVY SÃO PAULO',u:'https://vimeo.com/824933076'},
+{y:'2023',t:'Bronze',ti:'COLORS OF LOVE',b:'PANTONE',a:'TBWA\\ PARIS',u:'https://www.shootonline.com/video/best-work-you-may-never-see-stop-homophobie-pantone-tbwaparis-unfurl-colors-love%C2%A0so-lgbt'},
+{y:'2023',t:'Bronze',ti:'DANIEL\'S APARTMENT',b:'VIIV HEALTHCARE',a:'SRA. RUSHMORE MADRID',u:'https://clios.com/health/winner/experience-activation-pharmaceutical/viiv-healthcare/daniel-s-apartment-501186'},
+{y:'2023',t:'Bronze',ti:'DAS CHAIR',b:'VOLKSWAGEN COMMERCIAL VEHICLES',a:'TRY AS OSLO',u:'https://vimeo.com/836074850'},
+{y:'2023',t:'Bronze',ti:'DATA TIENDA',b:'WECAPITAL',a:'DDB MEXICO MEXICO CITY',u:'https://www.dandad.org/annual/2023/entry/professional/237758'},
+{y:'2023',t:'Bronze',ti:'DON\'T RUN OUT',b:'UBER EATS',a:'UBER EATS SAN FRANCISCO',u:'https://www.dandad.org/awards/professional/2023/237162/uber-eats-presents-dont-run-out/'},
+{y:'2023',t:'Bronze',ti:'DUBBING FACTORY',b:'PRIME VIDEO',a:'HEREZIE PARIS',u:'https://www.youtube.com/watch?v=2DBG57WMufA'},
+{y:'2023',t:'Bronze',ti:'ECYCLELAND',b:'INTEL',a:'VMLY&R KANSAS CITY',u:'https://www.vmlyr.com/en-us/united-states/work/ecycleland'},
+{y:'2023',t:'Bronze',ti:'EMPTY PLATES',b:'UAE GOVERNMENT MEDIA OFFICE',a:'SAATCHI & SAATCHI ME DUBAI',u:'https://www.youtube.com/watch?v=pAal3FlmWXM'},
+{y:'2023',t:'Bronze',ti:'ESCAPE',b:'GERMAN RAIL',a:'OGILVY GERMANY FRANKFURT',u:'https://www.dandad.org/awards/professional/2023/237174/escape/'},
+{y:'2023',t:'Bronze',ti:'EXHIBIT A',b:'I – MAURICE BLACKBURN SOCIAL JUSTICE',a:'HOWATSON+COMPANY SYDNEY',u:'https://howatsonco.com.au/project/exhibit-a-i/'},
+{y:'2023',t:'Bronze',ti:'FC BARCELONA X MOTOMAMI',b:'SPOTIFY IN-HOUSE',a:'SPOTIFY IN-HOUSE NEW YORK',u:'https://youtu.be/fPivYigzHt4'},
+{y:'2023',t:'Bronze',ti:'GALVÃO BUENO\'S MILLION VOICES',b:'TIKTOK',a:'TIKTOK SÃO PAULO',u:'https://vimeo.com/837694810'},
+{y:'2023',t:'Bronze',ti:'GAME',b:'HER – GUARANÁ ANTARCTICA',a:'SOKO SÃO PAULO',u:'https://vimeo.com/819237395'},
+{y:'2023',t:'Bronze',ti:'GIRLS WHO CODE GIRLS',b:'GIRLS WHO CODE',a:'MOJO SUPERMARKET NEW YORK',u:'https://mojosuper.market/work/gwc-girls/'},
+{y:'2023',t:'Bronze',ti:'GOLDEN DATES',b:'AMP | ASSOCIATION FOR THE ELDERLY',a:'LEO BURNETT LISBOA',u:'https://vimeo.com/809877135'},
+{y:'2023',t:'Bronze',ti:'GOLDFISH HAND DISH',b:'CAMPBELL\'S SNACK COMPANY',a:'SAATCHI & SAATCHI NEW YORK',u:'https://www.dandad.org/awards/professional/2023/236622/goldfish-hand-dish/'},
+{y:'2023',t:'Bronze',ti:'GO TO YOUR HAPPY PRICE',b:'PRICELINE',a:'MIRIMAR LOS ANGELES',u:'https://www.jameskunzler.com/#/priceline-go-to-your-happy-price/'},
+{y:'2023',t:'Bronze',ti:'HAPPY BIRTHDAY FROM EARTH',b:'HUSQVARNA',a:'PRIME WEBER SHANDWICK STOCKHOLM',u:'https://www.dandad.org/awards/professional/2023/236931/happy-birthday-from-earth/'},
+{y:'2023',t:'Bronze',ti:'HEADPHONES, PASSPORT',b:'LOTO',a:'BBDO SANTIAGO DE CHILE',u:'https://www.behance.net/gallery/loto'},
+{y:'2023',t:'Bronze',ti:'HEINEKICKS',b:'HEINEKEN',a:'PUBLICIS ITALY | LEPUB MILAN, BBH SINGAPORE',u:'https://akfolio.co/Heinekicks'},
+{y:'2023',t:'Bronze',ti:'HEINZ TATTOO INK',b:'HEINZ',a:'SOKO SÃO PAULO',u:'https://vimeo.com/819232425'},
+{y:'2023',t:'Bronze',ti:'HOPELINE RADIO',b:'FRONTLINE19',a:'ADAM&EVEDDB LONDON',u:'https://www.ddb.com/creative/17_frontline19brand/'},
+{y:'2023',t:'Bronze',ti:'IF THIS SPEAKS TO YOU (LOLA)',b:'MIND',a:'LANGLAND LONDON',u:'https://www.dandad.org/awards/professional/2023/236587/if-this-speaks-to-you/'},
+{y:'2023',t:'Bronze',ti:'INFLATION COOKBOOK',b:'SKIP THE DISHES',a:'DENTSU CREATIVE TORONTO',u:'https://www.dentsucreative.com/cases/inflation-cookbook'},
+{y:'2023',t:'Bronze',ti:'IRAN',b:'E MAN – PAIRI DAEZA',a:'NEW-LAND COPENHAGEN',u:'https://www.dandad.org/awards/professional/2023/237498/pairi-daeza-iran-e-man/'},
+{y:'2023',t:'Bronze',ti:'IS THAT HEINZ?',b:'HEINZ',a:'WUNDERMAN THOMPSON TURKEY ISTANBUL',u:'https://www.wundermanthompson.com/work/is-that-heinz'},
+{y:'2023',t:'Bronze',ti:'JINGLE THERAPY',b:'ASOCIACION DE ALZHEIMER PUERTO RICO + SBS',a:'VMLY&R COMMERCE GUAYNABO',u:'https://www.lbbonline.com/news/jingle-therapy-helps-puerto-ricans-with-alzheimers-to-remember'},
+{y:'2023',t:'Bronze',ti:'JOAQUIN\'S FIRST SCHOOL SHOOTING',b:'CHANGE THE REF',a:'BCW NEW YORK',u:'https://vimeo.com/827335198'},
+{y:'2023',t:'Bronze',ti:'JOIN THE FLIP SIDE',b:'SAMSUNG',a:'WIEDEN+KENNEDY AMSTERDAM',u:'https://www.wk.com/work/samsung-join-the-flip-side/'},
+{y:'2023',t:'Bronze',ti:'JOURNA',b:'RHYTHM – THE ASAHI SHIMBUN',a:'TBWA\\HAKUHODO INC., TOKYO',u:'https://www.hakuhodo-global.com/work/journa-rhythm.html'},
+{y:'2023',t:'Bronze',ti:'KAGUYA BY GUCCI',b:'GUCCI',a:'DENTSU INC., TOKYO',u:'https://www.youtube.com/watch?v=Kz7e-Q2Q9-4'},
+{y:'2023',t:'Bronze',ti:'KETCH',b:'UP & DOWN – HEINZ',a:'FP7 MCCANN DUBAI',u:'https://www.behance.net/gallery/169853487/Heinz-KetchUp-Down'},
+{y:'2023',t:'Bronze',ti:'LET\'S WASH AWAY THE TABOO',b:'PERSIL',a:'LOLA MULLENLOWE MADRID',u:'https://www.youtube.com/watch?v=qnQ5pqCUXPQ'},
+{y:'2023',t:'Bronze',ti:'LET HER GROW',b:'DOVE',a:'EDELMAN BANGKOK',u:'https://www.youtube.com/watch?v=2YjuS7KKk9s'},
+{y:'2023',t:'Bronze',ti:'LETTUCE LIZ',b:'DAILY STAR',a:'REACH PLC LONDON',u:'https://youtu.be/hFkzon_-TzI'},
+{y:'2023',t:'Bronze',ti:'LIGUE 1 SYMPHONY',b:'PRIME',a:'MARCEL PARIS',u:'https://activationideas.com/blog/ligue-1-symphony'},
+{y:'2023',t:'Bronze',ti:'LINE FOR CHANGE',b:'COLGATE',a:'VMLY&R PARIS',u:'https://www.geretyawards.com/?action=ows:entries.details&e=122629'},
+{y:'2023',t:'Bronze',ti:'LONG LINE OF LADIES',b:'THIS IS L',a:'PROCTER & GAMBLE CINCINNATI',u:'https://vimeo.com/777015125'},
+{y:'2023',t:'Bronze',ti:'LOVE SQUAD',b:'WAOO',a:'UNCLE GREY COPENHAGEN',u:'https://www.lbbonline.com/work/84344'},
+{y:'2023',t:'Bronze',ti:'MACHINEGUN MOUTH',b:'BATTLEGROUND MOBILE INDIA',a:'DDB MUDRA GROUP MUMBAI',u:'https://www.youtube.com/watch?v=lGnNM1YPA4M'},
+{y:'2023',t:'Bronze',ti:'MARATHONS ARE OUR KIND OF PARTY',b:'MICHELOB ULTRA',a:'AB INBEV MEXICO CITY',u:'https://agustinyjulian.com/our-kind-of-party/'},
+{y:'2023',t:'Bronze',ti:'MASTERPIECE',b:'COCA-COLA',a:'ELECTRIC THEATRE COLLECTIVE LONDON',u:'https://www.youtube.com/watch?v=VGa1imApfdg'},
+{y:'2023',t:'Bronze',ti:'MATCH STIX SNATCH',b:'FENTY BEAUTY',a:'@GRACEMCHOI NEW YORK',u:'https://youtu.be/sDxnyYcbmGY'},
+{y:'2023',t:'Bronze',ti:'MCDROP',b:'MCDONALD\'S',a:'DDB PARIS',u:'https://youtu.be/xPwclbn-hSs'},
+{y:'2023',t:'Bronze',ti:'MELTING ICON',b:'MAGNUM',a:'LOLA MULLENLOWE MADRID',u:'https://www.behance.net/gallery/148571883/Melting-Icon-Lola-Mullenlowe'},
+{y:'2023',t:'Bronze',ti:'MESSAGE FROM THE OTHER FRONT',b:'THE SALVATION ARMY',a:'VMLY&R PARIS',u:'https://youtu.be/3Yl6Sx9Dgm8'},
+{y:'2023',t:'Bronze',ti:'MIDDLE SEAT LOTTERY',b:'VIRGIN AUSTRALIA GROUP',a:'SPECIAL SYDNEY',u:'https://www.dandad.org/awards/professional/2023/237003/va-middle-seat-lottery/'},
+{y:'2023',t:'Bronze',ti:'MOTHER',b:'HEROES OF TODAY PLATFORM',a:'DDB SPAIN MADRID',u:'https://www.youtube.com/watch?v=h4rD5Mjie_Q'},
+{y:'2023',t:'Bronze',ti:'MUSTACHE',b:'TWIX',a:'DDB CHICAGO',u:'https://vimeo.com/834735844'},
+{y:'2023',t:'Bronze',ti:'NEO ICARUS',b:'ABEBE BIKILA',a:'AKQA COALA.LAB SÃO PAULO',u:'https://jordy.work/ICARUS'},
+{y:'2023',t:'Bronze',ti:'NEST DOMES',b:'BANANA BOAT',a:'WUNDERMAN THOMPSON COLOMBIA BOGOTA',u:'https://www.youtube.com/watch?time_continue=70&v=tlc9G-oWSrU'},
+{y:'2023',t:'Bronze',ti:'NOBODY WATCHES WOMEN FOOTBALL',b:'HEINEKEN',a:'PUBLICIS ITALY | LEPUB MILAN',u:'https://vimeo.com/user46699421'},
+{y:'2023',t:'Bronze',ti:'NOTHING FILLS A HOLE LIKE POT NOODLE',b:'POT NOODLE',a:'ADAM&EVEDDB LONDON',u:'https://www.adamandeveddb.com/work/nothing-fills-a-hole-like-pot-noodle'},
+{y:'2023',t:'Bronze',ti:'NOT',b:'SO CLASSIC DATES – TINDER',a:'OGILVY PARIS',u:'https://www.youtube.com/watch?v=WaDlH6nwUlI'},
+{y:'2023',t:'Bronze',ti:'ODE TO DADS',b:'PROSTATE CANCER UK',a:'BBH LONDON',u:'https://www.youtube.com/watch?v=X-FzLMqYNQQ'},
+{y:'2023',t:'Bronze',ti:'ONE STAR COOKBOOK',b:'DELIVEROO',a:'‿ AND US DUBAI',u:'https://www.dandad.org/awards/professional/2023/236798/one-star-cookbook/'},
+{y:'2023',t:'Bronze',ti:'ONE THING WE AGREE ON',b:'THE COCA-COLA COMPANY',a:'VMLY&R KANSAS CITY',u:'https://youtu.be/MrJByHF5m_s'},
+{y:'2023',t:'Bronze',ti:'ORANGE: SAFE ZONE',b:'ORANGE',a:'PUBLICIS CONSEIL PARIS',u:'https://youtu.be/CFKAFDNGvzg'},
+{y:'2023',t:'Bronze',ti:'OTHER MC\'S',b:'HEINZ',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://vimeo.com/826303043'},
+{y:'2023',t:'Bronze',ti:'PASSIVE COOKING',b:'BARILLA',a:'PUBLICIS ITALY | LEPUB MILAN',u:'https://youtu.be/6KtmypwRbs8'},
+{y:'2023',t:'Bronze',ti:'PEPE "THE MUTE"',b:'CRUZCAMPO',a:'OGILVY MADRID',u:'https://www.behance.net/gallery/160054595/Pepe-El-Mudo-Cruzcampo'},
+{y:'2023',t:'Bronze',ti:'PETRA MILK',b:'PETRA BEER',a:'BETC HAVAS SÃO PAULO',u:'https://www.dandad.org/awards/professional/2023/236572/petra-milk/'},
+{y:'2023',t:'Bronze',ti:'PLASTIC FISHING TOURNAMENT',b:'CORONA',a:'WE BELIEVERS BROOKLYN',u:'https://www.youtube.com/watch?v=Adj9kwFC7qg'},
+{y:'2023',t:'Bronze',ti:'PLAY HAS NO LIMITS FEAT. KENSHI YONEZU',b:'PLAYSTATION',a:'SIX INC., TOKYO',u:'https://clios.com/entertainment/winner/games-partnerships-branded-content-video/sony-interactive-entertainment-playstation/play-has-no-limits-feat-kenshi-yonezu-127083'},
+{y:'2023',t:'Bronze',ti:'PRIVACY ON IPHONE: DATA AUCTION',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.dandad.org/awards/professional/2023/237277/privacy-on-iphone-data-auction/'},
+{y:'2023',t:'Bronze',ti:'PURE WASTE',b:'SSAB',a:'FORSMAN & BODENFORS GOTHENBURG',u:'https://carllauren.com/project/pure-waste'},
+{y:'2023',t:'Bronze',ti:'QUILMES COINCIDENCES WORLD CUP CAN',b:'QUILMES',a:'AB INBEV BUENOS AIRES',u:'https://www.dandad.org/awards/professional/2023/236937/quilmes-coincidences-world-cup/'},
+{y:'2023',t:'Bronze',ti:'RE:STORE',b:'KFC',a:'DENTSU CREATIVE SHANGHAI',u:'https://www.bestadsontv.com/ad/147167/KFC-KFC-ReStore'},
+{y:'2023',t:'Bronze',ti:'READY PLAYER MOM',b:'ENTEROGERMINA',a:'MRM MADRID',u:'https://vimeo.com/824784010'},
+{y:'2023',t:'Bronze',ti:'REAL MOMENT',b:'MCDELIVERY',a:'DDB COLOMBIA BOGOTÁ',u:'https://www.dandad.org/awards/professional/2023/237761/a-second-of-happiness/'},
+{y:'2023',t:'Bronze',ti:'REAL OR FAKE',b:'CNN',a:'ALMAPBBDO SÃO PAULO',u:'https://www.putasacada.com.br/cnn-almapbbdo/'},
+{y:'2023',t:'Bronze',ti:'REAL TONE',b:'GOOGLE',a:'GOOGLE MOUNTAIN VIEW',u:'https://www.dandad.org/awards/professional/2022/236075/real-tone/'},
+{y:'2023',t:'Bronze',ti:'RECEIPTS TO KEEP FIGHTING',b:'UNIVERSITY ZUMBI DOS PALMARES',a:'GREY SÃO PAULO',u:'https://www.youtube.com/watch?v=D17LRWAzuRU'},
+{y:'2023',t:'Bronze',ti:'REVERSE SELFIE',b:'DOVE',a:'OGILVY LONDON',u:'http://julianaparacencio.com/#/dove-reverse-selfie/'},
+{y:'2023',t:'Bronze',ti:'RGD BRANDING AWARDS',b:'RGD BRANDING AWARDS',a:'RETHINK TORONTO',u:'https://www.lbbonline.com/news/rethink-designs-new-brand-identity-entirely-from-brandings-most-overlooked-symbol'},
+{y:'2023',t:'Bronze',ti:'R PLATES',b:'MYCAR TYRE & AUTO',a:'TBWA\\SYDNEY',u:'https://www.dandad.org/awards/professional/2023/237562/r-plates/'},
+{y:'2023',t:'Bronze',ti:'SALLA 2032',b:'HOUSE OF LAPLAND',a:'AFRICA DDB SÃO PAULO',u:'https://vimeo.com/534068005'},
+{y:'2023',t:'Bronze',ti:'SAVED MEMORIES',b:'TRANSKLAR E.V / TRANS-IDENT E.V / ROSA STRIPPE',a:'SERVICEPLAN MUNICH',u:'https://www.serviceplan.com/en/news/serviceplan-berlin-saved-memories0.html'},
+{y:'2023',t:'Bronze',ti:'SELF',b:'SUFFICIENT FOOD CART – CENTELSA BY NEXANS',a:'OGILVY COLOMBIA BOGOTÁ',u:'https://www.adsoftheworld.com/campaigns/self-sufficient-food-cart'},
+{y:'2023',t:'Bronze',ti:'SHARE THE JOY',b:'APPLE',a:'BLACKSMITH NEW YORK',u:'https://www.conception.tv/apple-share-the-joy'},
+{y:'2023',t:'Bronze',ti:'SHE',b:'J&B',a:'EL RUSO DE ROCKY MADRID',u:'https://clios.com/awards/winner/film/j-b/she-135959'},
+{y:'2023',t:'Bronze',ti:'SMILES EVERYWHERE',b:'COLGATE',a:'VMLY&R SÃO PAULO',u:'https://www.lbbonline.com/news/colgate-spreads-smiles-in-poor-communities-across-brazil'},
+{y:'2023',t:'Bronze',ti:'SOBERCOINS',b:'CITY OF BALEN',a:'HAPPINESS, AN FCB ALLIANCE BRUSSELS',u:'https://www.dandad.org/awards/professional/2023/237293/sobercoins/'},
+{y:'2023',t:'Bronze',ti:'STILL FRESH. NEVER FROZEN.',b:'WENDY\'S',a:'VMLY&R KANSAS CITY',u:'https://www.vmlyr.com/en-us/united-states/work/still-fresh-never-frozen'},
+{y:'2023',t:'Bronze',ti:'SUPERSTAR RAVI',b:'ADIDAS',a:'HAVAS MIDDLE EAST DUBAI',u:'https://www.youtube.com/watch?v=lyzyFctJtks'},
+{y:'2023',t:'Bronze',ti:'SUPER WENDY\'S WORLD',b:'WENDY\'S',a:'VMLY&R KANSAS CITY',u:'https://www.dandad.org/awards/professional/2021/234464/super-wendys-world/'},
+{y:'2023',t:'Bronze',ti:'SURAKSHA KA TEEKA',b:'MORTEIN',a:'DENTSU CREATIVE GURGAON',u:'https://youtu.be/EvcQn9mRfmk'},
+{y:'2023',t:'Bronze',ti:'TABLETOGO',b:'MCDONALD\'S',a:'LEO BURNETT MILAN',u:'https://www.adsoftheworld.com/campaigns/tabletogo'},
+{y:'2023',t:'Bronze',ti:'TASTE MY FACE',b:'APPLEBEE\'S',a:'GREY NEW YORK',u:'http://www.mikelatshaw.com/#/applebees-saucy-gloss/'},
+{y:'2023',t:'Bronze',ti:'THE 13 MINUTES NATIONAL DELAY DAY',b:'CZECH INSURANCE ASOCIATION',a:'MCCANN PRAGUE',u:'https://vimeo.com/651665618'},
+{y:'2023',t:'Bronze',ti:'THE 36',b:'DGT',a:'OGILVY MADRID',u:'https://www.dandad.org/awards/professional/2023/237357/the-36/'},
+{y:'2023',t:'Bronze',ti:'THE ART OF SEX ED',b:'DUREX',a:'VMLY&R POLAND WARSAW',u:'https://youtu.be/exx6Y9ASIp8'},
+{y:'2023',t:'Bronze',ti:'THE AUTISM JOURNEY',b:'TELEFONICA\'S VIVO',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://pedrorosas.cargo.site/Autism-Journey-1'},
+{y:'2023',t:'Bronze',ti:'THE BALL OF YARN',b:'WINAMAX',a:'TBWA\\ PARIS',u:'https://www.youtube.com/watch?v=B9E1qMN7JLU'},
+{y:'2023',t:'Bronze',ti:'THE BEER WITH A UKRAINIAN HEART',b:'CHERNIGIVSKE',a:'ANHEUSER-BUSCH INBEV LEUVEN',u:'https://vimeo.com/827401320'},
+{y:'2023',t:'Bronze',ti:'THE BILLBOARD IS YOURS TO TAKE',b:'BUDWEISER',a:'FCB NEW YORK',u:'https://www.dandad.org/awards/professional/2023/237438/this-billboard-is-yours-to-take/'},
+{y:'2023',t:'Bronze',ti:'THE BRIDGE',b:'PAWS NY',a:'KLICK HEALTH TORONTO',u:'https://clios.com/awards/winner/design-craft/paws-ny/the-bridge-132102'},
+{y:'2023',t:'Bronze',ti:'THE CATHEDRAL OF DIABLO',b:'DIABLO IV',a:'72ANDSUNNY LOS ANGELES',u:'https://www.shootonline.com/video/72andsunny-director-henry-hobson-visit-cathedral-launch-diablo-iv-videogame'},
+{y:'2023',t:'Bronze',ti:'THE CHAT',b:'BREAST CANCER NOW',a:'BMB LONDON',u:'https://bmbagency.com/case/breast-cancer-now-the-chat/'},
+{y:'2023',t:'Bronze',ti:'THE COPENHAGEN BENCH',b:'TV 2 DENMARK',a:'TV 2 CREATIVE COPENHAGEN',u:'https://www.dandad.org/awards/professional/2023/237008/the-copenhagen-bench/'},
+{y:'2023',t:'Bronze',ti:'THE DIAPÉR',b:'BABY2BABY',a:'MOTHER LA',u:'https://motherla.com/work/the-diaper/'},
+{y:'2023',t:'Bronze',ti:'THE ELECTIONS EDITION',b:'ANNAHAR NEWSPAPER',a:'IMPACT BBDO DUBAI',u:'https://www.dandad.org/awards/professional/2022/236134/the-elections-edition/'},
+{y:'2023',t:'Bronze',ti:'THE END',b:'PUBLIC INTEREST',a:'TASTES LIKE BLUE ARMENIA',u:'https://www.youtube.com/watch?v=8KRE2G_80mM'},
+{y:'2023',t:'Bronze',ti:'THE EVERYTHING BOOK',b:'VEDANTU',a:'DENTSU CREATIVE GURGAON',u:'https://www.dentsucreative.com/cases/the-everything-book'},
+{y:'2023',t:'Bronze',ti:'THE FLOOR IS FLAVA',b:'FRANK\'S REDHOT',a:'GREY NEW YORK',u:'https://www.brianry.com/portfolio-2/project-two-llrgk-lnr9w-2selg'},
+{y:'2023',t:'Bronze',ti:'THE FOLDED NEWSPAPER',b:'LGBT ASSOCIATION',a:'BLANCO TEL AVIV',u:'https://www.youtube.com/watch?v=ND3MRjGBMfs'},
+{y:'2023',t:'Bronze',ti:'THE GENTLE GIANT',b:'AD COUNCIL LOVE HAS NO LABELS',a:'R/GA NEW YORK',u:'https://www.youtube.com/watch?v=LQYzsZSwEk4'},
+{y:'2023',t:'Bronze',ti:'THE GHOSTED BAR',b:'HEINEKEN',a:'PUBLICIS ITALY | LEPUB MILAN',u:'https://www.adsoftheworld.com/campaigns/the-ghosted-bar'},
+{y:'2023',t:'Bronze',ti:'THE HEART PART 5',b:'KENDRICK LAMAR',a:'PGLANG LOS ANGELES',u:'https://www.youtube.com/watch?v=uAPUkgeiFVY'},
+{y:'2023',t:'Bronze',ti:'THE HIGH STAKES BEER AD',b:'BLUE MOON',a:'DROGA5 PART OF ACCENTURE SONG NEW YORK',u:'http://ethanbennett.co.uk/#/the-high-stakes-beer-ad-superbowl/'},
+{y:'2023',t:'Bronze',ti:'THE INDEX SHIRT',b:'ETON',a:'ETON AB GANGHESTER',u:'https://www.thedrum.com/news/2023/12/05/how-eton-shirtss-stock-rose-with-the-index-shirt'},
+{y:'2023',t:'Bronze',ti:'THE MAMMOTH MEATBALL',b:'VOW',a:'WUNDERMAN THOMPSON BENELUX ANTWERP',u:'https://www.youtube.com/watch?v=oNiz7nHj5io'},
+{y:'2023',t:'Bronze',ti:'THE MIGROS BEER',b:'MIGROS',a:'WIRZ GROUP ZURICH',u:'https://www.youtube.com/watch?v=HMJDrrjmgN0'},
+{y:'2023',t:'Bronze',ti:'THE MISSING CHAPTER',b:'PROCTER & GAMBLE',a:'LEO BURNETT MUMBAI',u:'https://www.lbbonline.com/work/65329'},
+{y:'2023',t:'Bronze',ti:'THE MOST BEAUTIFUL DENTAL CLINIC IN THE WORLD',b:'ROMANIA',a:'MCCANN BUCHAREST',u:'https://www.youtube.com/watch?v=4bgI8PeubSI'},
+{y:'2023',t:'Bronze',ti:'THE MOVIES THAT MADE (FROM) US',b:'FIVE STAR',a:'BBDO BANGKOK',u:'https://www.youtube.com/watch?v=pGmthP_oyo8'},
+{y:'2023',t:'Bronze',ti:'THE NAME CONFUSION',b:'A.L.M.A. / RACING CLUB',a:'REPUBLICA HAVAS MIAMI',u:'https://vimeo.com/824735065'},
+{y:'2023',t:'Bronze',ti:'THE NEW RECRUITS',b:'CHANGE THE REF',a:'ENERGY BBDO CHICAGO',u:'https://vimeo.com/821003119'},
+{y:'2023',t:'Bronze',ti:'THE NOTIFICATIONS',b:'PATHÉ',a:'FRED & FARID PARIS',u:'https://clios.com/awards/winner/film/path%C3%A9/the-notifications-133603'},
+{y:'2023',t:'Bronze',ti:'THE ORIGINAL IMPOSSIBLE',b:'ADIDAS',a:'OPINIONATED PORTLAND',u:'https://clios.com/sports/winner/film/adidas/the-original-impossible-503929'},
+{y:'2023',t:'Bronze',ti:'THE RIFT',b:'PENNY',a:'SERVICEPLAN MUNICH',u:'https://www.youtube.com/watch?v=Pp2-tyEHBps'},
+{y:'2023',t:'Bronze',ti:'THE SHUFFLE TICKET',b:'LIVE NATION / LUGER',a:'FORSMAN & BODENFORS GOTHENBURG',u:'https://www.dandad.org/awards/professional/2023/237494/the-shuffle-ticket/'},
+{y:'2023',t:'Bronze',ti:'THE SOOT LIFE EXPECTANCY',b:'THE EXTRA STEP INITIATIVE',a:'X3M IDEAS LAGOS',u:'https://www.dandad.org/awards/professional/2023/236680/the-soot-life-expectancy/'},
+{y:'2023',t:'Bronze',ti:'THE STAIN',b:'KOTEX',a:'VALOR LIMA',u:'https://clios.com/awards/winner/media/kotex/the-stain-137541'},
+{y:'2023',t:'Bronze',ti:'THE TAIWANESE WORLD OF WARCRAFT',b:'WORLD OF WARCRAFT',a:'DENTSU CREATIVE TAIWAN TAIPEI',u:'https://www.dentsu.com/sg/en/our-work/case-study-dentsu-creative-taiwan-the-taiwanese-world-of-warcraft'},
+{y:'2023',t:'Bronze',ti:'THE ULTIMATE VOW',b:'ALZHEIMER\'S SOCIETY',a:'NEW COMMERCIAL ARTS LONDON',u:'https://www.youtube.com/watch?v=56ruiLcJsgg'},
+{y:'2023',t:'Bronze',ti:'THE UNFORBIDDEN FRUIT',b:'DOLE SUNSHINE COMPANY',a:'GREY LONDON',u:'https://www.youtube.com/watch?v=xxIEhE61Ma8'},
+{y:'2023',t:'Bronze',ti:'THE ZÉ THEORY',b:'ZÉ DELIVERY',a:'GUT SÃO PAULO',u:'https://clios.com/awards/winner/creative-effectiveness/z%C3%A9-delivery/the-z%C3%A9-theory-143201'},
+{y:'2023',t:'Bronze',ti:'THROUGH MY EYES',b:'WAKA KOTAHI',a:'RUSKIN AUCKLAND',u:'https://www.youtube.com/watch?v=wwEhELyQe4c'},
+{y:'2023',t:'Bronze',ti:'THROUGH THE FIRE',b:'WE ARE WARRIORS',a:'R/GA SYDNEY',u:'https://www.youtube.com/watch?v=_qdzTMfXNWo'},
+{y:'2023',t:'Bronze',ti:'THUMBSTOPPING BEAUTY BIASES',b:'DOVE',a:'MINDSHARE INDIA MUMBAI',u:'https://www.mindshareworld.com/work/dove-thumbstopping-beauty-biases'},
+{y:'2023',t:'Bronze',ti:'TIME TO READ',b:'KINOKUNIYA',a:'SAATCHI & SAATCHI ME DUBAI',u:'https://www.youtube.com/watch?v=0AYGtzyvv5w'},
+{y:'2023',t:'Bronze',ti:'TOM BRADY\'S LETTER',b:'UNDER ARMOUR',a:'SLAP GLOBAL NEW YORK',u:'https://www.lbbonline.com/work/86440'},
+{y:'2023',t:'Bronze',ti:'TOUCH CARD',b:'MASTERCARD',a:'MCCANN NEW YORK',u:'https://earn.mccannworldgroup.com/issuetwo-work/touch-card'},
+{y:'2023',t:'Bronze',ti:'TURBOKADDY',b:'KAUFLAND',a:'DDB PRAGUE',u:'https://www.lbbonline.com/work/94693'},
+{y:'2023',t:'Bronze',ti:'TWEET SCARVES',b:'TWITTER',a:'DAVID MADRID',u:'https://vimeo.com/809118220'},
+{y:'2023',t:'Bronze',ti:'UKRAINE WELCOME TEXT',b:'UNSEEN UK',a:'BBD PERFECT STORM LONDON',u:'https://vimeo.com/810255113'},
+{y:'2023',t:'Bronze',ti:'UNBANNED ARMBAND',b:'ALL OUT',a:'ALMAPBBDO SÃO PAULO',u:'https://clios.com/awards/winner/branded-entertainment-content/all-out/play-with-love-142953'},
+{y:'2023',t:'Bronze',ti:'UNCOMFORTABLE FOOD',b:'STELLA ARTOIS',a:'SOKO SÃO PAULO',u:'https://juliacalais.com/Stella-Artois-Uncomfortable-Food'},
+{y:'2023',t:'Bronze',ti:'UNHASHTAGGED PLACES',b:'RENAULT',a:'PUBLICIS BUENOS AIRES',u:'https://vimeo.com/827758977'},
+{y:'2023',t:'Bronze',ti:'UNOFFICIAL GOALS',b:'AGUILA',a:'DAVID BOGOTÁ',u:'https://www.youtube.com/watch?v=SmOVBJEDX3U'},
+{y:'2023',t:'Bronze',ti:'URBAN MINER',b:'ELKJØP',a:'NORD DDB OSLO',u:'https://www.youtube.com/watch?v=ZNMs941LTG8'},
+{y:'2023',t:'Bronze',ti:'VEHICLE OF CHANGE',b:'VATTENFALL',a:'NORD DDB STOCKHOLM',u:'https://www.dandad.org/awards/professional/2023/236524/vehicle-of-change/'},
+{y:'2023',t:'Bronze',ti:'V',b:'LAND – SABA MEXICO / BODYFORM',a:'DENTSU CREATIVE MEXICO CITY',u:'https://www.behance.net/gallery/171331075/V-Land-by-Saba'},
+{y:'2023',t:'Bronze',ti:'VOICE OF THE CHECKOUT',b:'TESCO',a:'BBH LONDON',u:'https://sophieandgeorge.co.uk/tesco-tiktok'},
+{y:'2023',t:'Bronze',ti:'WAR STORIES',b:'BRADY',a:'BCW NEW YORK',u:'https://www.youtube.com/watch?v=BKR69DgH0ps'},
+{y:'2023',t:'Bronze',ti:'WEAR \'EM OUT STORE',b:'EBAY',a:'EDELMAN NEW YORK',u:'https://clios.com/awards/winner/creative-commerce/ebay/wear-em-out-store-140788'},
+{y:'2023',t:'Bronze',ti:'WEATHER ANYTHING',b:'MACPAC',a:'THE MONKEYS PART OF ACCENTURE SONG MELBOURNE',u:'https://www.lbbonline.com/news/the-monkeys-melbourne-creates-one-hell-of-a-cliffhanger'},
+{y:'2023',t:'Bronze',ti:'WE DON\'T SPEAK JANUARY',b:'EQUINOX GROUP',a:'COLLINS NEW YORK',u:'https://vimeo.com/821768737'},
+{y:'2023',t:'Bronze',ti:'WHY IS THIS A SWIGGY AD?',b:'SWIGGY',a:'TALENTED.AGENCY BANGALORE',u:'https://youtu.be/Xvm1-a68M74'},
+{y:'2023',t:'Bronze',ti:'WIKITRUTH',b:'UKRAINIAN WITNESS',a:'PUBLICIS GROUPE BENELUX AMSTERDAM',u:'https://www.youtube.com/watch?v=GId2vhqxo_Q'},
+{y:'2024',t:'Grand Prix',ti:'DOORDASH',b:'ALL-THE-ADS – DOORDASH',a:'WIEDEN+KENNEDY PORTLAND',u:'https://vimeo.com/936503180'},
+{y:'2024',t:'Grand Prix',ti:'THE FIRST EDIBLE MASCOT',b:'POP-TARTS',a:'WEBER SHANDWICK CHICAGO',u:'https://clios.com/awards/winner/experience-activation/kellanova/pop-tarts-the-first-edible-mascot-521832'},
+{y:'2024',t:'Grand Prix',ti:'MEET MARINA PRIETO',b:'JCDECAUX',a:'DAVID MADRID',u:'https://www.dandad.org/awards/professional/2024/238071/meet-marina-prieto/'},
+{y:'2024',t:'Grand Prix',ti:'REFURB',b:'PHILIPS',a:'LEPUB AMSTERDAM',u:'https://www.youtube.com/watch?v=sJXFLk5wvcQ'},
+{y:'2024',t:'Grand Prix',ti:'CARS TO WORK',b:'RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://www.contagious.com/news-and-views/campaign-of-the-week-renault-targets-isolated-communities-with-rental-scheme-for-job-hunters'},
+{y:'2024',t:'Grand Prix',ti:'ROOM FOR EVERYONE',b:'MASTERCARD',a:'MCCANN POLAND',u:'https://www.youtube.com/watch?v=ZezPag4HFKQ'},
+{y:'2024',t:'Grand Prix',ti:'IT HAS TO BE HEINZ',b:'HEINZ',a:'RETHINK TORONTO',u:'https://youtu.be/puTzMUGiMlg'},
+{y:'2024',t:'Grand Prix',ti:'A PIECE OF ME',b:'KPN',a:'DENTSU CREATIVE AMSTERDAM',u:'https://www.dandad.org/awards/professional/2024/238849/a-piece-of-me/'},
+{y:'2024',t:'Grand Prix',ti:'SIGHTWALKS',b:'SOL CEMENT',a:'CIRCUS GREY LIMA',u:'https://www.youtube.com/watch?v=IRuDOllWc-E'},
+{y:'2024',t:'Grand Prix',ti:'SPREADBEATS',b:'SPOTIFY',a:'FCB NEW YORK',u:'https://www.youtube.com/watch?v=Zc-U6PM9ilE'},
+{y:'2024',t:'Grand Prix',ti:'THE EVERYDAY TACTICIAN',b:'XBOX',a:'MCCANN LONDON',u:'https://www.contagious.com/news-and-views/campaign-of-the-week-xbox-offers-football-manager-24-players-a-shot-at-real-club-role'},
+{y:'2024',t:'Grand Prix',ti:'WE ARE AYENDA',b:'WHATSAPP',a:'CREATIVE X CALIFORNIA',u:'https://rodrigomoran.com/ayenda-inside-copy'},
+{y:'2024',t:'Grand Prix',ti:'ERRATA AT 88',b:'',a:'ALMAPBBDO SÃO PAULO',u:'https://www.youtube.com/watch?v=uJrabJhuzXw'},
+{y:'2024',t:'Grand Prix',ti:'WOMEN\'S FOOTBALL',b:'ORANGE',a:'MARCEL',u:'https://www.dandad.org/awards/professional/2024/238147/womens-football/'},
+{y:'2024',t:'Grand Prix',ti:'PLAY IT SAFE',b:'SYDNEY OPERA HOUSE',a:'THE MONKEYS, PART OF ACCENTURE SONG',u:'https://www.youtube.com/watch?v=QshKJQQyCAE'},
+{y:'2024',t:'Grand Prix',ti:'THE SQUARE METER',b:'HORNBACH',a:'HEIMATTBWA\\GERMANY',u:'https://www.dandad.org/awards/professional/2024/237794/the-square-meter/'},
+{y:'2024',t:'Grand Prix',ti:'TRANSITION BODY LOTION',b:'VASELINE',a:'OGILVY SINGAPORE',u:'https://maggiemichella.com/transitionbodylotion'},
+{y:'2024',t:'Grand Prix',ti:'THE FIRST SPEECH',b:'REPORTERS WITHOUT BORDERS',a:'INNOCEAN BERLIN',u:'https://www.shots.net/news/view/reporters-without-borders-famous-first-words'},
+{y:'2024',t:'Grand Prix',ti:'THE LAST BARF BAG',b:'DRAMAMINE',a:'FCB CHICAGO',u:'https://gustavodallegrave.com/thelastbarfbag/'},
+{y:'2024',t:'Grand Prix',ti:'THE 100TH EDITION',b:'FRANKFURTER ALLGEMEINE ZEITUNG',a:'SCHOLZ & FRIENDS',u:'https://www.nyfadvertising.com/Winners/WinnerDetailsNew/b5d12826-52a6-4b65-8c7e-10d80d24a1a9'},
+{y:'2024',t:'Grand Prix',ti:'VOICE 2 DIABETES',b:'KVI BRANVE FUND I INC',a:'KLICK HEALTH TORONTO',u:'https://clios.com/health/winner/audio-health-institutions-services/kvi-brave-fund-inc/voice-2-diabetes-523078'},
+{y:'2024',t:'Grand Prix',ti:'CHILD WEDDING CARDS',b:'UN WOMEN',a:'IMPACT BBDO DUBAI',u:'https://www.youtube.com/watch?v=G_dzr4SJqjY'},
+{y:'2024',t:'Grand Prix',ti:'LOEWE X SUNA FUJITA',b:'LOEWE',a:'LOEWE MADRID',u:'https://www.youtube.com/watch?v=Nims1jPxhqI'},
+{y:'2024',t:'Grand Prix',ti:'HANDSHAKE HUNT',b:'MERCADO LIBRE',a:'GUT SÃO PAULO',u:'https://raphaborges.com/handshakehunts/'},
+{y:'2024',t:'Grand Prix',ti:'ADOPTABLE',b:'PEDIGREE',a:'COLENSO BBDO AUCKLAND',u:'https://hyperboloid-ellipsoid-7gg7.squarespace.com/the-work-1/adoptable'},
+{y:'2024',t:'Grand Prix',ti:'FIND YOUR SUMMER',b:'MAGNUM',a:'LOLA MULLENLOWE',u:'https://www.dandad.org/awards/professional/2024/239094/find-your-summer/'},
+{y:'2024',t:'Grand Prix',ti:'THE FLYING TRAIN, A MAGNETIC STORY',b:'SIEMENS HEALTHINEERS',a:'AREA 23 NEW YORK',u:'https://www.youtube.com/watch?v=PJGgMzJb8qc'},
+{y:'2024',t:'Grand Prix',ti:'THE MISHEARD VERSION',b:'SPECSAVERS',a:'GOLIN LONDON',u:'https://www.youtube.com/watch?v=EgNb0LQxm84'},
+{y:'2024',t:'Grand Prix',ti:'RECYCLE ME',b:'COCA-COLA',a:'OGILVY NEW YORK',u:'https://www.ogilvy.com/work/recycle-me'},
+{y:'2024',t:'Grand Prix',ti:'MICHAEL CERAVE',b:'CERAVE',a:'OGILVY PR NEW YORK',u:'https://vimeo.com/924148167'},
+{y:'2024',t:'Gold',ti:'#TURNYOURBACK',b:'DOVE',a:'OGILVY LONDON',u:'https://www.youtube.com/watch?v=pw73tgBmv0g'},
+{y:'2024',t:'Gold',ti:'150 YEARS OF WHATEVERKEN',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://www.dandad.org/awards/professional/2024/238373/h150-anniversary/'},
+{y:'2024',t:'Gold',ti:'855',b:'HOW-TO-QUIT-(OPIOIDS) – ANZEN HEALTH',a:'SERVICEPLAN GERMANY',u:'https://www.dandad.org/awards/professional/2024/238402/855-how-to-quit-opioids/'},
+{y:'2024',t:'Gold',ti:'ABSURD PROMISES',b:'ASDRA',a:'VML BUENOS AIRES',u:'https://www.youtube.com/watch?v=MCT4n0M2lq0'},
+{y:'2024',t:'Gold',ti:'ALCARAZ SIGNS',b:'NETFLIX',a:'DAVID MADRID',u:'https://www.youtube.com/watch?v=tPokH-yiCiQ'},
+{y:'2024',t:'Gold',ti:'AMERICAN CANCER STORY',b:'CHANGE THE REF',a:'KLICK HEALTH TORONTO',u:'https://clios.com/health/winner/film-craft-health-awareness-advocacy/change-the-ref/american-cancer-story-520625'},
+{y:'2024',t:'Gold',ti:'ANIMAL ALERTS',b:'PETPACE',a:'SERVICEPLAN MUNICH',u:'https://youtu.be/kfnhUWM876k'},
+{y:'2024',t:'Gold',ti:'ASHE VERSUS',b:'MODERNA, INC.',a:'THE YOUTH CURITIBA',u:'https://clios.com/sports/winner/film-craft/moderna/ashe-versus-508250'},
+{y:'2024',t:'Gold',ti:'ASSUME THAT I CAN',b:'COORDOWN',a:'SMALL NEW YORK',u:'https://www.youtube.com/watch?v=gc9p3ska7rw'},
+{y:'2024',t:'Gold',ti:'AUDIENCE DELIVERY',b:'IFOOD',a:'DM9 BRAZIL',u:'https://www.dandad.org/awards/professional/2024/237894/audience-delivery/'},
+{y:'2024',t:'Gold',ti:'AYA NAKAMURA : HAUT NIVEAU, BY LANCÔME',b:'LANCOME',a:'PUBLICIS LUXE PARIS',u:'https://www.lancome.ca/en/aya-nakamura.html'},
+{y:'2024',t:'Gold',ti:'BAR EXPERIENCE',b:'HEINEKEN',a:'PUBLICIS ITALY | LEPUB MILAN',u:'https://www.youtube.com/watch?v=RN0Dz5sFHBQ'},
+{y:'2024',t:'Gold',ti:'BLACK LIGHTS',b:'BRADESCO SEGUROS & GOMA/EMPREGUE AFRO & MUSEU AFRO-UFBA',a:'ALMAPBBDO SÃO PAULO',u:'https://www.luerzersarchive.com/work/black-light-book/'},
+{y:'2024',t:'Gold',ti:'BRAIDED HISTORY',b:'L\'ORÉAL DE PUERTO RICO',a:'DDB LATIN PUERTO RICO',u:'https://vimeo.com/960467642'},
+{y:'2024',t:'Gold',ti:'BREATHE THROUGH IT',b:'HALLS',a:'DAVID MADRID',u:'https://clios.com/awards/winner/audio-craft/halls/breathe-through-it-510542'},
+{y:'2024',t:'Gold',ti:'CAN\'T B BROKEN',b:'VERIZON',a:'OGILVY NEW YORK',u:'https://www.matthewcurrycreative.com/#/cant-b-broken/'},
+{y:'2024',t:'Gold',ti:'CHANNEL 4 IDENTS',b:'CHANNEL 4',a:'4CREATIVE',u:'https://www.dandad.org/awards/professional/2024/238527/channel-4-idents/'},
+{y:'2024',t:'Gold',ti:'CLEAN SPONSORSHIP',b:'CONSUL',a:'DM9 SÃO PAULO',u:'https://vimeo.com/939546725'},
+{y:'2024',t:'Gold',ti:'CODE MY CROWN',b:'DOVE',a:'EDELMAN LONDON',u:'https://www.youtube.com/watch?v=cWOA7eUk1Bw'},
+{y:'2024',t:'Gold',ti:'COORS LIGHTS OUT',b:'COORS LIGHT',a:'RETHINK CANADA',u:'https://clios.com/awards/winner/integrated/coors-light/coors-lights-out-518617'},
+{y:'2024',t:'Gold',ti:'FILTER CAPS',b:'FILSA COLOMBIA',a:'OGILVY COLOMBIA, BOGOTÁ',u:'https://www.youtube.com/watch?v=I60bNRM2UhM'},
+{y:'2024',t:'Gold',ti:'FIT MY FEET',b:'BUCKAROO FOOTWARE',a:'MCCANN WORLDGROUP GURUGRAM',u:'https://lbbonline.com/work/108771'},
+{y:'2024',t:'Gold',ti:'FUZZY FEELINGS',b:'APPLE',a:'TBWA\\ MEDIA ARTS LAB',u:'https://www.youtube.com/watch?v=Abti_iE3zEI'},
+{y:'2024',t:'Gold',ti:'GAMER LOAN',b:'BANCO DEL PACÍFICO',a:'PARADAIS DDB GUAYAQUIL',u:'https://www.youtube.com/watch?v=96UaRc3PKHc'},
+{y:'2024',t:'Gold',ti:'GONNA NEED MORE TIDE',b:'TIDE',a:'SAATCHI & SAATCHI NEW YORK',u:'https://www.dandad.org/awards/professional/2024/238409/gonna-need-more-tide/'},
+{y:'2024',t:'Gold',ti:'HEINZ KETCHUP & SEEMINGLY RANCH',b:'KRAFT HEINZ',a:'RETHINK CANADA',u:'https://clios.com/awards/winner/creative-effectiveness/kraft-heinz/heinz-ketchup-and-seemingly-ranch-519698'},
+{y:'2024',t:'Gold',ti:'IF YOU\'RE INTO IT, IT\'S IN THE V&A',b:'THE V&A',a:'ADAM&EVEDDB',u:'https://www.dandad.org/awards/professional/2024/238456/if-youre-into-it-its-in-the-va/'},
+{y:'2024',t:'Gold',ti:'INCLUSIVE BY DESIGN',b:'MASTERCARD',a:'MCCANN XBC NEW YORK',u:'https://youtu.be/miLgz-uND3I'},
+{y:'2024',t:'Gold',ti:'INFLATION COOKBOOK',b:'SKIP THE DISHES',a:'DENTSU CREATIVE TORONTO',u:'https://www.dentsucreative.com/cases/inflation-cookbook'},
+{y:'2024',t:'Gold',ti:'IN TRANSIT',b:'CALLEN-LORDE, METROPOLITAN TRANSPORTATION AUTHORITY, NYC LGBT HISTORIC SITES PRO',a:'AREA 23, AN IPG HEALTH NETWORK COMPANY, NEW YORK',u:'https://youtu.be/9QRIR0z7RIQ'},
+{y:'2024',t:'Gold',ti:'KETCHUP FRAUD',b:'HEINZ KETCHUP',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2023/237531/heinz-fraud-ketchup/'},
+{y:'2024',t:'Gold',ti:'LAP OF LEGENDS',b:'MICHELOB ULTRA',a:'FCB NEW YORK',u:'https://vimeo.com/943372451'},
+{y:'2024',t:'Gold',ti:'LONG LASTING REVIEWS',b:'DARTY',a:'PUBLICIS CONSEIL PARIS',u:'https://vimeo.com/849116465'},
+{y:'2024',t:'Gold',ti:'MADLY/THE POEM',b:'THE BLAZE',a:'ICONOCLAST PARIS',u:'https://www.dandad.org/awards/professional/2024/237994/the-blaze-madly/'},
+{y:'2024',t:'Gold',ti:'MAYO HATERS',b:'NOTCO',a:'GUT MIAMI',u:'http://www.workofparadise.com/#/mayo-haters/'},
+{y:'2024',t:'Gold',ti:'MULLENLOWE GLOBAL REBRAND',b:'MULLENLOWE GLOBAL',a:'MULLENLOWE U.S.',u:'https://www.dandad.org/awards/professional/2024/238231/mullenlowe-global-rebrand/'},
+{y:'2024',t:'Gold',ti:'NO AD',b:'PAGUE MENOS',a:'LEW\'LARA\\TBWA SÃO PAULO',u:'https://www.youtube.com/watch?v=0kfsXhP3fSo'},
+{y:'2024',t:'Gold',ti:'NO SMILES',b:'MCDONALD\'S JAPAN',a:'TBWA HAKUHODO',u:'https://www.nyfadvertising.com/Winners/WinnerDetailsNew/de7f8cbb-0f61-4cfe-a39a-a5b4202c265c'},
+{y:'2024',t:'Gold',ti:'OLIVEIRA DOS CEN ANOS',b:'REAL CLUB CELTA VIGO',a:'VISIT LITTLE SPAIN',u:'https://vimeo.com/961210152'},
+{y:'2024',t:'Gold',ti:'OREO CALLS',b:'OREO',a:'VML NEW YORK',u:'https://www.vml.com/work/oreo-calls'},
+{y:'2024',t:'Gold',ti:'OTTER',b:'SANDOZ DEUTSCHLAND',a:'SERVICEPLAN MUNICH',u:'https://youtu.be/-VN200ywGN4'},
+{y:'2024',t:'Gold',ti:'PAPER ORGANS',b:'TAIWAN ORGAN SHARING REGISTRY AND PATIENT AUTONOMY PROMOTION CENTER',a:'LEO BURNETT TAIPEI',u:'https://clios.com/health/winner/516484'},
+{y:'2024',t:'Gold',ti:'PINK CHIP',b:'DEGIRO & UN WOMEN',a:'AKQA AMSTERDAM',u:'https://www.youtube.com/watch?v=NfQbKDq64hk'},
+{y:'2024',t:'Gold',ti:'PROTECTASBIH',b:'SAUDIA AIRLINES',a:'LEO BURNETT JEDDAH / SAATCHI & SAATCHI DUBAI',u:'https://kellytomes.com/work/saudia-protectasbih'},
+{y:'2024',t:'Gold',ti:'PUB MUSEUMS',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://www.lbbonline.com/work/110105'},
+{y:'2024',t:'Gold',ti:'RELAX: TRACTOR',b:'APPLE',a:'APPLE SAN JOSE',u:'https://www.youtube.com/watch?v=kuOQdo7t3Xk'},
+{y:'2024',t:'Gold',ti:'RICE OF GLORY',b:'SUPER EXTRA',a:'MARURI GUAYAQUIL',u:'https://www.behance.net/gallery/199719567/Arroz-Super-Extra-Rice-of-Glory'},
+{y:'2024',t:'Gold',ti:'RUNNER 321',b:'ADIDAS',a:'FCB TORONTO',u:'https://www.youtube.com/watch?v=KSCvD-cL3zM'},
+{y:'2024',t:'Gold',ti:'SAMMAKORN NOT SANPAKORN',b:'SAMMAKORN',a:'CHOOJAI AND FRIENDS BANGKOK',u:'https://www.dandad.org/awards/professional/2024/238288/sammakorn-not-sanpakorn/'},
+{y:'2024',t:'Gold',ti:'SAMSUNG IMPULSE',b:'SAMSUNG',a:'CHEIL MADRID',u:'https://www.dandad.org/awards/professional/2024/238851/samsung-impulse/'},
+{y:'2024',t:'Gold',ti:'SAMSUNG THROWBACK DEALS',b:'SAMSUNG',a:'MRM BRAZIL',u:'https://www.dandad.org/awards/professional/2024/237942/samsung-throwback-deals/'},
+{y:'2024',t:'Gold',ti:'SHT',b:'IKEA',a:'EDELMAN TORONTO',u:'https://www.linkedin.com/posts/edelman-canada_can-we-say-sht-well-we-just-did-edelman-activity-7209591937706663936-zcNS'},
+{y:'2024',t:'Gold',ti:'SWEETHEARTS SITUATIONSHIPS',b:'SPANGLER',a:'TOMBRAS',u:'https://www.brennencooke.com/situationships'},
+{y:'2024',t:'Gold',ti:'THANKS FOR COKE',b:'CREATING – COCA COLA',a:'VML NEW YORK',u:'https://www.youtube.com/watch?v=yOy9wkTqOCc'},
+{y:'2024',t:'Gold',ti:'THE BIGGER DRAW',b:'HAMBURG MARKETING GMBH',a:'JUNG VON MATT AG HAMBURG',u:'https://clios.com/awards/winner/design/hamburg-marketing-gmbh/the-bigger-draw-522820'},
+{y:'2024',t:'Gold',ti:'THE BIG SHAKE UP',b:'AKTION DEUTSCHLAND HILFT',a:'HAVAS DUSSELDORF',u:'https://lbbonline.com/work/108427'},
+{y:'2024',t:'Gold',ti:'THE GREAT INDIAN DUNK',b:'NBA',a:'LEO BURNETT DUBAI',u:'https://www.kapilbhimekar.com/#/nba-the-great-indian-dunk/'},
+{y:'2024',t:'Gold',ti:'THE MOVE TO',b:'15 – DP WORLD',a:'EDELMAN LONDON',u:'https://www.youtube.com/watch?v=se_0kuYmV7g'},
+{y:'2024',t:'Gold',ti:'THE NATIONAL SPORT OF KAZAKHSTAN',b:'RUH FIGHTING CHAMPIONSHIP',a:'GFORCE ALMATY',u:'https://www.youtube.com/watch?v=F2yHQAw1n9U'},
+{y:'2024',t:'Gold',ti:'THE POWER OF A FRAGRANCE',b:'LYNX',a:'LOLA MULLENLOWE',u:'https://www.mullenloweglobal.com/news/work/the-power-of-a-fragrance'},
+{y:'2024',t:'Gold',ti:'THE UNNOTICEABLE WHOPPER',b:'BURGER KING FRANCE',a:'BUZZMAN PARIS',u:'https://www.youtube.com/watch?v=gN9CqlMmvn0'},
+{y:'2024',t:'Gold',ti:'THE WORLD\'S MOST FAMOUS HAND MODEL',b:'STELLA ARTOIS',a:'GUT MIAMI',u:'https://www.jeffyjose.com/handmodel'},
+{y:'2024',t:'Gold',ti:'THIS IS MAGIC',b:'DISNEY',a:'DENTSU CREATIVE CHICAGO',u:'https://www.youtube.com/watch?v=wmNn_JzM494'},
+{y:'2024',t:'Gold',ti:'THIS IS NOT A GAME',b:'MOVISTAR',a:'VML MEXICO CITY',u:'https://www.youtube.com/watch?v=qKqi8uMMr6c'},
+{y:'2024',t:'Gold',ti:'THREE WORDS',b:'AXA',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=PZrR8l88PCE'},
+{y:'2024',t:'Gold',ti:'TRAINS NOW ON UBER',b:'UBER',a:'MOTHER LONDON',u:'https://www.motherlondon.com/work/uber-trains'},
+{y:'2024',t:'Gold',ti:'TRANSLATORS',b:'US BANK',a:'MCCANN NEW YORK',u:'https://www.theartoferika.com/us-bank-translators.html'},
+{y:'2024',t:'Gold',ti:'TURF FINDER',b:'GATORADE',a:'LEO BURNETT MUMBAI',u:'https://leoburnett.com/work/drop-the-turf'},
+{y:'2024',t:'Gold',ti:'UMBRELLA SPECIES',b:'WWF',a:'TBWA\\PARIS',u:'https://www.dandad.org/awards/professional/2024/239076/umbrella-species/'},
+{y:'2024',t:'Gold',ti:'UNINTERRUPTAD',b:'BUDWEISER',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://www.bolacha.work/uninterruptads/'},
+{y:'2024',t:'Gold',ti:'VOLKSWAGEN 70 YEARS',b:'VOLKSWAGEN',a:'ALMAPBBDO SÃO PAULO',u:'https://www.dandad.org/awards/professional/2024/238501/vw-70-years-campaign/'},
+{y:'2024',t:'Gold',ti:'WHAT THE FAST!',b:'KRUNGSRI FIRST CHOICE',a:'LEO BURNETT BANGKOK',u:'https://vimeo.com/919078391'},
+{y:'2024',t:'Gold',ti:'WINDOWS',b:'BRITISH AIRWAYS',a:'UNCOMMON CREATIVE STUDIO',u:'https://www.dandad.org/awards/professional/2024/238696/windows/'},
+{y:'2024',t:'Gold',ti:'WITHOUT CONSENT',b:'DEUTSCHE TELEKOM',a:'ADAM&EVEDDB BERLIN',u:'https://www.advert.ge/commercials/deutsche_telekom/without_consent.html'},
+{y:'2024',t:'Gold',ti:'WORLD CUP DELIVERY',b:'PEDIDOS YA',a:'GUT BUENOS AIRES',u:'https://www.youtube.com/watch?v=WoGh0-RlrI8'},
+{y:'2024',t:'Gold',ti:'YES, COUCH!',b:'META',a:'MOJO SUPERMARKET',u:'https://www.dandad.org/awards/professional/2024/238383/facebook-yes-couch/'},
+{y:'2024',t:'Silver',ti:'#BEFREETOPEE HARPIC LOOCATOR',b:'HARPIC INDIA',a:'TGTHR, MUMBAI',u:'https://www.youtube.com/watch?v=GjDM-zHe_NE'},
+{y:'2024',t:'Silver',ti:'#BRINGBACK2011',b:'OREO INDIA',a:'LEO BURNETT MUMBAI',u:'https://www.dandad.org/awards/professional/2023/236565/bringback2011/'},
+{y:'2024',t:'Silver',ti:'47',b:'CAFÉ JOYEUX',a:'KLICK HEALTH TORONTO',u:'https://clios.com/health/winner/520581'},
+{y:'2024',t:'Silver',ti:'ADLAM: AN ALPHABET TO PRESERVE A CULTURE',b:'MICROSOFT',a:'MCCANN NEW YORK',u:'https://www.youtube.com/watch?v=1GRTS2sFqhY'},
+{y:'2024',t:'Silver',ti:'AID AISLE',b:'FRESHCHOICE',a:'DENTSU CREATIVE AUCKLAND',u:'https://www.dandad.org/awards/professional/2024/238390/aid-aisle/'},
+{y:'2024',t:'Silver',ti:'AI PRESIDENT',b:'ANNAHAR NEWS',a:'IMPACT BBDO DUBAI',u:'https://www.contagious.com/news-and-views/campaign-of-the-week-lebanese-newspaper-creates-ai-politician-to-highlight-its-reporting'},
+{y:'2024',t:'Silver',ti:'AIRQUITY',b:'EARSWITCH',a:'HAVAS LYNX MANCHESTER',u:'https://www.adsoftheworld.com/campaigns/airquity'},
+{y:'2024',t:'Silver',ti:'ALBUM COVER (LONGFORM)',b:'APPLE',a:'APPLE SAN JOSE',u:'https://www.youtube.com/watch?v=ei0WDdT4-6A'},
+{y:'2024',t:'Silver',ti:'ALDIDAS',b:'ALDI UK',a:'MCCANN MANCHESTER',u:'https://www.geretyawards.com/winners/2024/entry/153662/aldidas-aldi-uk'},
+{y:'2024',t:'Silver',ti:'A LIFE IN SOUND',b:'SIRIUS XM',a:'UNCOMMON LONDON',u:'https://www.youtube.com/watch?v=VrT0Vt5wVdw'},
+{y:'2024',t:'Silver',ti:'ALLEGRA AIRWAYS',b:'ALLEGRA',a:'EDELMAN TORONTO',u:'https://www.edelman.com/work/allegra-airways'},
+{y:'2024',t:'Silver',ti:'ALWAYS OPEN',b:'7-ELEVEN',a:'DENTSU CREATIVE NEW YORK',u:'https://www.dandad.org/awards/professional/2024/238063/always-open/'},
+{y:'2024',t:'Silver',ti:'ANOTHER BIRTHDAY',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://clios.com/music/winner/use-of-music-in-film-video/apple/another-birthday-509097'},
+{y:'2024',t:'Silver',ti:'ANTSLIVE \'CUTLERY\'',b:'ANTSLIVE',a:'MOTHER LONDON',u:'https://www.youtube.com/watch?v=-2bZ4qdj8zQ'},
+{y:'2024',t:'Silver',ti:'ARA',b:'STRAP TECH',a:'BRANDS&PEOPLE SAN PEDRO GARZA GARCÍA',u:'https://vimeo.com/941389062'},
+{y:'2024',t:'Silver',ti:'A SOUND FOR EVERY FEELING',b:'EPIDEMIC SOUND',a:'RETHINK NEW YORK',u:'https://www.daniellobaton.net/epidemicsound'},
+{y:'2024',t:'Silver',ti:'ATACAMA FASHION WEEK',b:'DESIERTO VESTIDO & FASHION REVOLUTION',a:'ARTPLAN SÃO PAULO',u:'https://www.guives.com/#/atacama-fashion-week/'},
+{y:'2024',t:'Silver',ti:'BALLBOARDS',b:'MERCADO LIBRE',a:'GUT SÃO PAULO',u:'https://andreprestes.work/ballboards'},
+{y:'2024',t:'Silver',ti:'BATTLE OF THE BADEST \'RUMBLE\'',b:'GENERAL ENTERTAINMENT AUTHORITY / SAUDI MEDIA COMPANY',a:'PARK PICTURES / DROGA5 NEW YORK',u:'https://www.dandad.org/awards/professional/2024/238069/rumble/'},
+{y:'2024',t:'Silver',ti:'BEER RETIREMENT ACCOUNT',b:'POKER BEER',a:'MEDIA.MONKS HILVERSUM',u:'https://youtu.be/YTUf_mLc_5U'},
+{y:'2024',t:'Silver',ti:'BEST FRIENDS',b:'UBER ONE',a:'MOTHER LONDON',u:'https://clios.com/awards/winner/film/uber-one/uber-one-best-friends-514220'},
+{y:'2024',t:'Silver',ti:'BETIS PREGNANCY TEST',b:'REAL BETIS',a:'VML SPAIN',u:'https://www.vml.com/work/test-betico'},
+{y:'2024',t:'Silver',ti:'BOTTEGA FOR BOTTEGAS',b:'BOTTEGA VENETA',a:'PUBLICIS ITALY MILAN',u:'https://clios.com/awards/winner/fashion-beauty/bottega-veneta/bottega-for-bottegas-114348'},
+{y:'2024',t:'Silver',ti:'BRING HOME THE BUD',b:'BUDWEISER',a:'WIEDEN+KENNEDY NEW YORK',u:'https://www.youtube.com/watch?v=sI9YyjqBpg8'},
+{y:'2024',t:'Silver',ti:'CALL GLENN',b:'CHILDFOCUS',a:'VML ANTWERP',u:'https://www.dandad.org/awards/professional/2024/238339/call-glenn/'},
+{y:'2024',t:'Silver',ti:'CANCER BEFORE CANCER',b:'PERUVIAN CANCER FOUNDATION',a:'FAHRENHEIT DDB LIMA',u:'https://vimeo.com/850426528'},
+{y:'2024',t:'Silver',ti:'CHARMOLOGY',b:'LUCKY CHARMS',a:'VML NEW YORK',u:'https://clios.com/awards/winner/social-media/lucky-charms/charmology-517469'},
+{y:'2024',t:'Silver',ti:'CONTRAILS: MAKING FLYING MORE SUSTAINABLE WITH GOOGLE AI',b:'GOOGLE MOUNTAIN VIEW',a:'GOOGLE MOUNTAIN VIEW',u:'https://www.youtube.com/watch?v=xBkK7olwjx0'},
+{y:'2024',t:'Silver',ti:'CORRECT THE INTERNET',b:'TEAM HEROINE',a:'DDB NEW ZEALAND AUCKLAND',u:'https://vimeo.com/830686096'},
+{y:'2024',t:'Silver',ti:'DAYS OF HIRAYAMA PERFECT DAYS OFFICIAL SITE',b:'PERFECT DAYS',a:'MOUNT INC. TOKYO',u:'https://youtu.be/69XIJgmN7Ms'},
+{y:'2024',t:'Silver',ti:'DON\'T DRINK HERTOG JAN',b:'HERTOG JAN',a:'GUT AMSTERDAM',u:'https://www.unblock.coffee/campaign/dont-drink-hertog-jan/'},
+{y:'2024',t:'Silver',ti:'DON\'T DELETE MENU',b:'WENDY\'S',a:'VML ARGENTINA',u:'https://clios.com/awards/winner/creative-commerce/wendy-s/don-t-delete-menu-509801'},
+{y:'2024',t:'Silver',ti:'DORITOS SILENT: THE WORLD\'S FIRST AI AUGMENTED SNACK',b:'DORITOS PEPSICO',a:'PEPSICO READING',u:'https://www.dandad.org/awards/professional/2024/238011/doritos-silent/'},
+{y:'2024',t:'Silver',ti:'DREAMCASTER',b:'MICHELOB ULTRA',a:'FCB NEW YORK',u:'https://www.dandad.org/awards/professional/2024/237856/dreamcaster/'},
+{y:'2024',t:'Silver',ti:'DRINK NAKED',b:'BRLO',a:'DELOITTE DIGITAL',u:'https://www.dandad.org/awards/professional/2024/238693/drink-naked/'},
+{y:'2024',t:'Silver',ti:'DRIVING WHILE BLACK',b:'COURAGEOUS CONVERSATION GLOBAL FOUNDATION',a:'GOODBY SILVERSTEIN & PARTNERS/CRITICAL MASS',u:'https://clios.com/awards/winner/experience-activation/courageous-conversation-global-foundation/driving-while-black-517822'},
+{y:'2024',t:'Silver',ti:'E',b:'POLICE STATION – WONDER WOMEN TECH',a:'ALMAPBBDO SÃO PAULO',u:'https://vimeo.com/949671710'},
+{y:'2024',t:'Silver',ti:'FILM FEST GENT 2023',b:'FILM FEST GENT',a:'CZAR BRUSSELS',u:'https://www.youtube.com/watch?v=GSvQ1GaGrbM'},
+{y:'2024',t:'Silver',ti:'FITCHIX',b:'HONEST EGGS',a:'VML MELBOURNE',u:'https://www.dandad.org/awards/professional/2023/237461/fitchix/'},
+{y:'2024',t:'Silver',ti:'FORTUM+FISHHEART',b:'SCREEN',a:'FORTUM TBWA HELSINKI',u:'https://www.tbwa.fi/work/case-study-fortum-fishheart/'},
+{y:'2024',t:'Silver',ti:'GESTICULATORS',b:'H2OH',a:'ISLA REPUBLICA BUENOS AIRES',u:'https://vimeo.com/932994208'},
+{y:'2024',t:'Silver',ti:'GRAD IN BLACK',b:'VULT',a:'GUT SÃO PAULO',u:'https://marcelocarvalho.work/Grad-in-Black'},
+{y:'2024',t:'Silver',ti:'GUSTAVE ROUSSY: A TRUE STORY',b:'GUSTAVE ROUSSY',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=PWuxa3v95fM'},
+{y:'2024',t:'Silver',ti:'HAVE AI BREAK',b:'KITKAT',a:'COURAGE TORONTO',u:'https://tommyyong.ca/#have-ai-break'},
+{y:'2024',t:'Silver',ti:'HIGHLIGHT YOUR BALLS',b:'TESTICULAR CANCER SOCIETY',a:'FP7 MCCANN DUBAI',u:'https://lbbonline.com/work/106931'},
+{y:'2024',t:'Silver',ti:'ILLUSTRATE CHANGE',b:'JOHNSON & JOHNSON',a:'DELOITTE DIGITAL NEW YORK',u:'https://clios.com/health/winner/creative-business-transformation-health-awareness-/johnson-johnson-the-association-of-medical-illustr/illustrate-change-525194'},
+{y:'2024',t:'Silver',ti:'IMAGINE WITH PETACOS',b:'POKER',a:'DDB COLOMBIA',u:'https://www.youtube.com/watch?v=M1YkoAQUa-I'},
+{y:'2024',t:'Silver',ti:'IMPOSSIBLE JOURNEY',b:'ASTER',a:'AREA 23 NEW YORK',u:'https://youtu.be/_1sRor3-qBY'},
+{y:'2024',t:'Silver',ti:'INSTALL OUR LOGO',b:'ADT SECURITY',a:'LEO BURNETT MEXICO CITY',u:'https://vimeo.com/952481296'},
+{y:'2024',t:'Silver',ti:'IPAGER',b:'ANDROID',a:'DAVID MIAMI',u:'https://clios.com/awards/winner/social-media/android/ipager-513225'},
+{y:'2024',t:'Silver',ti:'JINDAL STEEL: THE STEEL OF INDIA',b:'JINDAL STEEL AND POWER',a:'EARLY MAN FILM PVT LTD MUMBAI',u:'https://www.youtube.com/watch?v=UvGwIFVUK7M'},
+{y:'2024',t:'Silver',ti:'JUST JOKING',b:'SANDY HOOK PROMISE',a:'BBDO NEW YORK',u:'https://www.lancevining.com/new-page-55'},
+{y:'2024',t:'Silver',ti:'KIKI, VIRTUAL HUMAN INTERPRETER',b:'NHK ENTERPRISES',a:'MEDIA.MONKS HILVERSUM',u:'https://clios.com/health/winner/creative-use-of-data-consumer-brand-health-initiat/nhk-enterprises-nhk-global-media-services/kiki-virtual-human-interpreter-523446'},
+{y:'2024',t:'Silver',ti:'KNOW THE SIGNS',b:'SANDY HOOK PROMISE',a:'BBDO NEW YORK',u:'https://youtu.be/3EpIUk37TDo'},
+{y:'2024',t:'Silver',ti:'KRUGER: LOVE IS MESSY',b:'KRUGER',a:'NIMIOPERE TORONTO',u:'https://clios.com/awards/winner/film-craft-direction/kruger-products/love-is-messy-519430'},
+{y:'2024',t:'Silver',ti:'LAY\'S CHIP CAM',b:'LAY\'S',a:'SLAP GLOBAL',u:'https://www.slapglobal.com/work'},
+{y:'2024',t:'Silver',ti:'LEMON, COFFEE, EYE',b:'FABER CASTEL',a:'DAVID SÃO PAULO',u:'https://www.filippepacheco.com/super-soft'},
+{y:'2024',t:'Silver',ti:'LET HER GROW',b:'DOVE',a:'EDELMAN BANGKOK',u:'https://www.youtube.com/watch?v=2YjuS7KKk9s'},
+{y:'2024',t:'Silver',ti:'LITERACY PEN',b:'WORLD LITERACY FOUNDATION',a:'MEDIA.MONKS HILVERSUM',u:'https://ogonzales.com/Literacy-Pen'},
+{y:'2024',t:'Silver',ti:'LIVE INSURANCE BY MAPFRE',b:'MAPFRE',a:'MAPFRE MADRID',u:'https://youtu.be/nuH2e1i6efc'},
+{y:'2024',t:'Silver',ti:'LULUMELON EOSS',b:'HDFC BANK',a:'FCB KINNECT MUMBAI',u:'https://vimeo.com/944145149'},
+{y:'2024',t:'Silver',ti:'LUSION',b:'LUSION',a:'LUSION BRISTOL',u:'https://lusion.co/'},
+{y:'2024',t:'Silver',ti:'MAKE ITALY GREEN: THE FLOATING BOAT',b:'E.ON ITALY',a:'BBDO ROME',u:'https://www.cresta-awards.com/?action=ows:entries.details&e=128313'},
+{y:'2024',t:'Silver',ti:'MAYBELLINE\'S VIRAL CGI MASCARA VIDEO',b:'MAYBELLINE',a:'MAYBELLINE COSMETICS LONDON',u:'https://youtu.be/AN98T_DyDoc'},
+{y:'2024',t:'Silver',ti:'MEGH SANTOOR',b:'BROOKE BOND TAJ MAHAL TEA',a:'OGILVY MUMBAI',u:'https://clios.com/awards/winner/audio-craft/brooke-bond-taj-mahal-tea/megh-santoor-522163'},
+{y:'2024',t:'Silver',ti:'MORE REASONS TO ESCAPE',b:'GERMAN RAIL',a:'OGILVY GERMANY FRANKFURT',u:'https://www.oneclub.org/awards/theoneshow/-award/51834/more-reasons-to-escape'},
+{y:'2024',t:'Silver',ti:'MUSEUM',b:'WORTHY – AICP',a:'BBDO NEW YORK',u:'https://vimeo.com/920605262'},
+{y:'2024',t:'Silver',ti:'NAKED TRAILS',b:'BEAR NAKED GRANOLA',a:'LEO BURNETT CHICAGO',u:'https://kelleybarrett.work/Bear-Naked-Granola'},
+{y:'2024',t:'Silver',ti:'OATLY IN PARIS',b:'OATLY',a:'OATLY DEPARTMENT OF MIND CONTROL',u:'https://www.dandad.org/awards/professional/2024/238994/oatly-in-paris/'},
+{y:'2024',t:'Silver',ti:'OFFSET BOXSET',b:'KINOKUNIYA',a:'SAATCHI & SAATCHI ME DUBAI',u:'https://www.adsoftheworld.com/campaigns/offset-boxset'},
+{y:'2024',t:'Silver',ti:'OUT',b:'OF-HOME MATCHES – HEINEKEN',a:'LEPUB SÃO PAULO',u:'https://youtu.be/rJqdcTTCDjA'},
+{y:'2024',t:'Silver',ti:'PLANETARY GUARDIANS',b:'PLANETARY GUARDIANS',a:'AKQA BLOOM MIAMI',u:'https://www.akqa.com/work/planetary-guardians/living-visual-identity/'},
+{y:'2024',t:'Silver',ti:'PLUG',b:'INN FOR BUSINESS – RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://www.behance.net/gallery/181338443/Renault-Plug-Inn'},
+{y:'2024',t:'Silver',ti:'PRÊT À VOTER',b:'SOLAR IMPULSE',a:'PUBLICIS CONSEIL PARIS',u:'https://www.stevendaout.com/pret-a-voter'},
+{y:'2024',t:'Silver',ti:'PRIDE UNRAVELLED',b:'VML CANADA',a:'EGALE CANADA',u:'https://clios.com/awards/winner/direct/egale-canada/pride-unravelled-522727'},
+{y:'2024',t:'Silver',ti:'PROJECT FARM EQUAL',b:'LAY\'S',a:'LEO BURNETT MUMBAI',u:'https://youtu.be/VBSBidXI46o'},
+{y:'2024',t:'Silver',ti:'RAISE YOUR ARCHES',b:'MCDONALD\'S',a:'LEO BURNETT LONDON',u:'https://www.youtube.com/watch?v=Zt336MYMY2c'},
+{y:'2024',t:'Silver',ti:'REACH FOR THE SUMMIT',b:'THE HOKKOKU SHIMBUN',a:'DENTSU INC. TOKYO',u:'https://www.dandad.org/awards/professional/2024/238534/reach-for-the-summit/'},
+{y:'2024',t:'Silver',ti:'RENT YOUR SUNSET',b:'CORONA',a:'FAHRENHEIT DDB LIMA',u:'https://vimeo.com/944239004'},
+{y:'2024',t:'Silver',ti:'REVIEWS FOR NATURALIZATION',b:'HEINZ',a:'AFRICA SÃO PAULO',u:'https://www.ddb.com/creative/a-simple-review-system-to-aid-the-naturalization-process/'},
+{y:'2024',t:'Silver',ti:'RIGHTS AGAINST THE RIGHT, THE FIRST TRADEMARK THAT STOPS TRADING NAZI MERCH',b:'LAUT GEGEN NAZIS',a:'JUNG VON MATT AG HAMBURG',u:'https://www.dandad.org/awards/professional/2024/237932/rights-against-the-right-the-first-trademark-that-stops-trading-nazi-merch/'},
+{y:'2024',t:'Silver',ti:'RISE',b:'EVOKA',a:'BLACK DOG FILMS LONDON',u:'https://lbbonline.com/work/80139'},
+{y:'2024',t:'Silver',ti:'ROCKSEEDS',b:'TBS',a:'CHANGE AN FCB ALLIANCE PARIS',u:'https://lbbonline.com/work/109687'},
+{y:'2024',t:'Silver',ti:'ROM\'S IMMORTAL TIMELINE',b:'ROYAL ONTARIO MUSEUM',a:'LEO BURNETT TORONTO',u:'https://theadcc.ca/archive/royal-ontario-museum-rom_2023_gold_brand-identity-rebrand'},
+{y:'2024',t:'Silver',ti:'SANS EMISSION',b:'VOLKSWAGEN',a:'TOUCHE! MONTREAL',u:'https://clios.com/awards/winner/media/volkswagen-canada/sans-%C3%89mission-522780'},
+{y:'2024',t:'Silver',ti:'SEE MY NAME',b:'MOLSON™',a:'RETHINK TORONTO',u:'https://lbbonline.com/work/110736'},
+{y:'2024',t:'Silver',ti:'SHOT ON IPHONE | LITTLE GARLIC',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB SHANGHAI',u:'https://www.youtube.com/watch?v=U1unmE6OlYM'},
+{y:'2024',t:'Silver',ti:'SICKER THAN THE PATIENTS',b:'FRONTLINE19',a:'ADAM&EVEDDB LONDON',u:'https://www.youtube.com/watch?v=eVxagBnriTE'},
+{y:'2024',t:'Silver',ti:'SING TO REMEMBER',b:'COCA-COLA',a:'VML MUMBAI',u:'https://vimeo.com/962253766'},
+{y:'2024',t:'Silver',ti:'SLEEP WITH RAIN',b:'AT&T BUSINESS',a:'BBDO LOS ANGELES',u:'https://www.arboledajuan.com/work/sleep-with-rain'},
+{y:'2024',t:'Silver',ti:'SMACK FOR HEINZ',b:'HEINZ',a:'RETHINK NEW YORK',u:'https://www.geoffbaillie.com/#/smack-for-heinz/'},
+{y:'2024',t:'Silver',ti:'SMUGGLERS',b:'MARMITE',a:'ADAM&EVEDDB LONDON/NY',u:'https://www.chrisbraileysthingys.com/marmite-smugglers'},
+{y:'2024',t:'Silver',ti:'SNOOP GOES SMOKELESS',b:'SOLO STOVE',a:'THE MARTIN AGENCY',u:'https://www.dandad.org/awards/professional/2024/238530/snoop-goes-smokeless/'},
+{y:'2024',t:'Silver',ti:'SOLO: THERE\'S MAGIC IN ALL OF US',b:'MONTEFIORE EINSTEIN',a:'ALTO NEW YORK',u:'https://www.dandad.org/awards/professional/2024/237836/solo-theres-magic-in-all-of-us/'},
+{y:'2024',t:'Silver',ti:'SORRY FOR SLURPING',b:'POT NOODLE / UNILEVER',a:'ADAM&EVEDDB LONDON',u:'https://www.markshanley.com/pot-noodle-slurp'},
+{y:'2024',t:'Silver',ti:'SOUND SCALES',b:'BAILEYS',a:'VML LONDON',u:'https://lbbonline.com/work/106681'},
+{y:'2024',t:'Silver',ti:'STRONGER',b:'THE RIKY RICK FOUNDATION',a:'TBWA\\HUNT\\LASCARIS JOHANNESBURG',u:'https://www.youtube.com/watch?v=qaKNqH5hbRY'},
+{y:'2024',t:'Silver',ti:'SUMMER',b:'GRAB RIDE-HAILING AND FOOD DELIVERY APP',a:'GIGIL MANILA',u:'https://www.youtube.com/watch?v=2b9fLSUF63c'},
+{y:'2024',t:'Silver',ti:'SUNSET O\' CLOCK',b:'CORONA',a:'DAVID BOGOTÁ',u:'https://vimeo.com/946858874'},
+{y:'2024',t:'Silver',ti:'SUPER',b:'CANAL',a:'BETC PARIS',u:'https://www.youtube.com/watch?v=jl5RHYY6yP0'},
+{y:'2024',t:'Silver',ti:'TED LASSO: FAKE TEAM. REAL PARTNERS.',b:'APPLE',a:'APPLE SAN JOSE',u:'https://www.oneclub.org/awards/theoneshow/-award/53366/ted-lasso-fake-team-real-partners'},
+{y:'2024',t:'Silver',ti:'THE ANTIRACIST BAG',b:'UNIVERSITY ZUMBI DOS PALMARES',a:'GREY SÃO PAULO',u:'https://www.adsoftheworld.com/campaigns/anti-racist-bag'},
+{y:'2024',t:'Silver',ti:'THE BALD THRU',b:'BURGER KING',a:'DAIVD SÃO PAULO',u:'https://vimeo.com/947099311'},
+{y:'2024',t:'Silver',ti:'THE BLACK GRAMMY',b:'THE GRAMMY AWARDS',a:'TBWA\\CHIAT\\DAY LOS ANGELES',u:'https://clios.com/music/winner/social-good/the-recording-academy/the-black-grammy-508648'},
+{y:'2024',t:'Silver',ti:'THE BOXER',b:'COLGATE',a:'SOHO SQUARE BANGKOK',u:'https://www.dandad.org/awards/professional/2024/237819/the-boxer/'},
+{y:'2024',t:'Silver',ti:'THE COST OF BEAUTY',b:'DOVE MASTERBRAND',a:'OGILVY LONDON',u:'https://www.youtube.com/watch?v=2ngESNoacxM'},
+{y:'2024',t:'Silver',ti:'THE CRUISE HEIST',b:'NETFLIX',a:'404 SÃO PAULO',u:'https://vimeo.com/939676301'},
+{y:'2024',t:'Silver',ti:'THE E',b:'COMMERCE OF TRUST – WECAPITAL',a:'DDB MEXICO',u:'https://www.youtube.com/watch?v=WajarWWN5jE'},
+{y:'2024',t:'Silver',ti:'THE F***ING CAR',b:'NETFLIX',a:'MEDIA.MONKS HILVERSUM',u:'https://www.youtube.com/watch?v=C8X6QeouYu0'},
+{y:'2024',t:'Silver',ti:'THE FORBIDDEN GIFT SHOP',b:'MERCADO LIBRE',a:'GUT SÃO PAULO',u:'https://vimeo.com/947891246'},
+{y:'2024',t:'Silver',ti:'THE GAMING FRIDGE',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://www.youtube.com/watch?v=R-eDCJt0FxU'},
+{y:'2024',t:'Silver',ti:'THE GREENPRINT',b:'VOLKSWAGEN NEW ZEALAND',a:'DDB AOTEAROA',u:'https://www.dandad.org/awards/professional/2024/238294/the-greenprint/'},
+{y:'2024',t:'Silver',ti:'THE HEAVIEST JERSEY',b:'NEW BALANCE',a:'LEPUB SÃO PAULO',u:'https://www.youtube.com/watch?v=O5M0AKUFjxs'},
+{y:'2024',t:'Silver',ti:'THE INVINCIBLES / IPHONE',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.dandad.org/awards/professional/2024/239035/the-invincibles/'},
+{y:'2024',t:'Silver',ti:'THE LAST PHOTO',b:'ITV X CALM',a:'ADAM&EVEDDB LONDON',u:'https://www.dandad.org/awards/professional/2023/237073/the-last-photo/'},
+{y:'2024',t:'Silver',ti:'THE LOST VOICE',b:'APPLE',a:'APPLE MARCOM',u:'https://vimeo.com/891477846'},
+{y:'2024',t:'Silver',ti:'THE MOBSTER',b:'FLOWARD',a:'FLOWARD MENA DUBAI',u:'https://vimeo.com/955464638'},
+{y:'2024',t:'Silver',ti:'THE MOST INCLUSIVE CHRISTMAS ADDRESS',b:'OPEN TO DIVERSITY, CLOSED TO EXCLUSION',a:'JUNG VON MATT AG HAMBURG',u:'https://clios.com/awards/winner/experience-activation/open-to-diversity/the-most-inclusive-christmas-address-522704'},
+{y:'2024',t:'Silver',ti:'THE NAME CONFUSION',b:'A.L.M.A. / RACING CLUB',a:'REPUBLICA HAVAS MIAMI',u:'https://vimeo.com/824735065'},
+{y:'2024',t:'Silver',ti:'THE ORIGINAL MOUTHFUL',b:'MCDONALD\'S',a:'DDB SYDNEY',u:'https://www.andrewtorrisi.com/theoriginalmouthful'},
+{y:'2024',t:'Silver',ti:'THE PLASTIC FORECAST',b:'MINDEROO FOUNDATION',a:'M&C SAATCHI AUSTRALIA',u:'https://clios.com/awards/winner/creative-use-of-data/minderoo-foundation/the-plastic-forecast-518002'},
+{y:'2024',t:'Silver',ti:'THE SOUND STUDIO',b:'THE GENERAL INSURANCE',a:'ENERGY BBDO CHICAGO',u:'https://baldinbarrea.com/soundstudio/'},
+{y:'2024',t:'Silver',ti:'THE STANLEY REFRESH',b:'STANLEY 1913',a:'GSD&M AUSTIN',u:'https://youtu.be/IxBIv2MuweQ'},
+{y:'2024',t:'Silver',ti:'THE UNDERDOGS: SWIPED MAC | APPLE AT WORK',b:'APPLE',a:'APPLE',u:'https://www.dandad.org/awards/professional/2024/237986/the-underdogs-swiped-mac/'},
+{y:'2024',t:'Silver',ti:'THE VAULT',b:'POWERADE',a:'OGILVY NEW YORK',u:'https://www.youtube.com/watch?v=5OMKmJ9onhE'},
+{y:'2024',t:'Silver',ti:'THIS IS AN IKEA STORE',b:'IKEA',a:'OGILVY MANILA',u:'https://www.dandad.org/awards/professional/2024/237920/this-is-an-ikea-store/'},
+{y:'2024',t:'Silver',ti:'TIME',b:'FIGHTERS PROGRAM – RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://www.lbbonline.com/work/85258'},
+{y:'2024',t:'Silver',ti:'TRES',b:'REINSERTA',a:'GREY MEXICO',u:'https://clios.com/awards/winner/film/reinserta/tres-512121'},
+{y:'2024',t:'Silver',ti:'TRUST THE TWIST',b:'OREO',a:'LEPUB AMSTERDAM',u:'https://www.andrearaia.com/work/oreo-trust-the-twist'},
+{y:'2024',t:'Silver',ti:'UNFINISHED',b:'EE',a:'SAATCHI & SAATCHI LONDON',u:'https://www.peteandollie.com/eeunfinished'},
+{y:'2024',t:'Silver',ti:'UNSEEN FACES',b:'MISSING CHILDREEN & UNICEF',a:'OGILVY ARGENTINA',u:'https://www.youtube.com/watch?v=MQeJjsmz2H0'},
+{y:'2024',t:'Silver',ti:'VISIONOS',b:'APPLE INC.',a:'APPLE CUPERTINO',u:'https://www.dandad.org/awards/professional/2024/238090/visionos/'},
+{y:'2024',t:'Silver',ti:'WAITING TO LIVE',b:'NHS BLOOD AND TRANSPLANT',a:'VML & WUNDERMANTHOMPSON LONDON',u:'https://www.dandad.org/awards/professional/2024/238666/waiting-to-live/'},
+{y:'2024',t:'Silver',ti:'WELCOME TO THE GROUP',b:'CAMBIEMOS LA REGLA',a:'PHD SAN JOSE',u:'https://www.behance.net/gallery/194407279/Welcome-To-The-Group'},
+{y:'2024',t:'Silver',ti:'WHAT THE FOOTBALL',b:'NIKE',a:'WIEDEN+KENNEDY PORTLAND',u:'https://clios.com/awards/winner/film-craft-editing/nike/what-the-football-519743'},
+{y:'2024',t:'Silver',ti:'WHOPPER ISLAND',b:'BURGER KING',a:'DM9 SÃO PAULO',u:'https://cakeandgus.com/WHOPPER-ISLAND'},
+{y:'2024',t:'Silver',ti:'WRONG CANDIDATES',b:'CHANGE THE REF',a:'ALMA DDB',u:'https://youtu.be/D_SW_QAOzyQ'},
+{y:'2024',t:'Bronze',ti:'#CANCELPIZZA',b:'AJINOMOTO',a:'EDELMAN NEW YORK',u:'https://www.youtube.com/watch?v=LD21DzLne2s'},
+{y:'2024',t:'Bronze',ti:'10 VS 10',b:'DOVE',a:'OGILVY LONDON',u:'https://julianaparacencio.com/#/dove-10x10/'},
+{y:'2024',t:'Bronze',ti:'0.0 PROHIBITION SHELF',b:'HEINEKEN',a:'PUBLICIS BUENOS AIRES',u:'https://vimeo.com/951380316'},
+{y:'2024',t:'Bronze',ti:'5 DAYS? GIVE ME A BREAK.',b:'BOTICARIO',a:'ALMAPBBDO SÃO PAULO',u:'https://www.mozargudin.com/#/5-days-o-boticrio/'},
+{y:'2024',t:'Bronze',ti:'AD',b:'ONS – MCDONALD\'S',a:'DDB NEW ZEALAND',u:'https://vimeo.com/945623360'},
+{y:'2024',t:'Bronze',ti:'ADOPTION LIVE',b:'MUSTI JA MIRRI',a:'ERMA & REINIKAINEN HELSINKI',u:'https://youtu.be/7D7dNM0E22Y'},
+{y:'2024',t:'Bronze',ti:'ADOPT YOUR ALLERGIES',b:'ALLEGRA',a:'MCCANN BOGOTA',u:'https://www.youtube.com/watch?v=V4bsF-kzVps'},
+{y:'2024',t:'Bronze',ti:'ADRESS CHANGE',b:'DANS LA RUE',a:'LG2 QUEBEC',u:'https://lbbonline.com/work/105394'},
+{y:'2024',t:'Bronze',ti:'ADSCAN',b:'MARKO COLOMBIA',a:'VML BOGOTA',u:'https://www.vml.com/work/adscan-by-makro'},
+{y:'2024',t:'Bronze',ti:'AE 1',b:'ADIDAS',a:'JOHANNES LEONARDO NEW YORK',u:'https://youtu.be/hOnhABJeAEE'},
+{y:'2024',t:'Bronze',ti:'AFTER',b:'DINNER DINNER – MCDONALD\'S',a:'FP7 MCCANN DUBAI',u:'https://liamgalt.myportfolio.com/mcdonalds-dinner-after-dinner'},
+{y:'2024',t:'Bronze',ti:'AIZOME ULTRA',b:'AIZOME',a:'SERVICEPLAN GERMANY',u:'https://clios.com/awards/winner/creative-business-transformation/aizome/aizome-ultra-an-innovative-method-to-create-textil-512853'},
+{y:'2024',t:'Bronze',ti:'AMERICA RUNS ON DUNKIN\' [AND BEN]',b:'DUNKIN\' DONUTS',a:'ARTISTS EQUITY LOS ANGELES',u:'https://youtu.be/P0_kRUZNZ88'},
+{y:'2024',t:'Bronze',ti:'AMUNAS RECOVERY',b:'BACKUS AB INBEV LIMA',a:'PUBLICIS PERU',u:'https://vimeo.com/937783428'},
+{y:'2024',t:'Bronze',ti:'AS CLOSE AS YOU CAN GET',b:'PRISM+',a:'MULLENLOWE SINGAPORE',u:'https://www.ernestchin.com/prism-as-close-as-you-can-get'},
+{y:'2024',t:'Bronze',ti:'A SOUP TO REMEMBER',b:'MARODI',a:'BRUKETA&ZINIC&GREY ZAGREB',u:'https://www.youtube.com/watch?v=svXl_7k1_aQ'},
+{y:'2024',t:'Bronze',ti:'BACKING THE BARS',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://youtu.be/gH_EA2rPac4'},
+{y:'2024',t:'Bronze',ti:'BANNED BOOK CLUB',b:'DIGITAL PUBLIC LIBRARIES OF AMERICA',a:'FCB CHICAGO',u:'https://clios.com/awards/winner/creative-use-of-data/digital-public-library-of-america/banned-book-club-521526'},
+{y:'2024',t:'Bronze',ti:'BARBIE BREAKS OUT OF THE BOX (OFFICE)',b:'BARBIE',a:'HEARTS & SCIENCE BURBANK',u:'https://clios.com/awards/winner/integrated/barbie/barbie-the-movie-512255'},
+{y:'2024',t:'Bronze',ti:'BE HONEST',b:'UBER',a:'SPECIAL LOS ANGELES',u:'https://youtu.be/3L-VTxCUnwM'},
+{y:'2024',t:'Bronze',ti:'BETTER WITH PEPSI: RUM',b:'PEPSI',a:'ALMA DDB MIAMI',u:'https://www.dandad.org/awards/professional/2024/238967/better-with-pepsi-rum/'},
+{y:'2024',t:'Bronze',ti:'BIGGER CHRISTMAS TREES',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.oneclub.org/awards/theoneshow/-award/52067/bigger-christmas-trees'},
+{y:'2024',t:'Bronze',ti:'BLOOD AID',b:'DASA INTEGRATED HEALTH SYSTEM',a:'DM9 SÃO PAULO',u:'https://cakeandgus.com/BLOOD-AID'},
+{y:'2024',t:'Bronze',ti:'BOUQUETS FOR LIVING MEN',b:'DOORDASH',a:'GUT LOS ANGELES',u:'https://vimeo.com/963534871'},
+{y:'2024',t:'Bronze',ti:'CAN YOU KFC IT?',b:'KFC',a:'MCCANN BUCHAREST',u:'https://youtu.be/ueadRxwBA1c'},
+{y:'2024',t:'Bronze',ti:'CAPA VS WAR',b:'ROBERT CAPA CONTEMPORARY PHOTOGRAPHY CENTER',a:'INNOCEAN BERLIN',u:'https://www.dandad.org/awards/professional/2024/239075/capa-vs-war/'},
+{y:'2024',t:'Bronze',ti:'CLIMATE DOCTOR\'S CERTIFICATE',b:'SCHOOL STRIKE 4 CLIMATE',a:'CHEP NETWORK MELBOURNE',u:'https://clios.com/awards/winner/experience-activation/school-strikes-4-climate/climate-doctor-s-certificate-514513'},
+{y:'2024',t:'Bronze',ti:'CORONA SUNSET BOTTLES',b:'CORONA',a:'WE BELIEVERS NEW YORK',u:'https://vimeo.com/947187194'},
+{y:'2024',t:'Bronze',ti:'CRITICS WELCOME',b:'CHICAGO INTERNATIONAL FILM FESTIVAL',a:'OGILVY CHICAGO',u:'https://clios.com/awards/winner/out-of-home/chicago-international-film-festival/critics-welcome-ooh-campaign-522602'},
+{y:'2024',t:'Bronze',ti:'DABBA SAVINGS ACCOUNT',b:'ESAF SMALL FINANCE BANK',a:'MCCANN WORLDGROUP GURUGRAM',u:'https://www.youtube.com/watch?v=0DMlDHOlJjs'},
+{y:'2024',t:'Bronze',ti:'DELIVERY SAFE',b:'KFC FRANCE',a:'HAVAS PARIS',u:'https://www.youtube.com/watch?v=_xLstn3cBfc'},
+{y:'2024',t:'Bronze',ti:'DEW BATTLE',b:'MOUNTAIN DEW',a:'BBDO GUERRERO MAKATI CITY',u:'https://www.lbbonline.com/work/109772'},
+{y:'2024',t:'Bronze',ti:'DIABLO ANTHEM',b:'DIABLO',a:'72ANDSUNNY LOS ANGELES',u:'https://clios.com/entertainment/winner/games-branded-content/diablo-iv/lilith-diablo-iv-anthem-150117'},
+{y:'2024',t:'Bronze',ti:'DIFFERENT',b:'SAMSUNG NZ',a:'DDB AUCKLAND',u:'https://jacobthomasnewton.com/coming-soon-1'},
+{y:'2024',t:'Bronze',ti:'DOMINO\'S HEATSUIT',b:'DOMINO\'S PIZZA',a:'ONE GREEN BEAN LONDON',u:'https://vimeo.com/945750406'},
+{y:'2024',t:'Bronze',ti:'DON\'T LET ME GO',b:'APPLE',a:'APPLE MARCOM',u:'https://www.dandad.org/awards/professional/2024/238292/dont-let-me-go/'},
+{y:'2024',t:'Bronze',ti:'DROPS OF JOY',b:'LAY\'S',a:'LEO BURNETT MUMBAI',u:'https://vimeo.com/964777266'},
+{y:'2024',t:'Bronze',ti:'E.L.F. X LIQUID DEATH',b:'LIQUID DEATH, E.L.F. COSMETICS',a:'E.L.F. COSMETICS NEW YORK',u:'https://youtu.be/4vqcvW43rhE'},
+{y:'2024',t:'Bronze',ti:'EAT LIKE YOUR AVATAR',b:'INTERBEV',a:'OGILVY PARIS',u:'https://youtu.be/6_VCiGTBSvw'},
+{y:'2024',t:'Bronze',ti:'EDIBLE LITERATURE',b:'KAMEYA YOSHINAGA',a:'VML OGILVY JAPAN',u:'https://www.vml.com/work/edible-literature'},
+{y:'2024',t:'Bronze',ti:'ET LE BUUUUUD',b:'BUDWEISER',a:'BETC PARIS',u:'https://youtu.be/TToIoh0Uow0'},
+{y:'2024',t:'Bronze',ti:'EXOSPHERE',b:'SPHERE',a:'SPHERE ENTERTAINMENT NEW YORK',u:'https://youtu.be/Vz3E2OULguM'},
+{y:'2024',t:'Bronze',ti:'FASHION AGAINST FASCISM. THE BIGGEST DATABANK AGAINST NAZI CODES.',b:'LAUT GEGEN NAZIS E.V.',a:'JUNG VON MATT AG HAMBURG',u:'https://youtu.be/3lg3FXn-AvM'},
+{y:'2024',t:'Bronze',ti:'FLYING GUARDIANS',b:'PLANET LABS PBC & GREENPEACE',a:'ALMAPBBDO SÃO PAULO',u:'https://youtu.be/Wlr-2G1B0-k'},
+{y:'2024',t:'Bronze',ti:'FORD X SYDNEY SWEENEY',b:'FORD',a:'WIEDEN+KENNEDY NEW YORK',u:'https://clios.com/awards/winner/partnerships-collaborations/ford/ford-x-sydney-sweeney-515242'},
+{y:'2024',t:'Bronze',ti:'FREEING TACO T***DAY',b:'TACO BELL',a:'DEUTSCH LA',u:'https://clios.com/awards/winner/public-relations/taco-bell/freeing-taco-t-day-514636'},
+{y:'2024',t:'Bronze',ti:'GATORADE MATCH SAVER',b:'GATORADE',a:'SPRINGTIME BUENOS AIRES',u:'https://www.youtube.com/watch?v=l7zUT368W9o'},
+{y:'2024',t:'Bronze',ti:'GHOST CAMPAIGN',b:'BURGER KING',a:'DAVID MADRID',u:'https://www.dandad.org/awards/professional/2024/238436/ghost-campaign/'},
+{y:'2024',t:'Bronze',ti:'GIVING A VOICE TO THE UNHEARD',b:'ISLAM ALIJAJ',a:'TEAM FARNER SWITZERLAND',u:'https://www.dandad.org/awards/professional/2024/238747/giving-a-voice-to-the-unheard/'},
+{y:'2024',t:'Bronze',ti:'GO FOR LAUNCH',b:'CP CHICKEN',a:'WOLF BKK BANGKOK',u:'https://www.youtube.com/watch?v=DP1YtKhWg4A'},
+{y:'2024',t:'Bronze',ti:'GOLDEN OPULENCE',b:'BEYMEN',a:'BEYMEN GROUP ISTANBUL',u:'https://www.tbwacannes.com/news/beymen-golden-opulence-beymen/'},
+{y:'2024',t:'Bronze',ti:'GOOGLE BLACK',b:'OWNED FRIDAY 2023 – GOOGLE',a:'GOOGLE NEW YORK',u:'https://clios.com/awards/winner/digital-mobile-social-media-craft/google/black-owned-friday-every-day-140876'},
+{y:'2024',t:'Bronze',ti:'GUILTY PETS',b:'IKEA',a:'INGO HAMBURG',u:'https://nicoandfer.com/ikea-guilty-pets'},
+{y:'2024',t:'Bronze',ti:'HEAR MY LAST WISH',b:'TAIWAN ORGAN SHARING REGISTRY AND PATIENT AUTONOMY PROMOTION CENTER',a:'LEO BURNETT TAIPEI',u:'https://clios.com/health/winner/audio-health-institutions-services/taiwan-organ-sharing-registry-patient-autonomy-pro/hear-my-last-wish-516485'},
+{y:'2024',t:'Bronze',ti:'HEART SURGEON\'S COOKBOOOK',b:'GETINGE',a:'FORSMAN & BODENFORS GOTHENBURG',u:'https://lbbonline.com/work/103256'},
+{y:'2024',t:'Bronze',ti:'HEAVEN FISH',b:'REGAL SPRING',a:'OGILVY HONDURAS TEGUCIGALPA',u:'https://www.youtube.com/watch?v=_nviy8MWCKg'},
+{y:'2024',t:'Bronze',ti:'HEINEKEN HEIDDEN IN PLAIN SIGHT',b:'HEINEKEN',a:'LEO BURNETT MALAYSIA',u:'https://activationideas.com/blog/heidden-in-plain-sight'},
+{y:'2024',t:'Bronze',ti:'HEINZ KETCHUP INSURANCE',b:'HEINZ',a:'FP8 MCCANN DUBAI',u:'https://liamgalt.myportfolio.com/heinz-ketchup-insurance'},
+{y:'2024',t:'Bronze',ti:'HELP US REMAIN',b:'EGALE',a:'COSSETTE TORONTO',u:'https://clios.com/awards/winner/film-craft-editing/egale/help-us-remain-519739'},
+{y:'2024',t:'Bronze',ti:'HERMÈS, CAVALIER JEWELLERY',b:'HERMES',a:'PUBLICIS ET NOUS PARIS',u:'https://www.hermes.com/us/en/content/312812-cavalier-jewelry/'},
+{y:'2024',t:'Bronze',ti:'HORROR CODES',b:'UBER EATS',a:'RETHINK NEW YORK',u:'https://www.dandad.org/awards/professional/2024/238584/uber-eats-horror-codes/'},
+{y:'2024',t:'Bronze',ti:'HUTUKARA',b:'SALGUEIRO & URIHI YANOMAMI',a:'ACADEMICOS DO SALGUEIRO ANDARAI',u:'https://cakeandgus.com/HUTUKARA'},
+{y:'2024',t:'Bronze',ti:'HVR X HVR',b:'HIDDEN VALLEY RANCH',a:'FCB CHICAGO',u:'https://www.johndoessel.com/hvr-x-hvr-double-ranch'},
+{y:'2024',t:'Bronze',ti:'IJACK',b:'BMW',a:'SERVICEPLAN DUBAI',u:'https://www.youtube.com/watch?v=2JszSYvK6DI'},
+{y:'2024',t:'Bronze',ti:'IMAGINARY SQUADS',b:'ITAÚ UNIBANCO',a:'GALERIA SÃO PAULO',u:'https://vimeo.com/961193626'},
+{y:'2024',t:'Bronze',ti:'INPLOYABLE',b:'CDSS',a:'FCB TORONTO',u:'https://www.youtube.com/watch?v=IS15mT6Objo'},
+{y:'2024',t:'Bronze',ti:'IT\'S TIME FOR YOUR TIME',b:'FRANC ARMAN WINES',a:'STUDIO TUMPIC PRENC ROVINJ',u:'https://www.tumpic-prenc.hr/en/projects/franc-arman-vrijeme-je-za-tvoje-vrijeme/'},
+{y:'2024',t:'Bronze',ti:'IT WORKS',b:'AD MUSEUM TOKYO',a:'DENTSU INC. TOKYO',u:'https://youtu.be/CZ5_czoAi7E'},
+{y:'2024',t:'Bronze',ti:'IWC INGENIEUR. FORM UND TECHNIK.',b:'IWC SCHAFFHAUSEN',a:'SCHOLZ & FRIENDS BERLIN',u:'https://www.geretyawards.com/winners/2024/entry/146394/iwc-ingenieur-form-und-technik-iwc-schaffhausen'},
+{y:'2024',t:'Bronze',ti:'JACKSONVILLE JAGUARS SCHEDULE RELEASE VIDEO',b:'JACKSONVILLE JAGUARS',a:'JACKSONVILLE JAGUARS',u:'https://www.youtube.com/watch?v=_tl_g3Uf1Tk'},
+{y:'2024',t:'Bronze',ti:'KFC FINGER LICKIN\' OPEN ENDORSEMENT',b:'KFC',a:'COURAGE TORONTO',u:'https://www.lbbonline.com/work/111049'},
+{y:'2024',t:'Bronze',ti:'LAST DROP',b:'HEINZ',a:'LEPUB SÃO PAULO',u:'https://www.adsoftheworld.com/campaigns/the-last-drop'},
+{y:'2024',t:'Bronze',ti:'LAUNDROMATCH',b:'HEINEKEN®',a:'LEPUB SINGAPORE',u:'https://www.youtube.com/watch?v=g1d8YBySG9c'},
+{y:'2024',t:'Bronze',ti:'LEGO FORTNITE',b:'LEGO',a:'THE LEGO GROUP BILLUND',u:'https://www.youtube.com/watch?v=ilhDyxH7_gU'},
+{y:'2024',t:'Bronze',ti:'LIFE IS NOT AN IKEA CATALOGUE',b:'IKEA',a:'TRY NORWAY',u:'https://www.dandad.org/awards/professional/2024/238367/life-is-not-an-ikea-catalogue/'},
+{y:'2024',t:'Bronze',ti:'LOOT FOR GOOD',b:'CALL OF DUTY ENDOWMENT',a:'DAVID NEW YORK',u:'https://jorgerocca.com/project/lootforgood'},
+{y:'2024',t:'Bronze',ti:'LOST IN TIME',b:'JIAN AI ELDERLY CHARITY CENTER',a:'DENTSU CREATIVE SHANGHAI',u:'https://lbbonline.com/work/108820'},
+{y:'2024',t:'Bronze',ti:'LUPIN ON THE MOVE',b:'NETFLIX',a:'DAVID MADRID',u:'https://clios.com/awards/winner/out-of-home/netflix/lupin-on-the-move-523675'},
+{y:'2024',t:'Bronze',ti:'LUX "THE END"',b:'LUX',a:'VML SINGAPORE',u:'https://www.vml.com/work/lux-the-end'},
+{y:'2024',t:'Bronze',ti:'MADE FROM RECYCLED MATERIALS',b:'VOLKSWAGEN',a:'BBDO ECUADOR',u:'https://clios.com/awards/winner/print/volkswagen/made-from-recycled-materials-515779'},
+{y:'2024',t:'Bronze',ti:'MAGNIFICENT',b:'YOTKAN ANCIENT CITY IN XINJIANG CHINA',a:'THE NINE SHANGHAI',u:'https://clios.com/music/winner/film-video-craft/yotkan-ancient-city-in-xinjiang-china/magnificent-508916'},
+{y:'2024',t:'Bronze',ti:'MALEKUS. THE LAST 600',b:'RAINFOREST LAB',a:'HAVAS COSTA RICA',u:'https://www.latinspots.com/sp/comercial/malekus.-the-last-600/45272'},
+{y:'2024',t:'Bronze',ti:'MAMA\'S EYES',b:'RCA RECORDS',a:'TRIM EDITING LONDON',u:'https://clios.com/music/winner/film-video/mette/mama-s-eyes-506698'},
+{y:'2024',t:'Bronze',ti:'MEOWZER',b:'WHISKAS',a:'COLENSO BBDO AUCKLAND',u:'https://youtu.be/rrrFgk6zPEI'},
+{y:'2024',t:'Bronze',ti:'MIS[S]DIAGNOSED',b:'ORGANON',a:'MULLENLOWE DUBAI',u:'https://caples.org/2024-winners-results/?id=23'},
+{y:'2024',t:'Bronze',ti:'MISSED CALLS',b:'TELENOR',a:'NORD DDB STOCKHOLM',u:'https://www.youtube.com/watch?v=-6J2nOuPNSg'},
+{y:'2024',t:'Bronze',ti:'NAPKINS OF RIGHTS',b:'FLORIDA IMMIGRANT COALITION',a:'VML MIAMI',u:'https://www.vml.com/work/napkins-of-rights'},
+{y:'2024',t:'Bronze',ti:'NEW GEN ENERGY',b:'OLGERDIN',a:'BRANDENBURG REYKJAVIK',u:'https://www.oneclub.org/awards/theoneshow/-award/51959/new-gen-energy'},
+{y:'2024',t:'Bronze',ti:'NEXT TO STOK\'D',b:'STOK\'D CANNABIS',a:'ANGRY BUTTERFLY CANADA',u:'https://www.dandad.org/awards/professional/2024/238266/next-to-stokd/'},
+{y:'2024',t:'Bronze',ti:'NO ONE MOVES SNOW LIKE GRISELDA',b:'NETFLIX',a:'CYW MADRID',u:'https://www.behance.net/gallery/193273755/Netflix-No-one-moves-snow-like-Griselda-Special-OHH'},
+{y:'2024',t:'Bronze',ti:'NOT A LONELY JOURNEY',b:'BIOGEN',a:'VML MILAN',u:'https://clios.com/health/winner/branded-entertainment-content-pharmaceutical/biogen/not-a-lonely-journey-travel-guide-collection-for-s-517306'},
+{y:'2024',t:'Bronze',ti:'NOTTURTLE',b:'NOTCO',a:'GUT MIAMI',u:'http://www.workofparadise.com/#/notturtle/'},
+{y:'2024',t:'Bronze',ti:'NOT VERY SWEET',b:'DELIGHT',a:'OGILVY BANGKOK',u:'https://www.dandad.org/awards/professional/2024/238130/not-very-sweet/'},
+{y:'2024',t:'Bronze',ti:'NURSES',b:'MUSEE DE LA GRANDE GUERRE',a:'DDB PARIS',u:'https://www.dandad.org/awards/professional/2024/238981/nurses/'},
+{y:'2024',t:'Bronze',ti:'OREO CHEAT COOKIES',b:'MONDELEZ EUROPE',a:'SAATCHI & SAATCHI DUSSELDORF',u:'https://clios.com/awards/winner/partnerships-collaborations/oreo/cheat-cookies-142614'},
+{y:'2024',t:'Bronze',ti:'OREO MENU',b:'OREO',a:'VML NEW YORK',u:'https://www.vml.com/work/oreo-menu'},
+{y:'2024',t:'Bronze',ti:'OREO X PAC',b:'MAN SUPERMARCADE – OREO',a:'SAATCHI & SAATCHI DUSSELDORF',u:'https://www.oneclub.org/awards/theoneshow/-award/53451/chaseplayfulness'},
+{y:'2024',t:'Bronze',ti:'PENGUIN SOAP OPERA',b:'ORIX AQUARIUM',a:'DENTSU TOKYO',u:'https://youtu.be/yIARSyYZt3A'},
+{y:'2024',t:'Bronze',ti:'PIÑATEX',b:'DOLE SUNSHINE COMPANY + ANANAS ANAM',a:'L&C NEW YORK',u:'https://clios.com/awards/winner/design-craft/dole-sunshine-company-x-ananas-anam/pi%C3%B1atex-116436'},
+{y:'2024',t:'Bronze',ti:'PLAY HAS NO LIMITS FEAT. KING GNU',b:'PLAYSTATION',a:'SIX INC., TOKYO',u:'https://clios.com/awards/winner/film-craft-animation/playstation/play-has-no-limits-feat-king-gnu-517209'},
+{y:'2024',t:'Bronze',ti:'PRIVACY SHADES',b:'WHATSAPP',a:'BBDO NEW YORK',u:'https://www.chesneyjensen.com/work/whatsapp'},
+{y:'2024',t:'Bronze',ti:'PULSE OF NATURE',b:'VEOLIA',a:'FAMOUSGREY BRUSSELS',u:'https://caples.org/2024-winners-results/?id=177'},
+{y:'2024',t:'Bronze',ti:'REEF RELIEF',b:'STREAM2SEA',a:'MCCANN DEMAND LONDON',u:'https://www.fredcorazza.com/reef-relief'},
+{y:'2024',t:'Bronze',ti:'REPRINTING NICA',b:'LA PRENSA NEWSPAPER',a:'HAVAS COSTA RICA',u:'https://www.youtube.com/watch?v=M-rh7IvncHI'},
+{y:'2024',t:'Bronze',ti:'RESPECT',b:'RSPCA',a:'SOMESUCH LOS ANGELES',u:'https://www.youtube.com/watch?v=F6Va1u5OMqY'},
+{y:'2024',t:'Bronze',ti:'REWILDING MODE',b:'HUSQVARNA',a:'WEBER SHANDWICK',u:'https://vimeo.com/883963154'},
+{y:'2024',t:'Bronze',ti:'RIP CURL VIRTUAL PRO',b:'RIP CURL',a:'VML SYDNEY',u:'https://www.dandad.org/awards/professional/2024/238361/rip-curl-virtual-pro/'},
+{y:'2024',t:'Bronze',ti:'ROASTS FOR RIVALS',b:'7-ELEVEN',a:'DENTSU CREATIVE NEW YORK',u:'https://vimeo.com/942494251'},
+{y:'2024',t:'Bronze',ti:'ROB IT TO GET IT',b:'DISTANCE',a:'BETC PARIS',u:'https://clios.com/awards/winner/media/distance/rob-it-to-get-it-517295'},
+{y:'2024',t:'Bronze',ti:'ROCK DNA',b:'BILLBOARD',a:'ALMAPBBDO SÃO PAULO',u:'https://vimeo.com/949686547'},
+{y:'2024',t:'Bronze',ti:'ROCK STAR',b:'WORKDAY',a:'OGILVY LOS ANGELES',u:'https://www.ogilvy.com/work/rock-star'},
+{y:'2024',t:'Bronze',ti:'SABINA BRALESS',b:'SABINA',a:'SOUR BANGKOK',u:'https://www.youtube.com/watch?v=4kHvxvdUgv4'},
+{y:'2024',t:'Bronze',ti:'SALVATION HANGER',b:'SALVATION ARMY',a:'WMCCANN SÃO PAULO',u:'https://www.youtube.com/watch?v=2hVMtoOdZ0I'},
+{y:'2024',t:'Bronze',ti:'SELFLESS SHELVES',b:'ARLA FOODS',a:'FP7 MCCANN DUBAI',u:'https://www.dandad.org/awards/professional/2024/237930/selfless-shelves/'},
+{y:'2024',t:'Bronze',ti:'SHORT LIFE STORIES',b:'WHITE RIBBON',a:'BENSIMON BYRNE TORONTO',u:'https://clios.com/awards/winner/film-craft-music-licensed/white-ribbon/short-life-stories-516754'},
+{y:'2024',t:'Bronze',ti:'SHOT ON IPHONE 15 PRO: MIDNIGHT',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB TOKYO',u:'https://campaignbriefasia.com/2024/03/07/director-takashi-miike-and-tbwamedia-arts-lab-tokyo-release-19-minute-shot-on-iphone-film/'},
+{y:'2024',t:'Bronze',ti:'SIM: SPECIAL INVESTIGATIVE MEDIA',b:'DUTCH POLICE FORCE',a:'INITIATIVE MEDIA NEW YORK',u:'https://youtu.be/U71oXgZfFgk'},
+{y:'2024',t:'Bronze',ti:'SKIP THE COW',b:'FLORA',a:'UPFIELD AMSTERDAM',u:'https://youtu.be/F22-Wr3MhEg'},
+{y:'2024',t:'Bronze',ti:'STARR PARK CCTV',b:'BRAWL STARS',a:'SUPERCELL HELSINKI',u:'https://vimeo.com/962593964'},
+{y:'2024',t:'Bronze',ti:'STOP BULLYING',b:'GREEK MINISTRY OF EDUCATION, RELIGIOUS AFFAIRS AND SPORTS',a:'OGILVY ATHENS',u:'https://www.ogilvy.com/work/stop-bullying'},
+{y:'2024',t:'Bronze',ti:'SUCCESSION',b:'HSBC',a:'DAVID BUENOS AIRES',u:'https://www.youtube.com/watch?v=Mpe0G4MMBLw'},
+{y:'2024',t:'Bronze',ti:'SUPERSTAR',b:'ADIDAS',a:'COMPANY 3 LONDON',u:'https://clios.com/sports/winner/film-craft/adidas/superstar-507809'},
+{y:'2024',t:'Bronze',ti:'TABOO TOTES',b:'NANA',a:'SAATCHI & SAATCHI ME',u:'https://vimeo.com/940776506'},
+{y:'2024',t:'Bronze',ti:'TACOMA DOG TOY',b:'TOYOTA',a:'SAATCHI & SAATCHI LOS ANGELES',u:'https://youtu.be/Phd_iT9tnx8'},
+{y:'2024',t:'Bronze',ti:'TAIL ORCHESTRA',b:'PEDIGREE',a:'BBDO NY',u:'https://www.lbbonline.com/work/109473'},
+{y:'2024',t:'Bronze',ti:'TAKE MY LAWYERS',b:'WOM',a:'BBDO COLOMBIA',u:'https://youtu.be/_rpf41Om-yY'},
+{y:'2024',t:'Bronze',ti:'TANTO',b:'CASSIE MARIN',a:'SOMESUCH LOS ANGELES',u:'https://vimeo.com/873167245'},
+{y:'2024',t:'Bronze',ti:'TEST',b:'ICLES – FUNDACIÓN DE ALBA, A.C',a:'OGILVY MEXICO & NEW YORK',u:'https://www.ogilvy.com/work/test-icles'},
+{y:'2024',t:'Bronze',ti:'THE 26 SIGNS',b:'ALEXANDER MONRO HOSPITAL & BREAST CARE FOUNDATION',a:'TBWA\\NEBOKO AMSTERDAM',u:'https://www.youtube.com/watch?v=vgieNW55Q04'},
+{y:'2024',t:'Bronze',ti:'THE ART OF HACK',b:'SAMSUNG',a:'CHEIL SPAIN',u:'https://www.dandad.org/awards/professional/2024/237945/samsung-the-art-of-hack/'},
+{y:'2024',t:'Bronze',ti:'THE BEKO INHERITANCE',b:'BEKO',a:'VML LONDON',u:'https://vimeo.com/943584509'},
+{y:'2024',t:'Bronze',ti:'THE CARDBOARD CAKE',b:'WHOLEGREEN BAKERY',a:'THE HALLWAY SYDNEY',u:'https://www.youtube.com/watch?v=dkj0jd3urw8'},
+{y:'2024',t:'Bronze',ti:'THE CLIMB',b:'RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://www.advert.ge/commercials/renault/the_climb.html'},
+{y:'2024',t:'Bronze',ti:'THE CURE',b:'EDITORA TAVERNA',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://lbbonline.com/news/africa-crafts-powerful-cinematic-drama-in-the-fight-against-conversion-therapy'},
+{y:'2024',t:'Bronze',ti:'THE CUSHIONING ROUTE',b:'NIKE',a:'BOOST BRAND ACCELERATOR LIMA',u:'https://clios.com/awards/winner/media/nike/the-cushioning-route-512818'},
+{y:'2024',t:'Bronze',ti:'THE DAY A COUNTRY STOOD STILL',b:'CZECH INSURANCE ASSOCIATION',a:'MCCANN PRAGUE',u:'https://youtu.be/CA4FjFssCYk'},
+{y:'2024',t:'Bronze',ti:'THE ENDANGERED TYPEFACE',b:'ANF|WWF & JARDIM ZOOLÓGICO DE LISBOA',a:'BAR OGILVY LISBON',u:'https://www.ogilvy.com/work/endangered-typeface'},
+{y:'2024',t:'Bronze',ti:'THE FAMILY COOKVAULT',b:'IGA',a:'SID LEE CANADA',u:'https://www.dandad.org/awards/professional/2024/238203/family-cookvault/'},
+{y:'2024',t:'Bronze',ti:'THE GENDER DISCOUNT',b:'SANTANDER',a:'BETC HAVAS SÃO PAULO',u:'https://vimeo.com/944425506'},
+{y:'2024',t:'Bronze',ti:'THE GRAVY RACE',b:'SHEBA',a:'AMV BBDO LONDON',u:'https://hyperboloid-ellipsoid-7gg7.squarespace.com/the-work-1/gravy-race'},
+{y:'2024',t:'Bronze',ti:'THE HUMANITY CHECK',b:'AMNESTY INTERNATIONAL',a:'AMNESTY INTERNATIONAL ROME',u:'https://www.adsoftheworld.com/campaigns/the-humanity-check'},
+{y:'2024',t:'Bronze',ti:'THE ICONIC PLAYLIST',b:'MERCEDES BENZ',a:'TBWA\\PARIS',u:'https://www.dandad.org/awards/professional/2024/238469/the-iconic-playlist/'},
+{y:'2024',t:'Bronze',ti:'THE LAST PERFORMANCE',b:'PARTNERS LIFE',a:'SPECIAL AUCKLAND',u:'https://www.youtube.com/watch?v=bWKWMcjA-68'},
+{y:'2024',t:'Bronze',ti:'THE LAST TRIP',b:'LA UNION NEWSPAPER ARTICULO 19',a:'GREY MEXICO CITY',u:'https://vimeo.com/933909951'},
+{y:'2024',t:'Bronze',ti:'THE MELANOMA LAW',b:'SKIN CANCER UK',a:'OGILVY LONDON',u:'https://vimeo.com/956171444'},
+{y:'2024',t:'Bronze',ti:'THE PRINCESS AND THE CROWN',b:'SUNSILK',a:'SOKO SÃO PAULO',u:'https://vimeo.com/949900539'},
+{y:'2024',t:'Bronze',ti:'THE SHAMELESS PAD',b:'INTIMUS',a:'FCB SÃO PAULO',u:'https://lbbonline.com/work/109684'},
+{y:'2024',t:'Bronze',ti:'THE SHOTLINE',b:'CHANGE THE REF & MARCH FOR OUR LIVES',a:'MULLENLOWE U.S.',u:'https://kieranjmurray.com/shotline'},
+{y:'2024',t:'Bronze',ti:'THE SOCIAL SWAP',b:'HEINEKEN',a:'PUBLICIS ITALY, EDELMAN LONDON',u:'https://www.youtube.com/watch?v=zuxX79Hn7Og'},
+{y:'2024',t:'Bronze',ti:'THE SWEAT SIDE OF SPONSORSHIP',b:'GATORADE',a:'ISLA REPUBLICA SÃO PAULO',u:'https://vimeo.com/936685008'},
+{y:'2024',t:'Bronze',ti:'THE TABLE READ',b:'NFL',a:'72ANDSUNNY LOS ANGELES',u:'https://clios.com/awards/winner/film-craft-copywriting/nfl/the-table-read-522953'},
+{y:'2024',t:'Bronze',ti:'THE TWO FACES',b:'ALEXIA ORTIZ',a:'BBDO MEXICO',u:'https://www.behance.net/gallery/193099669/Alexia-Ortiz-Two-Faces'},
+{y:'2024',t:'Bronze',ti:'THE UNIVERSAL LANGUAGE OF COCA',b:'COLA – COCA-COLA',a:'GUT BUENOS AIRES',u:'https://www.latinspots.com/sp/comercial/the-universal-language-of-coca-cola/45292'},
+{y:'2024',t:'Bronze',ti:'THE UNMENTIONABLES',b:'UNILEVER',a:'MULLENLOWE LONDON',u:'https://lbbonline.com/news/mullenlowe-partners-with-cleanipedia-to-shine-a-light-on-the-stains-no-one-talks-about'},
+{y:'2024',t:'Bronze',ti:'THE VALUE OF TIME',b:'ITAU',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://vimeo.com/962359975'},
+{y:'2024',t:'Bronze',ti:'THE WILD ALGORITHM',b:'INSTITUTO AMPARA ANIMAL',a:'EDELMAN SPAIN',u:'https://www.youtube.com/watch?v=r_-YmIbxlfQ'},
+{y:'2024',t:'Bronze',ti:'THE X',b:'TINCTION TIMELINE – WWF',a:'MCCANN DUSSELDORF',u:'https://clios.com/awards/winner/social-media/wwf/the-x-tinction-timeline-521770'},
+{y:'2024',t:'Bronze',ti:'THIRD STAR',b:'LA ARGENTINA HOTEL',a:'MERCADO MCCANN',u:'https://www.nyfadvertising.com/Winners/WinnerDetailsNew/d583e9d3-5f2a-47a7-a43e-356aeb9b445b'},
+{y:'2024',t:'Bronze',ti:'TIL IT\'S DONE',b:'FOOTBALL AUSTRALIA',a:'OGILVY AUSTRALIA',u:'https://vimeo.com/940649073'},
+{y:'2024',t:'Bronze',ti:'TOLEDO MUSEUM OF ART',b:'TOLEDO MUSEUM OF ART',a:'LAFAYETTE AMERICAN DETROIT',u:'https://www.oneclub.org/awards/theoneshow/-award/51940/toledo-museum-of-art-rebrand'},
+{y:'2024',t:'Bronze',ti:'TOUCH',b:'MASTERCARD',a:'HOWATSON+COMPANY SYDNEY',u:'https://www.youtube.com/watch?v=PNudP30XJj4'},
+{y:'2024',t:'Bronze',ti:'TOXIC INFLUENCE',b:'DOVE',a:'OGILVY LONDON',u:'https://grandi-ideas.com/work/the-nosnow-globe-3b2zh-83spb-ezczh-en6bf-dfxl6'},
+{y:'2024',t:'Bronze',ti:'TRAFFICKING INCORPORATED',b:'TALITA',a:'AKESTAM HOLST STOCKHOLM',u:'https://www.oneclub.org/awards/theoneshow/-award/53283/trafficking-incorporated'},
+{y:'2024',t:'Bronze',ti:'TRUCKER NAPP',b:'VOLKSWAGEN & LIVELO',a:'ALMAPBBDO SÃO PAULO',u:'https://youtu.be/b5K_DROfNn0'},
+{y:'2024',t:'Bronze',ti:'TRY GALAXY FOLD EXPERIENCE',b:'SAMSUNG',a:'CHEIL WORLDWIDE',u:'https://www.dandad.org/awards/professional/2024/238576/try-galaxy-fold-experience/'},
+{y:'2024',t:'Bronze',ti:'TWIGGY FULL CIRCLE',b:'EBAY',a:'ESSENCEMEDIACOM NEW YORK',u:'https://clios.com/awards/winner/fashion-beauty/ebay/twiggy-full-circle-513274'},
+{y:'2024',t:'Bronze',ti:'UNDER MY SKIN',b:'THAI LIFE INSURANCE CO',a:'OGILVY BANGKOK',u:'https://www.dandad.org/awards/professional/2024/237818/under-my-skin/'},
+{y:'2024',t:'Bronze',ti:'UNFROSTED: NOT BROUGHT TO YOU BY POP',b:'TARTS – POP TARTS',a:'STARCOM CHICAGO',u:'https://youtu.be/Mg0qqQz1qRg'},
+{y:'2024',t:'Bronze',ti:'UNHIDE THE PRICE',b:'DEUTSCHER SPARKASSEN- UND GIROVERBAND E.V. & S-COMMUNICATION SERVICES GMBH',a:'JUNG VON MATT AG HAMBURG',u:'https://www.youtube.com/watch?v=jF54993i1jA'},
+{y:'2024',t:'Bronze',ti:'UNIQUE BILLBOARDS',b:'KFC FRANCE',a:'HAVAS PARIS',u:'https://youtu.be/D0mgD__xMEg'},
+{y:'2024',t:'Bronze',ti:'UNSEALED BOOKS',b:'LÍRA',a:'VML HUNGARY',u:'https://lbbonline.com/work/110561'},
+{y:'2024',t:'Bronze',ti:'UNSILENCE THE VIOLENCE',b:'TERRE DES FEMMES',a:'SCHOLZ & FRIENDS HAMBURG',u:'https://michaelyousaf.de/portfolio/ewan/'},
+{y:'2024',t:'Bronze',ti:'USED BARBIE DREAM CARS',b:'CARBRAVO',a:'MRM MICHIGAN',u:'https://www.dandad.org/awards/professional/2024/237946/used-barbie-dream-cars-x-carbravo/'},
+{y:'2024',t:'Bronze',ti:'VANISHING EMAILS',b:'AMAZON WEB SERVICES',a:'VML LIMA',u:'https://juanicalvo.com/amazon-page'},
+{y:'2024',t:'Bronze',ti:'VASELINE SUNITIZER',b:'VASELINE',a:'VML JAKARTA',u:'https://lbbonline.com/work/110562'},
+{y:'2024',t:'Bronze',ti:'VIDEO VINYL',b:'COKE STUDIO',a:'OGILVY SINGAPORE',u:'https://vimeo.com/945769824'},
+{y:'2024',t:'Bronze',ti:'VI HUMAN NETWORK TESTING NETWORK',b:'VODAFONE IDEA LTD.',a:'OGILVY MUMBAI',u:'https://www.dandad.org/awards/professional/2024/237863/vi-human-network-testing-network/'},
+{y:'2024',t:'Bronze',ti:'WAITING ROOM',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.dandad.org/awards/professional/2024/239190/waiting-room/'},
+{y:'2024',t:'Bronze',ti:'WE GAVE THE WORLD AN ORIGINAL, YOU GAVE US A THOUSAND BACK.',b:'ADIDAS',a:'JOHANNES LEONARDO NEW YORK',u:'https://www.youtube.com/watch?v=JjW5HrBLZnA'},
+{y:'2024',t:'Bronze',ti:'WENDY\'S ENTERS THE CHAT',b:'WENDY\'S',a:'VML KANSAS CITY',u:'https://www.vml.com/work/wendys-enters-the-chat'},
+{y:'2024',t:'Bronze',ti:'WHOEVER BREATHES, NEEDS THE SEA',b:'GREENPEACE',a:'FARNER PR ZURICH',u:'https://vimeo.com/937712334'},
+{y:'2024',t:'Bronze',ti:'WRAPPED ON PLATFORM EXPERIENCE',b:'SPOTIFY IN-HOUSE',a:'SPOTIFY IN-HOUSE NEW YORK',u:'https://clios.com/awards/winner/creative-use-of-data/spotify-in-house/wrapped-on-platform-experience-143147'},
+{y:'2024',t:'Bronze',ti:'YOUR 2ND FAVOURITE BEER',b:'MATILDA BAY',a:'HOWATSON+COMPANY SYDNEY',u:'https://vimeo.com/913506137'},
+{y:'2024',t:'Bronze',ti:'ZAEL: THE DISAPPEARING FONT',b:'PROTYPE STUDIO',a:'LEO BURNETT DUBAI',u:'https://www.dandad.org/awards/professional/2024/239012/zael/'},
+{y:'2025',t:'Grand Prix',ti:'THREE WORDS',b:'AXA',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=pY-03zuV7mE'},
+{y:'2025',t:'Grand Prix',ti:'CAPTION WITH INTENTION',b:'CHICAGO HEARING SOCIETY',a:'FCB CHICAGO',u:'https://lbbonline.com/work/134176'},
+{y:'2025',t:'Grand Prix',ti:'VASELINE VERIFIED',b:'UNILEVER',a:'OGILVY SINGAPORE',u:'https://vimeo.com/1082798104'},
+{y:'2025',t:'Grand Prix',ti:'PEDIGREE CARAMELO',b:'PEDIGREE',a:'ALMAPBBDO SÃO PAULO',u:'https://cakeandgus.com/PEDIGREE-CARAMELO'},
+{y:'2025',t:'Grand Prix',ti:'ACT LIKE YOU KNOW',b:'GODADDY',a:'QUALITY MEATS CREATIVE NEW YORK',u:'https://www.youtube.com/watch?v=Psk5sR7KJTU'},
+{y:'2025',t:'Grand Prix',ti:'PRESERVED PROMOS',b:'ZIPLOC',a:'VML NEW YORK',u:'https://www.vml.com/work/preserved-promos'},
+{y:'2025',t:'Grand Prix',ti:'SHOT ON IPHONE',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://docs.google.com/presentation/d/1zoJVHOFy2O29W-lYcG0DtZ667fKgDXraSL_yH8qxyhE/edit'},
+{y:'2025',t:'Grand Prix',ti:'REAL BEAUTY: HOW A SOAP BRAND CREATED A GLOBAL SELF',b:'ESTEEM MOVEMENT – DOVE',a:'OGILVY LONDON',u:'https://www.youtube.com/watch?v=puQ0PNZ1W-A'},
+{y:'2025',t:'Grand Prix',ti:'NIGHT FISHING',b:'HYUNDAI MOTOR COMPANY',a:'INNOCEAN SEOUL',u:'https://www.dandad.org/awards/professional/2025/240593/night-fishing/'},
+{y:'2025',t:'Grand Prix',ti:'CALL OF DISCOUNTS',b:'MERCADO LIVRE',a:'GUT SÃO PAULO',u:'https://vimeo.com/1093409251'},
+{y:'2025',t:'Grand Prix',ti:'TRACKING BAD BUNNY',b:'RIMAS MUSIC',a:'DDB LATINA PUERTO RICO',u:'https://www.latinspots.com/pieza/comercial/tracking-bad-bunny/48003'},
+{y:'2025',t:'Grand Prix',ti:'HAALAND PAYBACK TIME',b:'SUPERCELL',a:'DAVID NEW YORK',u:'https://www.dandad.org/awards/professional/2025/239555/haaland-payback-time/'},
+{y:'2025',t:'Grand Prix',ti:'PARIS PARALYMPICS 2024: CONSIDERING WHAT?',b:'CHANNEL 4',a:'BISCUIT FILMWORKS LONDON',u:'https://www.youtube.com/watch?v=2np3KfLrA_M'},
+{y:'2025',t:'Grand Prix',ti:'THE FINAL COPY OF ILON SPECHT',b:'L\'OREAL',a:'MCCANN PARIS',u:'https://vimeo.com/1094956645'},
+{y:'2025',t:'Grand Prix',ti:'BETTER ON A BETTER NETWORK',b:'TELSTRA',a:'BEAR MEETS EAGLE ON FIRE +61',u:'https://beareaglefire.com/work/telstra-network-launch/'},
+{y:'2025',t:'Grand Prix',ti:'THE BEST PLACE TO HAVE HERPES',b:'THE NEW ZEALAND HERPES FOUNDATION',a:'FINCH SYDNEY',u:'https://vimeo.com/1083074994'},
+{y:'2025',t:'Grand Prix',ti:'NIGRUM CORPUS',b:'IDOMED',a:'ARTPLAN SÃO PAULO',u:'https://vimeo.com/1089083708'},
+{y:'2025',t:'Grand Prix',ti:'SOUNDS RIGHT',b:'UN LIVE, SPOTIFY',a:'AKQA COPENHAGEN',u:'https://vimeo.com/1094746280'},
+{y:'2025',t:'Grand Prix',ti:'THE PARTNERSHIP THAT CHANGED EVERYTHING',b:'LVMH',a:'HAVAS PLAY PARIS',u:'https://www.youtube.com/watch?v=vpsibWyRnKw'},
+{y:'2025',t:'Grand Prix',ti:'DOVE REAL BEAUTY REDEFINED FOR THE AI ERA',b:'DOVE',a:'MINDSHARE NEW YORK',u:'https://www.youtube.com/watch?v=8vYoL8nga-A'},
+{y:'2025',t:'Grand Prix',ti:'OLYMPIC GAMES OPENING CEREMONY PARIS 2024',b:'PARIS 2024',a:'PANAME 24',u:'https://vimeo.com/1093757553'},
+{y:'2025',t:'Grand Prix',ti:'PHONE BREAK',b:'KITKAT',a:'VML PRAGUE',u:'https://cargocollective.com/carlospaboudjian/KitKat-Phone-Break'},
+{y:'2025',t:'Grand Prix',ti:'MAKE LOVE LAST',b:'VIATRIS',a:'OGILVY SHANGHAI',u:'https://vimeo.com/1086963204'},
+{y:'2025',t:'Grand Prix',ti:'LUCKY YATRA',b:'INDIAN RAILWAYS',a:'FCB INDIA',u:'https://www.youtube.com/watch?v=19fzAvuFq0I'},
+{y:'2025',t:'Grand Prix',ti:'PRICE PACKS',b:'PENNY',a:'SERVICEPLAN GERMANY',u:'https://www.youtube.com/watch?v=wXx6z3mDnVc'},
+{y:'2025',t:'Grand Prix',ti:'ONE SECOND ADS',b:'BUDWEISER',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://www.youtube.com/watch?v=d-mtDQXtR6I'},
+{y:'2025',t:'Grand Prix',ti:'THE AMAZON GREENVENTORY',b:'NATURA',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://vimeo.com/1094885157'},
+{y:'2025',t:'Gold',ti:'ABRACADABRA: FROM FAN TO FEATURED',b:'MASTERCARD',a:'MCCANN XBC NEW YORK',u:'https://vimeo.com/1093143827'},
+{y:'2025',t:'Gold',ti:'AIRPODS PRO 2 HEARING AID FEATURE',b:'APPLE',a:'APPLE CUPERTINO',u:'https://vimeo.com/1093371918'},
+{y:'2025',t:'Gold',ti:'A TALE AS OLD AS WEBSITES',b:'SQUARESPACE',a:'SQUARESPACE NEW YORK',u:'https://www.dandad.org/awards/professional/2025/240773/a-tale-as-old-as-websites/'},
+{y:'2025',t:'Gold',ti:'BRIAN COX GOES TO COLLEGE',b:'UBER EATS',a:'SPECIAL US',u:'https://www.dandad.org/awards/professional/2025/240807/brian-cox-goes-to-college/'},
+{y:'2025',t:'Gold',ti:'BURGER TO KING',b:'BURGER KING',a:'HAPPINESS BRUSSELS',u:'https://www.dandad.org/awards/professional/2025/239630/burger-to-king/'},
+{y:'2025',t:'Gold',ti:'CAN\'T UNSEE IT',b:'HEINZ',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2025/240822/cant-unsee-it/'},
+{y:'2025',t:'Gold',ti:'DAISY VS SCAMMERS',b:'O2',a:'VCCP LONDON',u:'https://www.dandad.org/awards/professional/2025/239465/daisy-vs-scammers/'},
+{y:'2025',t:'Gold',ti:'DON\'T DRINK HERTOG JAN',b:'HERTOG JAN',a:'GUT AMSTERDAM',u:'https://vimeo.com/1003184179'},
+{y:'2025',t:'Gold',ti:'DROPS OF HOPE',b:'KIMBERLEY CLARK',a:'FCB NEW YORK',u:'https://vimeo.com/1092193619'},
+{y:'2025',t:'Gold',ti:'ERASE VALENTINE\'S DAY',b:'MONDELEZ INTERNATIONAL',a:'OGILVY MUMBAI',u:'https://www.dandad.org/awards/professional/2025/239673/erase-valentines-day/'},
+{y:'2025',t:'Gold',ti:'FIND YOUR FRIENDS',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.dandad.org/awards/professional/2025/240679/find-your-friends/'},
+{y:'2025',t:'Gold',ti:'FOOTBALL IS FOR FOOD',b:'UBER EATS',a:'SPECIAL US',u:'https://www.dangreener.com/football-is-for-food'},
+{y:'2025',t:'Gold',ti:'GET UNREADY',b:'DOVE',a:'OGILVY NEW YORK',u:'https://www.ogilvy.com/work/get-unready'},
+{y:'2025',t:'Gold',ti:'GHOST TOWN',b:'CARREFOURSA',a:'TBWA\\ISTANBUL',u:'https://www.tbwacannes.com/work/ghost-town/'},
+{y:'2025',t:'Gold',ti:'GROUP THERAPY',b:'AXA',a:'VML PARIS',u:'https://www.dandad.org/awards/professional/2025/239793/group-therapy/'},
+{y:'2025',t:'Gold',ti:'GUAO GUAO',b:'DESPERADOS',a:'LEPUB MILAN',u:'https://www.dandad.org/awards/professional/2025/239741/guao-guao/'},
+{y:'2025',t:'Gold',ti:'HERALBONY',b:'HERALBONY',a:'HERALBONY CO., LTD., IWATE PREFECTURE',u:'https://vimeo.com/1093399082'},
+{y:'2025',t:'Gold',ti:'HEY JUDE',b:'ADIDAS',a:'JOHANNES LEONARDO NEW YORK',u:'https://johannesleonardo.com/case-studies/hey-jude/'},
+{y:'2025',t:'Gold',ti:'HIDDEN TAGS',b:'IKEA',a:'UZINA LISBON',u:'https://vimeo.com/1087698212'},
+{y:'2025',t:'Gold',ti:'HUMANIMAL TOURISM',b:'PROCOLOMBIA',a:'DDB COLOMBIA',u:'https://www.youtube.com/watch?v=1r6DMx0FOYk'},
+{y:'2025',t:'Gold',ti:'IT HAS TO BE..',b:'HEINZ',a:'WIEDEN+KENNEDY LONDON',u:'https://simonallens.me/it-has-to-be-heinz'},
+{y:'2025',t:'Gold',ti:'KYIKATEJÊ',b:'GAVIÃO KYIKATEJÊ FOOTBALL CLUB',a:'AREA 23 NEW YORK',u:'https://vimeo.com/1080359037'},
+{y:'2025',t:'Gold',ti:'LATE CHECKOUT: A RITZ',b:'CARLTON STORY – THE RITZ-CARLTON',a:'LITTLE SPAIN MADRID',u:'https://vimeo.com/1094659374'},
+{y:'2025',t:'Gold',ti:'LET THERE BE CAKE',b:'KFC',a:'BANANAS JOHANNESBURG',u:'https://www.youtube.com/watch?v=kdDvwt3L3iA'},
+{y:'2025',t:'Gold',ti:'LIDLIZE',b:'LIDL',a:'MARCEL PARIS',u:'https://www.dandad.org/awards/professional/2025/240751/lidlize/'},
+{y:'2025',t:'Gold',ti:'MISSED BIRTHDAYS',b:'ITV X CALM',a:'ADAM&EVEDDB LONDON',u:'https://adamandeveddb.com/work/calm-missed-birthdays/'},
+{y:'2025',t:'Gold',ti:'NAME THIS OREO',b:'OREO',a:'VML NEW YORK',u:'https://www.dandad.org/awards/professional/2025/239805/name-this-oreo/'},
+{y:'2025',t:'Gold',ti:'NEVER JUST A PERIOD',b:'BODYFORM',a:'AMVBBDO LONDON',u:'https://www.dandad.org/awards/professional/2025/240514/never-just-a-period/'},
+{y:'2025',t:'Gold',ti:'NO LABELS',b:'NIKKA WHISKY',a:'DENTSU INC. TOKYO',u:'https://vimeo.com/1094008740'},
+{y:'2025',t:'Gold',ti:'NUTTER BUTTER, YOU GOOD?',b:'NUTTER BUTTER',a:'DENTSU CREATIVE NEW YORK',u:'https://www.dandad.org/awards/professional/2025/240777/nutter-butter-you-good/'},
+{y:'2025',t:'Gold',ti:'OBSESSION',b:'GENERAL ENTERTAINMENT AUTHORITY',a:'BIGTIME CREATIVE SHOP RIYADH',u:'https://www.youtube.com/watch?v=PdcUQwAtDDs'},
+{y:'2025',t:'Gold',ti:'OLYMPIC CURRY',b:'MCDONALD\'S',a:'DDB PARIS',u:'https://www.dandad.org/awards/professional/2025/239347/olympic-curry/'},
+{y:'2025',t:'Gold',ti:'POTTY',b:'TUNITIES – ANGEL SOFT',a:'GREY NEW YORK',u:'https://www.madelinedewree.com/work/angel-soft-pottytunities-ejp8a'},
+{y:'2025',t:'Gold',ti:'PRIZE ON THE BONE',b:'KFC',a:'DM9 SÃO PAULO',u:'https://www.dandad.org/awards/professional/2025/239195/prize-on-the-bone/'},
+{y:'2025',t:'Gold',ti:'RAISE YOUR BANNERS',b:'HBO MAX',a:'GIANT SPOON NEW YORK',u:'https://vimeo.com/998236877'},
+{y:'2025',t:'Gold',ti:'RECIPE FOR GROWTH',b:'IFOOD',a:'DM9 SÃO PAULO',u:'https://vimeo.com/1080197730'},
+{y:'2025',t:'Gold',ti:'RESALE',b:'BUDWEISER',a:'AFRICA CREATIVE DDB SÃO PAULO',u:'https://vimeo.com/1079571158'},
+{y:'2025',t:'Gold',ti:'SATO 2531',b:'ASUNIWA',a:'DENTSU DIGITAL TOKYO',u:'https://www.dandad.org/awards/professional/2025/240779/sato-2531/'},
+{y:'2025',t:'Gold',ti:'SHADES OF RED',b:'COCA COLA',a:'DAVID MADRID',u:'https://www.youtube.com/watch?v=pisbM3uEb6Y'},
+{y:'2025',t:'Gold',ti:'SIGHTWALKS',b:'SOL CEMENT',a:'CIRCUS GREY LIMA',u:'https://www.youtube.com/watch?v=IRuDOllWc-E'},
+{y:'2025',t:'Gold',ti:'SPREADBEATS',b:'SPOTIFY',a:'FCB NEW YORK',u:'https://www.youtube.com/watch?v=Zc-U6PM9ilE'},
+{y:'2025',t:'Gold',ti:'STILL OPEN',b:'JCDECAUX',a:'DAVID MADRID',u:'https://www.behance.net/gallery/226850893/JC-Decaux-Still-open'},
+{y:'2025',t:'Gold',ti:'STREAMING BARS',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://www.youtube.com/watch?v=VNq1oogkrYk'},
+{y:'2025',t:'Gold',ti:'SUN RESERVE',b:'CORONA',a:'GREY SÃO PAULO',u:'https://vimeo.com/1091835567'},
+{y:'2025',t:'Gold',ti:'TAILOR SWIF',b:'A$AP ROCKY',a:'ICONOCLAST',u:'https://www.dandad.org/awards/professional/2025/239348/aap-rocky-tailor-swif/'},
+{y:'2025',t:'Gold',ti:'THE COUNT',b:'SICKKIDS FOUNDATION',a:'FCB TORONTO',u:'https://www.youtube.com/watch?v=qNF34ZROR8s'},
+{y:'2025',t:'Gold',ti:'THE EVERYDAY TACTICIAN',b:'XBOX',a:'MCCANN LONDON',u:'https://www.youtube.com/watch?v=elq83mERXv0'},
+{y:'2025',t:'Gold',ti:'THE FINAL EXAM',b:'CHANGE THE REF',a:'ENERGY BBDO CHICAGO',u:'https://www.dandad.org/awards/professional/2025/239821/the-final-exam/'},
+{y:'2025',t:'Gold',ti:'THE HIDDEN EYE TEST',b:'1001 OPTOMETRY',a:'VML SYDNEY',u:'https://vimeo.com/1077848029'},
+{y:'2025',t:'Gold',ti:'THE MISHEARD VERSION',b:'SPECSAVERS',a:'GOLIN LONDON',u:'https://www.youtube.com/watch?v=EgNb0LQxm84'},
+{y:'2025',t:'Gold',ti:'THE PARENTAL LEAVE MORTGAGE',b:'NORDEA',a:'NORD DDB STOCKHOLM',u:'https://www.geretyawards.com/winners/2025/entry/187474/the-parental-leave-mortgage-nordea'},
+{y:'2025',t:'Gold',ti:'TIDE COLLATERAL STAIN STORIES',b:'TIDE',a:'SAATCHI & SAATCHI NEW YORK',u:'https://vimeo.com/1078053795'},
+{y:'2025',t:'Gold',ti:'TREE CORRESPONDENTS',b:'HYUNDAI',a:'FCB NEW YORK',u:'https://vimeo.com/1092193263'},
+{y:'2025',t:'Gold',ti:'UN.PATENT',b:'RENAULT',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=qVfIMMF1CEo'},
+{y:'2025',t:'Gold',ti:'U UP?',b:'IKEA',a:'RETHINK TORONTO',u:'https://www.dandad.org/awards/professional/2025/239606/u-up/'},
+{y:'2025',t:'Gold',ti:'WINNING ISN\'T COMFORTABLE',b:'NIKE',a:'WIEDEN+KENNEDY PORTLAND',u:'https://www.wk.com/work/nike-2024-olympics/'},
+{y:'2025',t:'Gold',ti:'WINTER TAKES ON COLORS',b:'MCDONALD\'S',a:'DDB WARSAW',u:'https://www.youtube.com/watch?v=qcSHtBgAB6o'},
+{y:'2025',t:'Silver',ti:'\'TIL I DIED',b:'BRITISH HEART FOUNDATION',a:'SAATCHI & SAATCHI LONDON',u:'https://vimeo.com/1060884961'},
+{y:'2025',t:'Silver',ti:'100 YEARS OF MEISTERSTÜCK',b:'MONTBLANC INTERNATIONAL GMBH',a:'SOLOMON WINTER HAMBURG',u:'https://www.youtube.com/watch?v=tUSRyAha37w'},
+{y:'2025',t:'Silver',ti:'1837 TIFFANY BLUE CONSERVATION',b:'TIFFANY & CO.',a:'L&C NEW YORK',u:'https://www.youtube.com/watch?v=_JhBOf0OJrQ'},
+{y:'2025',t:'Silver',ti:'36 MONTHS',b:'36 MONTHS',a:'FINCH SYDNEY',u:'https://www.dandad.org/awards/professional/2025/240710/36-months-raising-the-age-of-social-media-citizenship/'},
+{y:'2025',t:'Silver',ti:'ANIMAL ALERTS',b:'PETPACE',a:'SERVICEPLAN MUNICH',u:'https://youtu.be/kfnhUWM876k'},
+{y:'2025',t:'Silver',ti:'APPLE 100 BEST ALBUMS',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.instagram.com/reel/DKvvULdREHc/'},
+{y:'2025',t:'Silver',ti:'BACK HOME',b:'IMPERIAL',a:'JOYSTICK, FIFCO SAN JOSE',u:'https://www.youtube.com/watch?v=eldXt2qk7Aw'},
+{y:'2025',t:'Silver',ti:'BEER RETIREMENT ACCOUNT',b:'POKER BEER',a:'MEDIAMONKS BOGOTÁ',u:'https://youtu.be/YTUf_mLc_5U'},
+{y:'2025',t:'Silver',ti:'BELIEVE IN CHICKEN',b:'KFC',a:'MOTHER LONDON',u:'https://www.dandad.org/awards/professional/2025/241087/believe-in-chicken-all-hail-gravy/'},
+{y:'2025',t:'Silver',ti:'BREASTMILK MONEY',b:'HERCONOMY',a:'SERVICEPLAN MUNICH',u:'https://www.behance.net/gallery/225851089/Breastmilk-Money-Film-Web-Data-Visualization'},
+{y:'2025',t:'Silver',ti:'BRING KOREA TO THE WORLD',b:'NETFLIX',a:'NETFLIX LOS ANGELES',u:'https://vimeo.com/1094609025'},
+{y:'2025',t:'Silver',ti:'BUMPBOARDS',b:'CITROEN',a:'BETC PARIS',u:'https://www.youtube.com/watch?v=Qh8iW06HWYI'},
+{y:'2025',t:'Silver',ti:'BUNDLES OF JOY',b:'BURGER KING',a:'BBH LONDON',u:'https://www.dandad.org/awards/professional/2025/240747/bundles-of-joy/'},
+{y:'2025',t:'Silver',ti:'CORONA ECLIPSE',b:'CORONA',a:'DAVID MIAMI',u:'https://www.ogilvy.com/work/corona-eclipse'},
+{y:'2025',t:'Silver',ti:'DAWAI READER',b:'ALKEM LABORATORIES',a:'LOWE LINTAS MUMBAI',u:'https://lbbonline.com/work/136815'},
+{y:'2025',t:'Silver',ti:'FIND YOUR SUMMER',b:'MAGNUM',a:'LOLA MULLENLOWE',u:'https://www.dandad.org/awards/professional/2024/239094/find-your-summer/'},
+{y:'2025',t:'Silver',ti:'FLOCK',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.google.com/search?q=FLOCK+APPLE'},
+{y:'2025',t:'Silver',ti:'FROSTY FIX',b:'WENDY\'S',a:'VML KANSAS CITY',u:'https://www.dandad.org/awards/professional/2025/240818/wendys-frosty-fix/'},
+{y:'2025',t:'Silver',ti:'GLOWING RELIEF',b:'ALIVIA HEALTH',a:'DE LA CRUZ OGILVY SAN JUAN',u:'https://www.ogilvy.com/work/glowing-relief'},
+{y:'2025',t:'Silver',ti:'HANDSHAKE HUNT',b:'MERCADO LIBRE',a:'GUT SÃO PAULO',u:'https://raphaborges.com/handshakehunts/'},
+{y:'2025',t:'Silver',ti:'HEALTH IS',b:'BUPA HEALTH INSURANCE',a:'INITIATIVE MEDIA NEW YORK',u:'https://vimeo.com/1065929468'},
+{y:'2025',t:'Silver',ti:'IS IT EVEN A CITY?',b:'VISIT OSLO',a:'NEWSLAB OSLO',u:'https://www.youtube.com/watch?v=8vhD59ac7nw'},
+{y:'2025',t:'Silver',ti:'IT\'S A CHEETOS THING',b:'CHEETOS',a:'GOODBY SILVERSTEIN & PARTNERS SAN FRANCISCO',u:'https://vimeo.com/1094791063'},
+{y:'2025',t:'Silver',ti:'JORDAN CAN\'T BAN GREATNESS',b:'NIKE',a:'WIEDEN+KENNEDY PORTLAND',u:'https://www.mdotbrown.net/#/jordan-banned/'},
+{y:'2025',t:'Silver',ti:'KLEENEX SCORE',b:'KLEENEX',a:'VML NEW YORK',u:'https://lbbonline.com/work/131305'},
+{y:'2025',t:'Silver',ti:'LAP OF LEGENDS',b:'MICHELOB ULTRA',a:'FCB NEW YORK',u:'https://vimeo.com/943372451'},
+{y:'2025',t:'Silver',ti:'LEARN KOREAN OR ELSE',b:'DUOLINGO',a:'NETFLIX LOS ANGELES',u:'https://vimeo.com/1043774871'},
+{y:'2025',t:'Silver',ti:'LITTLE SIMZ \'FLOOD\'',b:'LITTLE SIMZ',a:'PRETTYBIRD LONDON',u:'https://www.dandad.org/awards/professional/2025/239582/little-simz-flood/'},
+{y:'2025',t:'Silver',ti:'LOVE CAPTURED',b:'THE EXODUS ROAD',a:'KLICK HEALTH TORONTO',u:'https://vimeo.com/1092244065'},
+{y:'2025',t:'Silver',ti:'MACCIE',b:'MCDONALD\'S',a:'TBWA\\NEBOKO AMSTERDAM',u:'https://vimeo.com/1076319737'},
+{y:'2025',t:'Silver',ti:'MEET ME AT THE COKE SIGN',b:'COCA-COLA',a:'OGILVY SYDNEY',u:'https://vimeo.com/1084452770'},
+{y:'2025',t:'Silver',ti:'MOMENTS',b:'VOLVO',a:'STENDAHLS GOTHENBURG',u:'https://www.youtube.com/watch?v=cQX-QXxwGvA'},
+{y:'2025',t:'Silver',ti:'NAVY SUBREDDIT HUNT',b:'U.S. NAVY',a:'VML NEW YORK',u:'https://www.vml.com/work/subreddit-hunt'},
+{y:'2025',t:'Silver',ti:'NO SMILES',b:'MCDONALD\'S JAPAN',a:'TBWA HAKUHODO',u:'https://www.nyfadvertising.com/Winners/WinnerDetailsNew/de7f8cbb-0f61-4cfe-a39a-a5b4202c265c'},
+{y:'2025',t:'Silver',ti:'OMNILIVERY',b:'OMNI',a:'SAATCHI & SAATCHI PARIS',u:'https://www.geretyawards.com/winners/2025/entry/180380/omnilivery-omni'},
+{y:'2025',t:'Silver',ti:'OREO SQUARE COOKIE',b:'OREO',a:'SAATCHI & SAATCHI DÜSSELDORF',u:'https://www.dandad.org/awards/professional/2025/240957/oreo-square-cookie/'},
+{y:'2025',t:'Silver',ti:'PROJECT: MEMORY CARD',b:'PLAYSTATION',a:'SIX INC/HAKUHODO TOKYO',u:'https://vimeo.com/1094223404'},
+{y:'2025',t:'Silver',ti:'PUB SUCCESSION',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://vimeo.com/1082873947'},
+{y:'2025',t:'Silver',ti:'REFURB',b:'PHILIPS',a:'LEPUB AMSTERDAM',u:'https://www.youtube.com/watch?v=sJXFLk5wvcQ'},
+{y:'2025',t:'Silver',ti:'SALTANAT LIGHT',b:'CITIX',a:'GFORCE ALMATY',u:'https://www.adsoftheworld.com/campaigns/saltanat-light'},
+{y:'2025',t:'Silver',ti:'SELF',b:'PACKING CHEESE – NESTLE',a:'OGILVY BOGOTÁ',u:'https://www.ogilvy.com/work/self-packing-cheese'},
+{y:'2025',t:'Silver',ti:'SEVERANCE S2',b:'APPLE',a:'IN-HOUSE',u:'https://www.youtube.com/watch?v=TUEfoa3nmJk'},
+{y:'2025',t:'Silver',ti:'SO MANY DICKS',b:'E.L.F. BEAUTY',a:'E.L.F. COSMETICS NEW YORK',u:'https://www.youtube.com/watch?v=-koo15C3nYI'},
+{y:'2025',t:'Silver',ti:'SOMEDAY',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.dandad.org/awards/professional/2025/241036/someday/'},
+{y:'2025',t:'Silver',ti:'SUNSHINE',b:'NIKE',a:'TRAFIK SANTA MONICA',u:'https://www.youtube.com/watch?v=qvFnf2EEd20'},
+{y:'2025',t:'Silver',ti:'THANKS FOR COKE',b:'CREATING – COCA COLA',a:'VML NEW YORK',u:'https://www.youtube.com/watch?v=yOy9wkTqOCc'},
+{y:'2025',t:'Silver',ti:'THE ATHLETES CODE',b:'GATORADE',a:'OGILVY NY',u:'https://www.dandad.org/awards/professional/2025/241009/the-athletes-code/'},
+{y:'2025',t:'Silver',ti:'THE COMMENTS SECTION',b:'AUSTRALIAN LAMB',a:'DROGA5 SYDNEY',u:'https://www.dandad.org/awards/professional/2025/239516/the-comments-section/'},
+{y:'2025',t:'Silver',ti:'THE DEATH OF DUO',b:'DUOLINGO',a:'IN-HOUSE',u:'https://vimeo.com/1094581252'},
+{y:'2025',t:'Silver',ti:'THE DESK BREAK CLAUSE',b:'ASICS',a:'GOLIN LONDON',u:'https://vimeo.com/1086029094'},
+{y:'2025',t:'Silver',ti:'THE DOVE CODE',b:'DOVE',a:'DROGA5 SÃO PAULO',u:'https://shark-cowbell-rtnx.squarespace.com/home/dovecode'},
+{y:'2025',t:'Silver',ti:'THE FLAME THAT WASN\'T A FLAME',b:'EDF',a:'BETC PARIS',u:'https://www.dandad.org/awards/professional/2025/239838/the-flame-that-wasnt-a-flame/'},
+{y:'2025',t:'Silver',ti:'THE LAST BARF BAG',b:'DRAMAMINE',a:'FCB CHICAGO',u:'https://gustavodallegrave.com/thelastbarfbag/'},
+{y:'2025',t:'Silver',ti:'THE MIND GUARDIAN',b:'SAMSUNG',a:'CHEIL WORLDWIDE MADRID',u:'https://www.dandad.org/awards/professional/2025/241070/the-mind-guardian/'},
+{y:'2025',t:'Silver',ti:'THE PRINCESS AND THE CROWN',b:'SUNSILK',a:'SOKO SÃO PAULO',u:'https://vimeo.com/949900539'},
+{y:'2025',t:'Silver',ti:'THE RAREST STARS SHINE BRIGHTEST',b:'MONTEFIORE EINSTEIN',a:'ALTO NEW YORK',u:'https://vimeo.com/1056957344'},
+{y:'2025',t:'Silver',ti:'THE SHADED ROUTE',b:'HUNGERSTATION',a:'VML RIYADH',u:'https://www.youtube.com/watch?v=5cGxg-wRzsE'},
+{y:'2025',t:'Silver',ti:'TOO YUMM TO CHEER!',b:'TOO YUMM!',a:'FCB KINNECT MUMBAI',u:'https://vimeo.com/1092206809'},
+{y:'2025',t:'Silver',ti:'UNWRAP IT',b:'CORNETTO',a:'LOLA MULLENLOWE MADRID',u:'https://vimeo.com/1083762169'},
+{y:'2025',t:'Silver',ti:'WARREN',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.youtube.com/watch?v=3m0MoYKwVTM'},
+{y:'2025',t:'Silver',ti:'YOU MUST BE HUMAN',b:'WORLDCOIN',a:'ADAM&EVEDDB BERLIN',u:'https://www.sunguhacisabanoglu.com/youmustbehuman'},
+{y:'2025',t:'Bronze',ti:'250 REASONS NOT TO BUY THE MERCEDES',b:'AMG PURESPEED – MERCEDES BENZ',a:'TEAM X BERLIN',u:'https://vimeo.com/1094331871'},
+{y:'2025',t:'Bronze',ti:'5',b:'STAR THEATER WITH ADAM DRIVER – AMAZON',a:'IN-HOUSE',u:'https://www.oneclub.org/awards/theoneshow/-award/57274/5-star-theater-with-adam-driver/'},
+{y:'2025',t:'Bronze',ti:'AD',b:'FREE MOVIES – BUDWEISER',a:'AFRICA DDB SÃO PAULO',u:'https://luiz.works/02-ad-free-movies'},
+{y:'2025',t:'Bronze',ti:'AIRBNB ICONS',b:'AIRBNB',a:'WEBER SHANDWICK NEW YORK',u:'https://vimeo.com/1094578684'},
+{y:'2025',t:'Bronze',ti:'AM I A BAD PERSON',b:'NIKE',a:'WIEDEN+KENNEDY PORTLAND',u:'https://www.youtube.com/watch?v=pwLergHG81c'},
+{y:'2025',t:'Bronze',ti:'BACHELOR',b:'TV SHOW',a:'STARLIGHTMEDIA KYIV',u:'https://www.youtube.com/watch?v=fDp5aDsp5QM'},
+{y:'2025',t:'Bronze',ti:'BAD LUCK REVERSER',b:'REFISAL',a:'VML NEW YORK',u:'https://www.youtube.com/watch?v=4OaN00EWwWg'},
+{y:'2025',t:'Bronze',ti:'BARK AIR LAUNCH',b:'BARK AIR',a:'TOMBRAS KNOXVILLE',u:'https://clios.com/winners-gallery/details/190002'},
+{y:'2025',t:'Bronze',ti:'BAZ BOX',b:'SPECIAL K',a:'MSL NEW YORK',u:'https://vimeo.com/1038385052'},
+{y:'2025',t:'Bronze',ti:'BODY SWAP',b:'NETFLIX',a:'AKQA AUCKLAND',u:'https://vimeo.com/1088570858'},
+{y:'2025',t:'Bronze',ti:'BUILDING FUTURES',b:'MRV',a:'DM9 SÃO PAULO',u:'https://vimeo.com/1086909960'},
+{y:'2025',t:'Bronze',ti:'CAMDOM',b:'BILLY BOY',a:'INNOCEAN BERLIN',u:'https://www.dandad.org/awards/professional/2025/239472/camdom/'},
+{y:'2025',t:'Bronze',ti:'CHILD WEDDING CARDS',b:'UN WOMEN',a:'IMPACT BBDO DUBAI',u:'https://www.youtube.com/watch?v=G_dzr4SJqjY'},
+{y:'2025',t:'Bronze',ti:'COORS LIGHT, COORS LIGHT',b:'COORS LIGHT',a:'DROGA5 NEW YORK',u:'https://vimeo.com/1064154466'},
+{y:'2025',t:'Bronze',ti:'DIARY OF A HEAD INJURY',b:'HEADWAY',a:'ASSEMBLY AUCKLAND',u:'https://www.dandad.org/awards/professional/2025/240640/doahi/'},
+{y:'2025',t:'Bronze',ti:'DISCONNECT',b:'AIR FRANCE',a:'TBWA\\PARIS',u:'https://www.tbwacannes.com/work/disconnect-air-france/'},
+{y:'2025',t:'Bronze',ti:'DON\'T CALL IT LOVE',b:'YVES SAINT LAURENT BEAUTE',a:'BETC FULLSIX',u:'https://www.youtube.com/watch?v=eBnKDL57i7Y'},
+{y:'2025',t:'Bronze',ti:'EMOJI COKE',b:'COCA-COLA',a:'VML NEW YORK',u:'https://vimeo.com/1094885234'},
+{y:'2025',t:'Bronze',ti:'EVERYBODY\'S BUSINESS',b:'LINKEDIN',a:'LINKEDIN DUBLIN',u:'https://vimeo.com/1094885255'},
+{y:'2025',t:'Bronze',ti:'EYE TEST MENU',b:'TITAN COMPANY LIMTED',a:'OGILVY BANGALORE',u:'https://www.dandad.org/awards/professional/2025/239672/eye-test-menu/'},
+{y:'2025',t:'Bronze',ti:'FC25',b:'EA SPORTS FC',a:'UNCOMMON CREATIVE STUDIO LONDON',u:'https://vimeo.com/1094221714'},
+{y:'2025',t:'Bronze',ti:'FEELIN PLANTY GOOD',b:'SILK',a:'HAVAS NEW YORK',u:'https://www.dandad.org/awards/professional/2025/239637/feelin-planty-good/'},
+{y:'2025',t:'Bronze',ti:'FER',b:'SAVE THE CHILDREN',a:'ANONIMO MEXICO CITY',u:'https://www.dandad.org/awards/professional/2025/240491/fer/'},
+{y:'2025',t:'Bronze',ti:'FOOTBALL LOVER FM',b:'SO FOOT',a:'BETC PARIS',u:'https://www.dandad.org/awards/professional/2025/239850/lover-fm/'},
+{y:'2025',t:'Bronze',ti:'FOUR SEASONS BABY',b:'FOUR SEASONS ORLANDO',a:'WE ARE SOCIAL',u:'https://vimeo.com/1058771553'},
+{y:'2025',t:'Bronze',ti:'GAMEPAY',b:'ELGIGANTEN',a:'LEO STOCKHOLM',u:'https://www.maxnico.work/gamepay'},
+{y:'2025',t:'Bronze',ti:'GO FURTHER',b:'7-ELEVEN',a:'CLEMENGER BBDO MELBOURNE',u:'https://vimeo.com/997540972'},
+{y:'2025',t:'Bronze',ti:'GRAD IN BLACK',b:'VULT',a:'GUT SÃO PAULO',u:'https://marcelocarvalho.work/Grad-in-Black'},
+{y:'2025',t:'Bronze',ti:'HAGELCHUP',b:'HEINZ',a:'GUT AMSTERDAM',u:'https://vimeo.com/1094886512'},
+{y:'2025',t:'Bronze',ti:'HEINZ ROLLER SHUTTER',b:'HEINZ',a:'GOODIDEA SHANGHAI',u:'https://vimeo.com/1094886574'},
+{y:'2025',t:'Bronze',ti:'HISTORY OUTNUMBERED',b:'HISTORY CHANNEL',a:'DENTSU LISBON',u:'https://www.adsoftheworld.com/campaigns/history-outnumbered'},
+{y:'2025',t:'Bronze',ti:'IN TUNE WITH NATURE',b:'FOREST CARBON',a:'DESIGN BRIDGE AND PARTNERS SINGAPORE',u:'https://www.designbridge.com/work/forest-carbon'},
+{y:'2025',t:'Bronze',ti:'KENDRICK LAMAR SUPER BOWL HALFTIME SHOW CAMPAIGN',b:'APPLE MUSIC',a:'APPLE CUPERTINO',u:'https://vimeo.com/1094223419'},
+{y:'2025',t:'Bronze',ti:'KIA SOUNDSCAPES',b:'KIA EUROPE',a:'INNOCEAN BERLIN',u:'https://vimeo.com/1078212592'},
+{y:'2025',t:'Bronze',ti:'LOEWE TIKTOK',b:'LOEWE',a:'IN-HOUSE',u:'https://vimeo.com/1094660435'},
+{y:'2025',t:'Bronze',ti:'MAYO EXCHANGE',b:'HELLMANN\'S',a:'EDELMAN LONDON',u:'https://www.youtube.com/watch?v=4NpEnDNRwc0'},
+{y:'2025',t:'Bronze',ti:'MCRIB MISTAKES',b:'MCDONALD\'S',a:'LEO LONDON',u:'https://www.dandad.org/awards/professional/2025/239653/mcrib-mistakes/'},
+{y:'2025',t:'Bronze',ti:'MICHAEL CERAVE',b:'CERAVE',a:'OGILVY PR NEW YORK',u:'https://vimeo.com/924148167'},
+{y:'2025',t:'Bronze',ti:'MIRACLE',b:'RC COLA',a:'GIGIL MANILA',u:'https://www.youtube.com/watch?v=u0c7pO99Ysw'},
+{y:'2025',t:'Bronze',ti:'MOMMYPHONE',b:'LABORATOIRE GALLIA',a:'BETC FULLSIX PARIS',u:'https://www.youtube.com/watch?v=ZwVT6JBuz4E'},
+{y:'2025',t:'Bronze',ti:'MOST LIKELY TO',b:'DOVE',a:'OGILVY TORONTO',u:'https://www.dandad.org/awards/professional/2025/241069/most-likely-to/'},
+{y:'2025',t:'Bronze',ti:'NOT WHEELS',b:'MATTEL CREATIONS',a:'MATTEL LOS ANGELES',u:'https://vimeo.com/1094221811'},
+{y:'2025',t:'Bronze',ti:'OREO EMPIRE',b:'OREO',a:'DENTSU CREATIVE CHICAGO',u:'https://clios.com/winners-gallery/details/181094'},
+{y:'2025',t:'Bronze',ti:'OTHER HAND',b:'CHEETOS',a:'GOODBY SILVERSTEIN & PARTNERS SAN FRANCISCO',u:'https://www.dandad.org/awards/professional/2025/240782/other-hand/'},
+{y:'2025',t:'Bronze',ti:'PACKED FULL OF HISTORY',b:'SAMSUNG',a:'CLEMENGER BBDO SYDNEY',u:'https://www.dandad.org/awards/professional/2025/239317/packed-full-of-history/'},
+{y:'2025',t:'Bronze',ti:'PICK UP YOUR POOP',b:'COLOGUARD',a:'THE COMMUNITY MIAMI',u:'https://vimeo.com/1093348412'},
+{y:'2025',t:'Bronze',ti:'PLANTLETS FOR FUTURE',b:'NESCAFE',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=qtg_sYwAj2E'},
+{y:'2025',t:'Bronze',ti:'PRADA: BEYOND THE LINE',b:'PRADA',a:'MCCANN PARIS',u:'https://www.youtube.com/watch?v=rXF9wl0BCWE'},
+{y:'2025',t:'Bronze',ti:'READ BETTER',b:'WATERSTONES',a:'FP7 MCCANN DUBAI',u:'https://www.robhall.work/portfolio/readbetter'},
+{y:'2025',t:'Bronze',ti:'RESHAPING RUGBY: THE WORLD\'S FIRST TIKTOK FINAL',b:'2DEGREES',a:'TBWA\\AUCKLAND',u:'https://www.dandad.org/awards/professional/2025/240902/reshaping-rugby-the-worlds-first-tiktok-final/'},
+{y:'2025',t:'Bronze',ti:'RETURNING CREATIVITY',b:'CRAYOLA',a:'DENTSU CREATIVE NEW YORK',u:'https://www.dandad.org/awards/professional/2025/240781/returning-creativity/'},
+{y:'2025',t:'Bronze',ti:'SAFE AT 3AM',b:'DUBAI TOURISM',a:'VML DUBAI',u:'https://www.vml.com/work/safe-at-3am'},
+{y:'2025',t:'Bronze',ti:'SAVE US FROM THE USA',b:'CHANGE THE REF',a:'ATLANTIC NEW YORK',u:'https://www.dandad.org/awards/professional/2025/240971/save-us-from-the-usa/'},
+{y:'2025',t:'Bronze',ti:'SCRATCHED OUT',b:'PATIENT ACTIVATION FOR PRURIGO NODULARIS',a:'HAVAS LYNX MANCHESTER',u:'https://www.dandad.org/awards/professional/2025/240688/scratched-out/'},
+{y:'2025',t:'Bronze',ti:'SENNA\'S CUT',b:'NETFLIX',a:'MONKS BUENOS AIRES',u:'https://www.youtube.com/watch?v=5lDse7WCVUU'},
+{y:'2025',t:'Bronze',ti:'SEVERANCE S2\'S OPENING TITLE',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.youtube.com/watch?v=uKT5bwMkOAw'},
+{y:'2025',t:'Bronze',ti:'SHARE THE FIRST',b:'DOVE',a:'EDELMAN LONDON',u:'https://www.youtube.com/watch?v=V68MSwIkKM0'},
+{y:'2025',t:'Bronze',ti:'SICKLE CELL BALL',b:'NEWYORK-PRESBYTERIAN',a:'HAVAS NEW YORK',u:'https://vimeo.com/1082598227'},
+{y:'2025',t:'Bronze',ti:'SIGNS FROM HEAVEN',b:'PANGU CLOUD',a:'OGILVY SHANGHAI',u:'https://www.dandad.org/awards/professional/2025/240802/signs-from-heaven/'},
+{y:'2025',t:'Bronze',ti:'SIX BACK',b:'VICTORIA',a:'GUT MEXICO CITY',u:'https://www.youtube.com/watch?v=xbkAvvh64IA'},
+{y:'2025',t:'Bronze',ti:'SMILE 20',b:'GOODY\'S PAIN POWDER',a:'FCB CHICAGO',u:'https://vimeo.com/1081666376'},
+{y:'2025',t:'Bronze',ti:'SNICKERS AI',b:'MARS',a:'T&PM LONDON',u:'https://www.oneclub.org/awards/theoneshow/-award/57141/snickers-ai/'},
+{y:'2025',t:'Bronze',ti:'SPONSORED BALLS',b:'TESTICULAR CANCER SOCIETY',a:'FP7 MCCANN DUBAI',u:'https://vimeo.com/1083510969'},
+{y:'2025',t:'Bronze',ti:'SQUAD UP',b:'SUPERCELL',a:'UNCOMMON CREATIVE STUDIO LONDON',u:'https://www.dandad.org/awards/professional/2025/241029/squad-up/'},
+{y:'2025',t:'Bronze',ti:'STEAL',b:'MANDAUE FOAM HOME STORE',a:'GIGIL MANILA',u:'https://www.dandad.org/awards/professional/2025/240917/steal/'},
+{y:'2025',t:'Bronze',ti:'SUBMERGED',b:'APPLE',a:'APPLE CUPERTINO',u:'https://www.youtube.com/watch?v=lP8LLIjCe6Q'},
+{y:'2025',t:'Bronze',ti:'SUPPORTBELT',b:'FORD',a:'VML DETROIT',u:'https://www.dandad.org/awards/professional/2025/240793/supportbelt/'},
+{y:'2025',t:'Bronze',ti:'THE BOY & THE OCTOPUS',b:'DISNEY',a:'ADAM&EVEDDB NYC',u:'https://www.youtube.com/watch?v=clgyncrbyDg'},
+{y:'2025',t:'Bronze',ti:'THE CHEEKY CONTROLLER',b:'XBOX',a:'MCCANN LONDON',u:'https://www.dandad.org/awards/professional/2025/239723/the-cheeky-controller/'},
+{y:'2025',t:'Bronze',ti:'THE FAN REMOTE',b:'CLARO TV+',a:'TALENT MARCEL SÃO PAULO',u:'https://www.youtube.com/watch?v=3BbpfDvl6f4'},
+{y:'2025',t:'Bronze',ti:'THE GRAVY RACE',b:'SHEBA',a:'AMV BBDO LONDON',u:'https://hyperboloid-ellipsoid-7gg7.squarespace.com/the-work-1/gravy-race'},
+{y:'2025',t:'Bronze',ti:'THE GREATEST RUN',b:'ORANGE',a:'PUBLICIS CONSEIL PARIS',u:'https://www.dandad.org/awards/professional/2025/240835/orange-paralympics/'},
+{y:'2025',t:'Bronze',ti:'THE IMPOSSIBLE DRIVE',b:'LEGO',a:'M&C SAATCHI LONDON',u:'https://lbbonline.com/work/136395'},
+{y:'2025',t:'Bronze',ti:'THE LAST TIMBIT',b:'TIM HORTONS',a:'GUT TORONTO',u:'https://vimeo.com/1094221778'},
+{y:'2025',t:'Bronze',ti:'THE MEAL',b:'MCDONALD\'S',a:'LEO & READY10 LONDON',u:'https://www.dandad.org/awards/professional/2025/239655/the-meal/'},
+{y:'2025',t:'Bronze',ti:'THE SOUND OF DIVORCE',b:'CALM',a:'OGILVY ARGENTINA',u:'https://www.youtube.com/watch?v=FVsx6MQYNRc'},
+{y:'2025',t:'Bronze',ti:'THE TRIAL',b:'ALL IN ACTION FUND',a:'KLICK HEALTH TORONTO',u:'https://www.adsoftheworld.com/campaigns/the-trial-78d8901c-6add-4f0f-94d5-96ad2daa13fe'},
+{y:'2025',t:'Bronze',ti:'THE UGLIEST SWEATER',b:'ILAS',a:'THE MAESTROS MEXICO',u:'https://www.youtube.com/watch?v=0mfkxE8e2HI'},
+{y:'2025',t:'Bronze',ti:'TIKTOK UNIVERSITY',b:'HAAGA-HELIA UNIVERSITY OF APPLIED SCIENCES',a:'BOB THE ROBOT HELSINKI',u:'https://www.geretyawards.com/winners/2025/entry/186621/tiktok-university-haaga-helia-university-of-applied-sciences'},
+{y:'2025',t:'Bronze',ti:'TOGETHER IS FOR CHRISTMAS',b:'TELSTRA',a:'BEAR MEETS EAGLE ON FIRE SYDNEY',u:'https://vimeo.com/1027541097'},
+{y:'2025',t:'Bronze',ti:'VI GUARDIAN BEADS',b:'VI',a:'OGILVY MUMBAI',u:'https://www.dandad.org/awards/professional/2025/239720/vi-guardian-beads/'},
+{y:'2025',t:'Bronze',ti:'VISIONGRAM',b:'JAPAN BLIND JUDO FEDERATION',a:'DENTSU INC. TOKYO',u:'https://lbbonline.com/work/136358'},
+{y:'2025',t:'Bronze',ti:'WAITING TO LIVE',b:'NHS BLOOD AND TRANSPLANT',a:'VML & WUNDERMANTHOMPSON LONDON',u:'https://www.dandad.org/awards/professional/2024/238666/waiting-to-live/'},
+{y:'2025',t:'Bronze',ti:'WAKE UP',b:'XBOX',a:'DROGA5 NEW YORK',u:'https://www.dandad.org/awards/professional/2025/241031/xbox-rat-race-/'},
+{y:'2025',t:'Bronze',ti:'WALRUS WHIZZER',b:'VIRGIN',a:'UNTOLD STUDIOS LONDON',u:'https://www.dandad.org/awards/professional/2025/239718/virgin-media-walrus-whizzer/'},
+{y:'2025',t:'Bronze',ti:'YOU CAN\'T WIN. SO WIN.',b:'NIKE',a:'WIEDEN+KENNEDY PORTLAND',u:'https://www.brunooppido.com/#/sowin/'},
+{y:'2026',t:'Grand Prix',ti:'HAVEN',b:'SUNCORP INSURANCE',a:'LEO SYDNEY',u:'https://www.youtube.com/watch?v=Pwf50R9flkU'},
+{y:'2026',t:'Grand Prix',ti:'EXPEDITION IMPOSSIBLE',b:'COLUMBIA SPORTSWEAR',a:'ADAM&EVE\\TBWA/LONDON',u:'https://www.youtube.com/watch?v=N0WxAUkBuQA'},
+{y:'2026',t:'Grand Prix',ti:'VEHICLE OF HOPE',b:'CARITAS',a:'DIFFER STOCKHOLM',u:'https://www.youtube.com/watch?v=YfQbzgQfOKI'},
+{y:'2026',t:'Grand Prix',ti:'600K NETWORK',b:'RAINBOW LOBSTER MEXICO',a:'COMANDO CON VENEZUELA',u:'https://www.youtube.com/watch?v=k2U1G8xCYus'},
+{y:'2026',t:'Grand Prix',ti:'OREO COWS',b:'OREO',a:'VML NEW YORK',u:'https://www.youtube.com/watch?v=F2EjJgR0adE'},
+{y:'2026',t:'Grand Prix',ti:'THE LEGACY OF VIRGINIA GIUFFRE',b:'VIRGINIA GIUFFRE',a:'DINI VON MUEFFLING COMMUNICATIONS NEW YORK',u:'https://www.youtube.com/watch?v=J_45sFUTkhw'},
+{y:'2026',t:'Grand Prix',ti:'THE FAROE ISLANDS SPACE PROGRAM',b:'SKF',a:'NORD DDB STOCKHOLM',u:'https://youtu.be/I182TbpuV0U'},
+{y:'2026',t:'Grand Prix',ti:'THE WEDDING RICE',b:'WIKIFARMER',a:'MCCANN ATHENS',u:'https://www.youtube.com/watch?v=Xop6AbopFeQ'},
+{y:'2026',t:'Grand Prix',ti:'LUCKY FAN INDEX',b:'WISŁA KRAKÓW FOOTBALL CLUB',a:'VML KRAKÓW',u:'https://vimeo.com/1182366532'},
+{y:'2026',t:'Grand Prix',ti:'SOS POS',b:'BCP',a:'CIRCUS GREY LIMA',u:'https://www.youtube.com/watch?v=GVdCoJEhO6M'},
+{y:'2026',t:'Grand Prix',ti:'THREE WORDS',b:'AXA',a:'PUBLICIS CONSEIL PARIS',u:'https://www.youtube.com/watch?v=pY-03zuV7mE'},
+{y:'2026',t:'Grand Prix',ti:'THE PUB THAT REFUSED TO DIE',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://vimeo.com/1190924385'},
+{y:'2026',t:'Grand Prix',ti:'APPLE TV REBRAND',b:'APPLE TV',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://www.youtube.com/watch?v=MWfJcl8deLE'},
+{y:'2026',t:'Grand Prix',ti:'PROJECT GENIE',b:'GOOGLE',a:'GOOGLE MOUNTAIN VIEW',u:'https://www.youtube.com/watch?v=D448m_QWf74'},
+{y:'2026',t:'Grand Prix',ti:'UVA UVA BOMBÓN',b:'UVA APP',a:'DE LA CRUZ OGILVY MADRID',u:'https://vimeo.com/1204190443'},
+{y:'2026',t:'Grand Prix',ti:'ORIGINAL FOREVER',b:'ADIDAS',a:'JOHANNES LEONARDO NEW YORK',u:'https://www.youtube.com/watch?v=mmVwe0Sul68'},
+{y:'2026',t:'Grand Prix',ti:'COPYCATS WELCOME',b:'CLASH ROYALE',a:'DAVID NEW YORK',u:'https://www.youtube.com/watch?v=izSoHjBvAwA'},
+{y:'2026',t:'Grand Prix',ti:'ROSALÍA FT. BJÖRK, YVES TUMOR',b:'BERGHAIN',a:'CANADA BARCELONA',u:'https://www.youtube.com/watch?v=htQBS2Ikz6c'},
+{y:'2026',t:'Grand Prix',ti:'THE THOUSAND SPONSORS OF MUNI',b:'CLUB DEPORTIVO MUNICIPAL',a:'MCCANN LIMA',u:'https://www.youtube.com/watch?v=tq775MZGE48'},
+{y:'2026',t:'Grand Prix',ti:'YOUR WAY OUT',b:'COINBASE',a:'ISLE OF ANY NEW YORK',u:'https://www.youtube.com/watch?v=HQJMzTpckPo'},
+{y:'2026',t:'Grand Prix',ti:'CAN I GET A SIX PACK QUICKLY?',b:'CLAUDE',a:'MOTHER LONDON',u:'https://www.youtube.com/watch?v=NuEXYfbV_PA'},
+{y:'2026',t:'Grand Prix',ti:'HOW CAN I COMMUNICATE BETTER WITH MY MOM?',b:'CLAUDE',a:'MOTHER LONDON',u:'https://www.youtube.com/watch?v=8ZnGqg87FEo'},
+{y:'2026',t:'Grand Prix',ti:'NIGRUM CORPUS',b:'IDOMED',a:'ARTPLAN SÃO PAULO',u:'https://vimeo.com/1089083708'},
+{y:'2026',t:'Grand Prix',ti:'TINY COFFEE SHOPS',b:'DE\'LONGHI',a:'LOLA MADRID',u:'https://vimeo.com/1196607563'},
+{y:'2026',t:'Grand Prix',ti:'SUPERNOVA ADAPTIVE',b:'ADIDAS',a:'TBWA\\TORONTO',u:'https://vimeo.com/1203657943'},
+{y:'2026',t:'Grand Prix',ti:'WARMER TOGETHER',b:'MONCLER',a:'WESAYHI MILAN',u:'https://www.youtube.com/watch?v=nelgWVfxDHk'},
+{y:'2026',t:'Grand Prix',ti:'BUILD YOUR OWN SUPER BOWL COMMERCIAL',b:'UBER EATS',a:'SPECIAL LOS ANGELES',u:'https://vimeo.com/1204133679'},
+{y:'2026',t:'Grand Prix',ti:'FIELD BARCODE',b:'MERCADO LIVRE',a:'GUT SÃO PAULO',u:'https://vimeo.com/1186329990'},
+{y:'2026',t:'Grand Prix',ti:'RELAX YOUR TIGHT END',b:'NOVARTIS',a:'FALLON MINNEAPOLIS',u:'https://www.youtube.com/watch?v=CV7KcrlJwk8'},
+{y:'2026',t:'Grand Prix',ti:'THE PERIODIC FABLE',b:'THE ORDINARY',a:'UNCOMMON CREATIVE STUDIO LONDON',u:'https://www.dandad.org/work/d-ad-awards-archive/the-periodic-fable'},
+{y:'2026',t:'Grand Prix',ti:'THE KITKAT HEIST',b:'KITKAT',a:'VML LONDON',u:'https://vimeo.com/1204147459'},
+{y:'2026',t:'Grand Prix',ti:'LOOK FAMILIAR?',b:'HEINZ',a:'RETHINK TORONTO',u:'https://www.youtube.com/watch?v=7vuZx0ue7z0'},
+{y:'2026',t:'Grand Prix',ti:'COQUÍ ALARMED',b:'HYUNDAI',a:'BBDO PUERTO RICO',u:'https://www.youtube.com/watch?v=55knFa5zP6g'},
+{y:'2026',t:'Grand Prix',ti:'COULD HAVE BEEN A HEINEKEN',b:'HEINEKEN',a:'LEPUB MILAN & SÃO PAULO',u:'https://vimeo.com/1203492482'},
+{y:'2026',t:'Grand Prix',ti:'PAID SICK LEAVE FOR COWS',b:'TOO GOOD',a:'THE PARTNERSHIP AGENCY NAIROBI',u:'https://youtu.be/vQ6A_4_V5j8'},
+{y:'2026',t:'Gold',ti:'"BASED ON A TRUE STORY"',b:'MISSING PEOPLE',a:'BBH LONDON',u:'https://vimeo.com/1199684705'},
+{y:'2026',t:'Gold',ti:'A TIME AND A PLACE',b:'CLAUDE',a:'MOTHER LONDON',u:'https://youtu.be/X4i0k68wOGU'},
+{y:'2026',t:'Gold',ti:'ART\'S MISSING PERIOD',b:'KOTEX',a:'DAVID LONDON & OGILVY SINGAPORE',u:'https://www.ogilvy.com/work/arts-missing-period'},
+{y:'2026',t:'Gold',ti:'BAD BUNNY HALFTIME SHOW',b:'SHOT ON IPHONE – APPLE',a:'APPLE CUPERTINO',u:'https://lbbonline.com/news/Apple-Bad-Bunny-Super-Bowl-Halftime-Show-Shot-on-iPhone'},
+{y:'2026',t:'Gold',ti:'BEAT CANCER OFF',b:'FUCK CANCER',a:'VML NEW YORK',u:'https://vimeo.com/1203383874'},
+{y:'2026',t:'Gold',ti:'BULLET MACHINE',b:'LA UNION NEWSPAPER AND ARTICLE 19',a:'GREY MEXICO',u:'https://www.ogilvy.com/work/bullet-machine'},
+{y:'2026',t:'Gold',ti:'CAMERA ROLLS: GIG, WEDDING, BOWLING',b:'MCDONALD\'S',a:'LEO LONDON',u:'https://www.youtube.com/watch?v=Xzm_7YZ1sy8'},
+{y:'2026',t:'Gold',ti:'CHICKEN SCREAMS FOR COKE',b:'COCA-COLA',a:'VML NEW YORK & SÃO PAULO',u:'https://www.nyfadvertising.com/Winners/WinnerDetailsNew/341b8b94-6954-4f61-9903-8f4514da57ba'},
+{y:'2026',t:'Gold',ti:'CLEAN MY NAME',b:'CIF',a:'DROGA5 SÃO PAULO',u:'https://vimeo.com/1187492812'},
+{y:'2026',t:'Gold',ti:'DANCEBOOK BRASIL',b:'BRADESCO',a:'LOVELY SÃO PAULO',u:'https://youtu.be/NxkU4hE_GLw'},
+{y:'2026',t:'Gold',ti:'DARK MODE ADS',b:'PLENITUDE',a:'LEPUB MILAN',u:'https://vimeo.com/1188653060'},
+{y:'2026',t:'Gold',ti:'ONE MORE QUESTION',b:'LALCEC',a:'GREY ARGENTINA BUENOS AIRES',u:'https://www.youtube.com/watch?v=SCS8CJGqSDo'},
+{y:'2026',t:'Gold',ti:'THE RELATIONSHIP AID',b:'SPECSAVERS',a:'GOLIN KETCHUM LONDON',u:'https://youtu.be/7MXNZv1fT8w'},
+{y:'2026',t:'Gold',ti:'DEAR DIFFERENCE',b:'NIKKA WHISKY',a:'DENTSU TOKYO',u:'https://lbbonline.com/work/171133'},
+{y:'2026',t:'Gold',ti:'DEFINING HELP',b:'KIDS HELP PHONE',a:'MCCANN TORONTO',u:'https://www.youtube.com/watch?v=cj1cc2JMQbA'},
+{y:'2026',t:'Gold',ti:'DONATE TO PLAY',b:'GRUPO PULSA',a:'PUBLICIS SÃO PAULO',u:'https://vimeo.com/1200485742'},
+{y:'2026',t:'Gold',ti:'DOVE R/EAL REVIEWS',b:'DOVE',a:'DAVID LONDON',u:'https://vimeo.com/1204109832'},
+{y:'2026',t:'Gold',ti:'EVERYBODY COINBASE',b:'COINBASE',a:'ISLE OF ANY NEW YORK',u:'https://www.dandad.org/work/d-ad-awards-archive/everybody-coinbase'},
+{y:'2026',t:'Gold',ti:'EVERYONE WANTS A PIECE',b:'LEGO',a:'OUR LEGO AGENCY BILLUND',u:'https://vimeo.com/1195332948'},
+{y:'2026',t:'Gold',ti:'EXPENSIVE SH*T',b:'HUGGIES',a:'MCCANN NEW YORK',u:'https://guyandtim.portfolio.site/expensive-sht'},
+{y:'2026',t:'Gold',ti:'FOR YOUR RIGHT TO BE CURIOUS',b:'NPR',a:'MISCHIEF AT NO FIXED ADDRESS NEW YORK',u:'https://www.dandad.org/work/d-ad-awards-archive/npr-for-your-right-to-be-curious'},
+{y:'2026',t:'Gold',ti:'HEINZ DIPPER',b:'HEINZ KETCHUP',a:'RETHINK TORONTO',u:'https://vimeo.com/1187334779'},
+{y:'2026',t:'Gold',ti:'HELICOPTER',b:'A$AP ROCKY',a:'AWGE SOMESUCH LOS ANGELES',u:'https://vimeo.com/1154051428'},
+{y:'2026',t:'Gold',ti:'HOPE, MORNINGS, PICKY, AWAKE',b:'IKEA',a:'TRY OSLO',u:'https://vimeo.com/1096194558'},
+{y:'2026',t:'Gold',ti:'I THINK OF YOU DYING',b:'LIFE360',a:'ALTO LOS ANGELES',u:'https://vimeo.com/1080372107'},
+{y:'2026',t:'Gold',ti:'I\'M NOT REMARKABLE',b:'APPLE',a:'APPLE CUPERTINO',u:'https://vimeo.com/1145798005'},
+{y:'2026',t:'Gold',ti:'ICONIC HOME',b:'DUNKIN\' AT HOME',a:'BBH NEW YORK',u:'https://www.oneclub.org/awards/theoneshow/-award/63863/iconic-home/'},
+{y:'2026',t:'Gold',ti:'KYLE F*CKING CONNOR',b:'KFC',a:'COURAGE TORONTO',u:'https://www.youtube.com/watch?v=bSL1iz37-Gg'},
+{y:'2026',t:'Gold',ti:'LANGUAGE OF BEDWETTING',b:'AUTISM SOCIETY',a:'MCCANN NEW YORK',u:'https://vimeo.com/1188452653'},
+{y:'2026',t:'Gold',ti:'LET\'S END FAST TECH',b:'BACK MARKET',a:'MARCEL PARIS',u:'https://vimeo.com/1203484921'},
+{y:'2026',t:'Gold',ti:'LIME GUIDES',b:'CORONA',a:'GREY NEW YORK',u:'https://vimeo.com/1188248881'},
+{y:'2026',t:'Gold',ti:'NO PROJECT WITHOUT DRAMA',b:'HORNBACH',a:'HEIMAT\\TBWA BERLIN',u:'https://vimeo.com/1113169877'},
+{y:'2026',t:'Gold',ti:'PEDIGREE CARAMELO',b:'PEDIGREE',a:'ALMAPBBDO SÃO PAULO',u:'https://www.youtube.com/watch?v=prMM0H9psRs'},
+{y:'2026',t:'Gold',ti:'POCKET',b:'SIZED HALFTIME SHOW – CLASH ROYALE',a:'UNCOMMON CREATIVE STUDIO STOCKHOLM',u:'https://www.latinspots.com/pieza/comercial/pocket-sized-halftime-show/51349'},
+{y:'2026',t:'Gold',ti:'POPE YES',b:'POPEYES',a:'GUT MIAMI',u:'https://vimeo.com/1189119597'},
+{y:'2026',t:'Gold',ti:'PROTECT THE PEANUT',b:'MARS SNACKING',a:'BBDO NEW YORK',u:'https://vimeo.com/1190628293'},
+{y:'2026',t:'Gold',ti:'RESIZE THE PRICE',b:'AGUILA',a:'DAVID BOGOTÁ',u:'https://vimeo.com/1203767931'},
+{y:'2026',t:'Gold',ti:'SEARCHING FOR BIRDS ON WIRES',b:'ABRADEE',a:'AFRICA CREATIVE SÃO PAULO',u:'https://vimeo.com/1202133381'},
+{y:'2026',t:'Gold',ti:'SHAPE OF DREAMS',b:'ON',a:'ON AG ZURICH',u:'https://vimeo.com/1191960468'},
+{y:'2026',t:'Gold',ti:'SLEEP TALK REVIEWS',b:'IKEA',a:'RETHINK TORONTO',u:'https://www.youtube.com/watch?v=BNAfX0lKSjg'},
+{y:'2026',t:'Gold',ti:'SOIL STAY',b:'TRA MONGKUT FERTILIZER',a:'VML BANGKOK',u:'https://vimeo.com/1152091660'},
+{y:'2026',t:'Gold',ti:'SUNBURNT CAR',b:'MYCAR',a:'TBWA\\SYDNEY',u:'https://vimeo.com/1203492324'},
+{y:'2026',t:'Gold',ti:'T',b:'REX LEATHER – LAB-GROWN LEATHER',a:'VML PARIS',u:'https://www.youtube.com/watch?v=I2sHOyoL0J4'},
+{y:'2026',t:'Gold',ti:'THE LAST COKE IN THE DESERT',b:'COCA-COLA',a:'VML NEW YORK',u:'https://gracereinhold.com/the-last-coke-in-the-desert'},
+{y:'2026',t:'Gold',ti:'THE MĀORI ROLL CALL',b:'WHĀNAU ORA',a:'MOTION SICKNESS AUCKLAND',u:'https://www.youtube.com/watch?v=cQE_cxhHlqc'},
+{y:'2026',t:'Gold',ti:'THE NEW FACE OF LEGS',b:'CERAVE',a:'BOLDED NEW YORK',u:'https://rickybowry.com/portfolio/cerave-new-face-of-legs/'},
+{y:'2026',t:'Gold',ti:'THE PERIOD UNIFORM',b:'SOMOS MARTINA',a:'SERVICEPLAN MUNICH',u:'https://youtu.be/J_lOZXpp9TI'},
+{y:'2026',t:'Gold',ti:'THE SAFE PACK',b:'TUPHARMA 365',a:'VML MADRID',u:'https://www.vml.com/work/the-safe-pack'},
+{y:'2026',t:'Gold',ti:'THE SWEDISH PRESCRIPTION',b:'VISIT SWEDEN',a:'PRIME WEBER SHANDWICK STOCKHOLM',u:'https://vimeo.com/1157558881'},
+{y:'2026',t:'Gold',ti:'THE TIGER',b:'GUCCI',a:'MJZ LOS ANGELES',u:'https://www.youtube.com/watch?v=Y7MgcDKBPpw'},
+{y:'2026',t:'Gold',ti:'THE TROJAN FAX',b:'IUCN FRENCH COMMITTEE X FUJIFILM PRINT',a:'BETC PARIS',u:'https://vimeo.com/1203429857'},
+{y:'2026',t:'Gold',ti:'THE VOLVO CARS SAFETY STANDARD',b:'VOLVO CARS',a:'VOLVO GOTHENBURG',u:'https://youtu.be/jL3XxEk0HX0'},
+{y:'2026',t:'Gold',ti:'TIFFANY × NETFLIX\'S FRANKENSTEIN',b:'TIFFANY',a:'TIFFANY NEW YORK & NETFLIX BRAND CREATIVE STUDIO',u:'https://youtu.be/8nI6O-P5BuM'},
+{y:'2026',t:'Gold',ti:'TOCAYOS',b:'HEINEKEN',a:'LEPUB MILAN',u:'https://youtu.be/r5M5spNm-fI'},
+{y:'2026',t:'Gold',ti:'UBERLÂNDIA E.C.',b:'UBER',a:'WIEDEN+KENNEDY SÃO PAULO',u:'https://vimeo.com/1186558075'},
+{y:'2026',t:'Gold',ti:'UTRECHT ENERGIZED',b:'RENAULT',a:'PUBLICIS AMSTERDAM',u:'https://www.youtube.com/watch?v=osZnUXoyVfQ'},
+{y:'2026',t:'Gold',ti:'VASELINE AND THE REAL NIGERIAN PRINCE',b:'VASELINE',a:'LEO SINGAPORE',u:'https://youtu.be/eNYA89Z97Gs'},
+{y:'2026',t:'Gold',ti:'VASELINE ORIGINALS',b:'VASELINE',a:'OGILVY SINGAPORE',u:'https://www.youtube.com/watch?v=hzq9lR5SsNo'},
+{y:'2026',t:'Gold',ti:'VIAGRA BLUE BRANDS',b:'VIATRI',a:'OGILVY SHANGHAI',u:'https://vimeo.com/1203387960'},
+{y:'2026',t:'Gold',ti:'WELCOME BACK, PAISANO',b:'TECATE',a:'LEPUB MEXICO',u:'https://www.youtube.com/watch?v=sFLMnLf2HeI'},
+{y:'2026',t:'Gold',ti:'WHO\'S WAITING FOR YOU?',b:'CERVEZA VICTORIA',a:'WIEDEN+KENNEDY MEXICO',u:'https://www.youtube.com/watch?v=OvwrHl__VKY'},
+{y:'2026',t:'Silver',ti:'#UNCENSORYOURHEALTH',b:'LADYWELL',a:'SAATCHI & SAATCHI NEW YORK',u:'https://www.youtube.com/watch?v=8rr_up6f5EE'},
+{y:'2026',t:'Silver',ti:'2036',b:'ASSOCIATION ANTOINE ALLÉNO',a:'HAVAS PARIS',u:'https://www.youtube.com/watch?v=sG0Y_i84xpw'},
+{y:'2026',t:'Silver',ti:'867',b:'5309 – THE CANCER SUPPORT COMMUNITY',a:'KLICK HEALTH TORONTO',u:'https://youtu.be/jzFpWNbQfp8'},
+{y:'2026',t:'Silver',ti:'A CRITTER CAROL',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://vimeo.com/1140829189'},
+{y:'2026',t:'Silver',ti:'A DRUGSTORE IN YOUR PESEBRE',b:'FARMACIAS ECONÓMICAS',a:'BE FLAMINGO SAN JOSÉ',u:'https://www.youtube.com/watch?v=PlezpHe6_lM'},
+{y:'2026',t:'Silver',ti:'A MOTHER\'S COMMENTARY',b:'REPORTERS WITHOUT BORDERS',a:'THE GOOD COMPANY PARIS',u:'https://youtu.be/a4ZCQDgxW0U'},
+{y:'2026',t:'Silver',ti:'AFTER SHIT HAPPENED SERVICE',b:'SHIELD INSURANCE',a:'VML BANGKOK',u:'https://vimeo.com/1177559337'},
+{y:'2026',t:'Silver',ti:'AMAZONIA',b:'EMBRATUR',a:'FUTUREBRAND SÃO PAULO',u:'https://lbbonline.com/news/Brazilian-Amazon-Gains-Its-Own-Unique-Brand-to-Boost-Tourism-and-Sustainable-Initiatives'},
+{y:'2026',t:'Silver',ti:'BACK TO KAI TAK',b:'CATHAY',a:'LEO HONG KONG',u:'https://www.youtube.com/watch?v=Dpb4yzz85CQ'},
+{y:'2026',t:'Silver',ti:'CHANGE MY MIND',b:'CZECH TELEVISION',a:'PUNK FILM PRAGUE',u:'https://youtu.be/a4ouJAuo1ag'},
+{y:'2026',t:'Silver',ti:'CHEETOS THING',b:'ERTIPS – CHEETOS',a:'GS&P',u:'https://www.youtube.com/watch?v=AQREpnGLU_8'},
+{y:'2026',t:'Silver',ti:'CHUPA CHUPS IMPOSSIBLE',b:'CHUPA CHUPS',a:'BBH LONDON',u:'https://vimeo.com/1185473956'},
+{y:'2026',t:'Silver',ti:'DELIVERED BY TETRIS',b:'LA POSTE',a:'BETC/PARIS',u:'https://www.youtube.com/watch?v=JPSOD_c4AoY'},
+{y:'2026',t:'Silver',ti:'DISCOUNT CHANTS',b:'MERCADO LIBRE',a:'GUT BUENOS AIRES',u:'https://youtu.be/k2JGGB1tPEA'},
+{y:'2026',t:'Silver',ti:'DRESS YOURSELF',b:'SIMONS',a:'SID LEE MONTREAL',u:'https://vimeo.com/1119787096'},
+{y:'2026',t:'Silver',ti:'DRESSED FOR WIMBLEDON',b:'STELLA ARTOIS',a:'GUT AMSTERDAM',u:'https://www.dandad.org/work/d-ad-awards-archive/dressed-for-wimbledon'},
+{y:'2026',t:'Silver',ti:'DROP IN',b:'ELECTRONIC ARTS SKATE',a:'UNCOMMON CREATIVE STUDIO LONDON',u:'https://vimeo.com/1119239917'},
+{y:'2026',t:'Silver',ti:'FIRECATCHERS',b:'SAPEURS POMPIERS DE FRANCE',a:'HAVAS PLAY PARIS',u:'https://www.youtube.com/watch?v=YFSRJpoZHoU'},
+{y:'2026',t:'Silver',ti:'FIRST SCHOOL POO',b:'ANDREX',a:'KIMBERLY-CLARK SURREY',u:'https://vimeo.com/1084183002'},
+{y:'2026',t:'Silver',ti:'FOR PAPA!',b:'INSTACART',a:'MCCANN NEW YORK',u:'https://www.youtube.com/watch?v=a1ysUdRLjaE'},
+{y:'2026',t:'Silver',ti:'GAMING FLUTE',b:'SKITTLES',a:'TBWA\\CHIAT\\DAY CHICAGO',u:'https://www.katiebero.com/work-1/skittles-gaming-flute'},
+{y:'2026',t:'Silver',ti:'HIDDEN TAGS',b:'IKEA',a:'UZINA LISBON',u:'https://vimeo.com/1087698212'},
+{y:'2026',t:'Silver',ti:'IKEA BRIGHTON STORE LAUNCH',b:'IKEA',a:'MOTHER LONDON',u:'https://www.dandad.org/work/d-ad-awards-archive/ikea-brighton-store-launch'},
+{y:'2026',t:'Silver',ti:'KEEP THINKING',b:'CLAUDE',a:'MOTHER LONDON',u:'https://vimeo.com/1124860904'},
+{y:'2026',t:'Silver',ti:'KITKAT SECURITY DETAIL',b:'KITKAT',a:'COURAGE TORONTO',u:'https://youtu.be/VfDoqCGYrms'},
+{y:'2026',t:'Silver',ti:'MADE TO SHARE',b:'CADBURY',a:'VCCP LONDON',u:'https://vimeo.com/1078890101'},
+{y:'2026',t:'Silver',ti:'MNTANA KA GOGO',b:'VASELINE',a:'VML JOHANNESBURG',u:'https://www.youtube.com/watch?v=q1QNAOA2Q64'},
+{y:'2026',t:'Silver',ti:'NO BLUE, NO GREEN',b:'SOS OCEANO',a:'DROGA5 SÃO PAULO',u:'https://vimeo.com/1201108240'},
+{y:'2026',t:'Silver',ti:'NOTHING STOPS WOMEN\'S RUGBY',b:'AXA FRANCE',a:'PUBLICIS CONSEIL PARIS',u:'https://vimeo.com/1181231416'},
+{y:'2026',t:'Silver',ti:'OWN YOUR FLOW',b:'KOTEX',a:'MCCANN NEW YORK',u:'https://vimeo.com/1164169063'},
+{y:'2026',t:'Silver',ti:'PLAYED BY HUMANS',b:'JAZZ IS DEAD',a:'TBWA\\CHIAT\\DAY LOS ANGELES',u:'https://youtu.be/1lZ696Kd6ic'},
+{y:'2026',t:'Silver',ti:'SHOT WITHOUT PERMISSION',b:'AMSTEL',a:'INGO STOCKHOLM',u:'https://www.youtube.com/watch?v=l88beT9gxCk'},
+{y:'2026',t:'Silver',ti:'SILENT EDITION',b:'JEEP',a:'PUBLICIS TORONTO',u:'https://vimeo.com/1185650047'},
+{y:'2026',t:'Silver',ti:'THE BITE',b:'BURGER KING',a:'BARKLEYOKRP CHICAGO & MOJO SUPERMARKET NEW YORK',u:'https://www.naomifrankel.com/work/cutwater'},
+{y:'2026',t:'Silver',ti:'THE CHOICE',b:'PEPSI',a:'PEPSICO PURCHASE',u:'https://vimeo.com/1182423422'},
+{y:'2026',t:'Silver',ti:'THE MISSING MANAGERS',b:'XBOX',a:'MCCANN LONDON',u:'https://youtu.be/Z7zomJ1eVSw'},
+{y:'2026',t:'Silver',ti:'THE TREASURE HUNT',b:'MINISTRY FOR EQUALITY',a:'OGILVY MADRID',u:'https://lbbonline.com/work/153982'},
+{y:'2026',t:'Silver',ti:'THE TRIANGLE THEORY',b:'DORITOS',a:'ALMAPBBDO SÃO PAULO',u:'https://vimeo.com/1195946969'},
+{y:'2026',t:'Silver',ti:'TRIP',b:'OPEN AI',a:'ISLE OF ANY NEW YORK',u:'https://vimeo.com/1122948088'},
+{y:'2026',t:'Silver',ti:'UKRAINE AIR RAID ALERTS',b:'UNICEF',a:'UNITED IMAGINATIONS HELSINKI',u:'https://youtu.be/WOWTIZLMosw'},
+{y:'2026',t:'Silver',ti:'WHEREVER LIFE GOES',b:'IKEA',a:'NOA | ÅKESTAM HOLST / STOCKHOLM',u:'https://www.oneclub.org/awards/theoneshow/-award/64800/wherever-life-goes/'},
+{y:'2026',t:'Bronze',ti:'¡HOLA!',b:'COLAS ICELAND',a:'PIPAR\\TBWA ICELAND',u:'https://youtu.be/RZ_RvWpxEhw'},
+{y:'2026',t:'Bronze',ti:'30UNDER30',b:'CHANGE THE REF',a:'FOUNDERS MIAMI',u:'https://youtu.be/ZcIX4jEKUo0'},
+{y:'2026',t:'Bronze',ti:'A MINECRAFT MOVIE MEAL',b:'MCDONALD\'S',a:'WIEDEN+KENNEDY NEW YORK',u:'https://www.wk.com/work/mcdonalds-minecraft/'},
+{y:'2026',t:'Bronze',ti:'AFFORDABLE MASTERPIECES',b:'IKEA',a:'MEMAC OGILVY DUBAI',u:'https://www.ogilvy.com/work/affordable-masterpieces'},
+{y:'2026',t:'Bronze',ti:'BRING A BOOK TO LIFE',b:'AMAZON',a:'DROGA5 LONDON',u:'https://vimeo.com/1103797486'},
+{y:'2026',t:'Bronze',ti:'COLORFOOD',b:'AUCHAN',a:'TBWA\\PARIS',u:'https://www.youtube.com/watch?v=dlonvMFZ3MA'},
+{y:'2026',t:'Bronze',ti:'CROSSES FOR CRISIS',b:'RED CROSS',a:'MUTANT ANTWERP',u:'https://vimeo.com/1200962755'},
+{y:'2026',t:'Bronze',ti:'DIRTY BUSINESS',b:'CHANNEL 4',a:'4CREATIVE LONDON',u:'https://youtu.be/Prs4OLPIl8A'},
+{y:'2026',t:'Bronze',ti:'DISH',b:'OPEN AI',a:'ISLE OF ANY NEW YORK',u:'https://vimeo.com/1135476314'},
+{y:'2026',t:'Bronze',ti:'DRAWN TO D&AD',b:'D&AD',a:'JONES KNOWLES RITCHIE LONDON',u:'https://www.oneclub.org/awards/theoneshow/-award/63912/drawn-to-dad/'},
+{y:'2026',t:'Bronze',ti:'ESCAPE VEHICLE',b:'TOYOTA',a:'OGILVY ATHENS',u:'https://www.youtube.com/watch?v=pzG0C7oIfRE'},
+{y:'2026',t:'Bronze',ti:'FANTASTIC KEYS',b:'MARVEL / THE WALT DISNEY COMPANY FRANCE',a:'MARCEL PARIS',u:'https://www.youtube.com/watch?v=e4SIlC4Ey_Y'},
+{y:'2026',t:'Bronze',ti:'GOOD DAYS',b:'LILLY',a:'WIEDEN+KENNEDY NEW YORK',u:'https://vimeo.com/1150526756'},
+{y:'2026',t:'Bronze',ti:'GOODBYE RX',b:'7: SAYING FAREWELL TO A DEAR FRIEND – MAZDA',a:'LUCK TOKYO',u:'https://www.youtube.com/watch?v=nf3_lwSIShg'},
+{y:'2026',t:'Bronze',ti:'HELP!',b:'SANTALUCÍA',a:'ORIOLVILLAR BARCELONA',u:'https://vimeo.com/1204811319'},
+{y:'2026',t:'Bronze',ti:'IN GOOD TIME',b:'UBER',a:'MOTHER NEW YORK',u:'https://vimeo.com/1127387388'},
+{y:'2026',t:'Bronze',ti:'LUTHER',b:'KENDRICK LAMAR',a:'FELA LOS ANGELES',u:'https://vimeo.com/1079902757'},
+{y:'2026',t:'Bronze',ti:'M&M\'S RICKTOK',b:'M&M\'S',a:'BBDO NEW YORK',u:'https://vimeo.com/1189884974'},
+{y:'2026',t:'Bronze',ti:'MARSEILLE C\'EST NOUS.',b:'PUMA',a:'WAY AGENCY PARIS',u:'https://www.youtube.com/watch?v=8aVYID0-at8'},
+{y:'2026',t:'Bronze',ti:'NEVER OVER',b:'ELI LILLY',a:'WIEDEN+KENNEDY NEW YORK',u:'https://www.youtube.com/watch?v=CtxdhnieTCQ'},
+{y:'2026',t:'Bronze',ti:'NO FRAME MISSED',b:'APPLE',a:'TBWA\\MEDIA ARTS LAB LOS ANGELES',u:'https://vimeo.com/1112735008'},
+{y:'2026',t:'Bronze',ti:'PULL UP',b:'OPEN AI',a:'ISLE OF ANY NEW YORK',u:'https://www.youtube.com/watch?v=IqC3YrIzbQw'},
+{y:'2026',t:'Bronze',ti:'RUN BACK THE MIRACLE',b:'MICHELOB ULTRA',a:'WIEDEN+KENNEDY NEW YORK',u:'https://youtu.be/twUi2ykMybw'},
+{y:'2026',t:'Bronze',ti:'SLIDE',b:'APPLE',a:'APPLE CUPERTINO',u:'https://vimeo.com/1168177137'},
+{y:'2026',t:'Bronze',ti:'STEPH CURRY SHOOTS THE MOON',b:'RANDOM HOUSE PUBLISHING GROUP',a:'KNOWN NEW YORK',u:'https://www.youtube.com/watch?v=7sPk_BgjNZs'},
+{y:'2026',t:'Bronze',ti:'STRANGER THINGS IN SEARCH',b:'GOOGLE AND NETFLIX',a:'GOOGLE MOUNTAIN VIEW',u:'https://www.youtube.com/watch?v=FDnNW_HPEwg'},
+{y:'2026',t:'Bronze',ti:'THE BIG REDEMPTION',b:'FRONTIER AIRLINES',a:'BARKLEYOKRP KANSAS CITY',u:'https://vimeo.com/1164767168'},
+{y:'2026',t:'Bronze',ti:'THE CATRACE',b:'DISTANCE × STRAVA',a:'BETC PARIS',u:'https://www.youtube.com/watch?v=jCp9ruDK2c0'},
+{y:'2026',t:'Bronze',ti:'THE LEAST MOST INTERESTING MAN',b:'DOS EQUIS',a:'LEPUB NEW YORK',u:'https://youtu.be/X2VLDiIwKpk'},
+{y:'2026',t:'Bronze',ti:'THE MISSING WORD DICTIONARY',b:'VISIONING BEYOND VIOLENCE',a:'FCB HEALTH NEW YORK',u:'https://www.youtube.com/watch?v=OQdjpHoyQVs'},
+{y:'2026',t:'Bronze',ti:'THE WIZARD OF OZ AT SPHERE',b:'SPHERE STUDIOS',a:'SPHERE ENTERTAINMENT BURBANK',u:'https://youtu.be/9d8HMYn-upo'},
+{y:'2026',t:'Bronze',ti:'TWO',b:'WAY DEAL – CLASH OF CLANS',a:'DAVID NEW YORK',u:'https://vimeo.com/1168852605'},
+{y:'2026',t:'Bronze',ti:'UNLOVED',b:'INTERMARCHÉ',a:'ROMANCE PARIS',u:'https://vimeo.com/1149404148'},
+{y:'2026',t:'Bronze',ti:'WIFI INVASION',b:'WAOO',a:'UNCLE GREY COPENHAGEN',u:'https://vimeo.com/1198392889'}];
+
+const TIER_STYLES = {
+  'Grand Prix': { bg: '#D4FF3D', fg: '#0A0A0A', label: 'GRAND PRIX' },
+  'Gold':       { bg: '#E8C547', fg: '#0A0A0A', label: 'GOLD' },
+  'Silver':     { bg: '#C9CDD3', fg: '#0A0A0A', label: 'SILVER' },
+  'Bronze':     { bg: '#C97B4A', fg: '#0A0A0A', label: 'BRONZE' },
+  'Unranked':   { bg: '#3A3A30', fg: '#F5F5F0', label: '' },
+};
+
+const STACK = 16;
+const SEEN_KEY = 'ltwm.seen.v1';
+const SAVED_KEY = 'ltwm.saved.v1';
+const TIER_KEYS = ['All', 'Grand Prix', 'Gold', 'Silver', 'Bronze'];
+const YEARS = ['All'].concat(Array.from(new Set(DATA.map(function (d) { return d.y; }))).sort());
+
+function media(item) {
+  if (!item || !item.u) return { kind: 'none' };
+  var u = item.u;
+  var m = u.match(/[?&]v=([\w-]{6,})/) || u.match(/youtu\.be\/([\w-]{6,})/);
+  if (m) return { kind: 'youtube', id: m[1] };
+  m = u.match(/vimeo\.com\/(?:.*\/)?(\d{6,})/);
+  if (m) return { kind: 'vimeo', id: m[1] };
+  return { kind: 'link' };
+}
+function embedFor(item, autoplay) {
+  var m = media(item);
+  if (m.kind === 'youtube') return 'https://www.youtube.com/embed/' + m.id + (autoplay ? '?autoplay=1' : '');
+  if (m.kind === 'vimeo') return 'https://player.vimeo.com/video/' + m.id + (autoplay ? '?autoplay=1' : '');
+  return '';
+}
+function shuffleArray(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function loadStore(key) {
+  try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
+}
+function saveStore(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+}
+
+export default function App() {
+  const [tier, setTier] = useState('All');
+  const [year, setYear] = useState('All');
+  const [seen, setSeen] = useState([]);
+  const [saved, setSaved] = useState([]);
+  const [order, setOrder] = useState([]);
+  const [cursor, setCursor] = useState(0);
+  const [view, setView] = useState('swipe');
+  const [watching, setWatching] = useState(false);
+  const [hint, setHint] = useState(true);
+  const [detail, setDetail] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [swipes, setSwipes] = useState(0);
+  const [roundSaved, setRoundSaved] = useState([]);
+  const [viThumbs, setViThumbs] = useState({});
+
+  const cardRef = useRef(null);
+  const likeRef = useRef(null);
+  const skipRef = useRef(null);
+  const dx = useRef(0);
+  const dragging = useRef(false);
+  const startX = useRef(0);
+  const exiting = useRef(false);
+  const requested = useRef({});
+
+  function unseen(t, y, s) {
+    return DATA.filter(function (c) {
+      return (t === 'All' || c.t === t) && (y === 'All' || c.y === y) && s.indexOf(c.u) === -1;
+    });
+  }
+  function resetCard() {
+    dx.current = 0;
+    var c = cardRef.current;
+    if (c) { c.style.transition = 'none'; c.style.transform = 'none'; c.style.opacity = 1; }
+    if (likeRef.current) likeRef.current.style.opacity = 0;
+    if (skipRef.current) skipRef.current.style.opacity = 0;
+  }
+  function rebuild(t, y, s) {
+    var list = shuffleArray(unseen(t, y, s || seen));
+    setTier(t); setYear(y); setOrder(list); setCursor(0);
+    setWatching(false); setHistory([]);
+    setView(list.length ? 'swipe' : 'empty');
+    resetCard();
+  }
+
+  useEffect(function () {
+    var s = loadStore(SEEN_KEY);
+    var sv = loadStore(SAVED_KEY);
+    setSeen(s); setSaved(sv);
+    var list = shuffleArray(unseen('All', 'All', s));
+    setOrder(list);
+    setView(list.length ? 'swipe' : 'empty');
+  }, []);
+
+  const cur = order[cursor];
+  const nxt = order[cursor + 1];
+  const md = media(cur);
+  const tierStyle = cur ? (TIER_STYLES[cur.t] || TIER_STYLES.Unranked) : TIER_STYLES.Unranked;
+
+  function requestVimeo(id) {
+    if (requested.current[id]) return;
+    requested.current[id] = true;
+    fetch('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + id)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        setViThumbs(function (v) { var n = Object.assign({}, v); n[id] = (d && d.thumbnail_url) || ''; return n; });
+      })
+      .catch(function () {
+        setViThumbs(function (v) { var n = Object.assign({}, v); n[id] = ''; return n; });
+      });
+  }
+  function thumbFor(item) {
+    var m = media(item);
+    if (m.kind === 'youtube') return 'https://img.youtube.com/vi/' + m.id + '/hqdefault.jpg';
+    if (m.kind === 'vimeo') { var v = viThumbs[m.id]; return v === undefined ? null : v; }
+    return '';
+  }
+  useEffect(function () {
+    [cur, nxt].forEach(function (it) {
+      var m = media(it);
+      if (m.kind === 'vimeo' && viThumbs[m.id] === undefined) requestVimeo(m.id);
+    });
+  });
+
+  const thumb = thumbFor(cur);
+  const showPlay = (md.kind === 'youtube' || md.kind === 'vimeo') && thumb !== null;
+  const noFilm = md.kind === 'link' || md.kind === 'none';
+
+  function advance(liked) {
+    if (!cur || exiting.current || watching) return;
+    exiting.current = true;
+    var c = cardRef.current;
+    if (c) {
+      c.style.transition = 'transform 0.2s ease-in, opacity 0.2s ease-in';
+      c.style.transform = 'translateX(' + (liked ? 460 : -460) + 'px) rotate(' + (liked ? 18 : -18) + 'deg)';
+      c.style.opacity = 0;
+    }
+    var item = cur;
+    setTimeout(function () {
+      var nextSeen = seen.indexOf(item.u) === -1 ? seen.concat([item.u]) : seen;
+      var nextSaved = liked && !saved.some(function (x) { return x.u === item.u; }) ? saved.concat([item]) : saved;
+      saveStore(SEEN_KEY, nextSeen);
+      saveStore(SAVED_KEY, nextSaved);
+      setSeen(nextSeen);
+      setSaved(nextSaved);
+      if (liked) setRoundSaved(function (r) { return r.concat([item]); });
+      setHistory(function (h) { return h.concat([{ liked: liked, item: item }]); });
+      var nSwipes = swipes + 1;
+      setSwipes(nSwipes);
+      var nOrder = order;
+      var nCursor = cursor + 1;
+      if (nCursor >= order.length) {
+        nOrder = shuffleArray(unseen(tier, year, nextSeen));
+        nCursor = 0;
+        setOrder(nOrder);
+      }
+      setCursor(nCursor);
+      setView(!nOrder.length ? 'empty' : (nSwipes % STACK === 0 ? 'milestone' : 'swipe'));
+      setWatching(false);
+      setHint(false);
+      resetCard();
+      exiting.current = false;
+    }, 200);
+  }
+
+  function undo() {
+    if (!history.length) return;
+    var last = history[history.length - 1];
+    var nOrder = order.indexOf(last.item) === -1 ? [last.item].concat(order) : order;
+    var nCursor = nOrder.indexOf(last.item);
+    var nSeen = seen.filter(function (u) { return u !== last.item.u; });
+    var nSaved = last.liked ? saved.filter(function (x) { return x.u !== last.item.u; }) : saved;
+    saveStore(SEEN_KEY, nSeen);
+    saveStore(SAVED_KEY, nSaved);
+    setSeen(nSeen); setSaved(nSaved); setOrder(nOrder); setCursor(nCursor);
+    if (last.liked) setRoundSaved(function (r) { return r.filter(function (x) { return x.u !== last.item.u; }); });
+    setHistory(function (h) { return h.slice(0, -1); });
+    setSwipes(function (s) { return Math.max(0, s - 1); });
+    setView('swipe');
+    setWatching(false);
+    resetCard();
+  }
+
+  function openWatch() {
+    if (noFilm) { window.open(cur.u, '_blank', 'noopener'); return; }
+    setWatching(true); setHint(false);
+  }
+
+  useEffect(function () {
+    function onKey(e) {
+      if (view !== 'swipe') return;
+      if (watching) { if (e.key === 'Escape') setWatching(false); return; }
+      if (e.key === 'ArrowRight') advance(true);
+      else if (e.key === 'ArrowLeft') advance(false);
+      else if (e.key.toLowerCase() === 'u') undo();
+      else if (e.key === ' ') { e.preventDefault(); openWatch(); }
+    }
+    window.addEventListener('keydown', onKey);
+    return function () { window.removeEventListener('keydown', onKey); };
+  });
+
+  function paintDrag() {
+    var c = cardRef.current;
+    if (!c) return;
+    c.style.transition = 'none';
+    c.style.transform = 'translateX(' + dx.current + 'px) rotate(' + (dx.current / 18) + 'deg)';
+    if (likeRef.current) likeRef.current.style.opacity = Math.max(0, Math.min(1, dx.current / 100));
+    if (skipRef.current) skipRef.current.style.opacity = Math.max(0, Math.min(1, -dx.current / 100));
+  }
+  function onDown(e) {
+    if (watching) return;
+    dragging.current = true;
+    startX.current = e.clientX;
+    if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId);
+  }
+  function onMove(e) {
+    if (!dragging.current) return;
+    dx.current = e.clientX - startX.current;
+    paintDrag();
+  }
+  function onUp() {
+    if (!dragging.current) return;
+    dragging.current = false;
+    if (dx.current > 100) { advance(true); return; }
+    if (dx.current < -100) { advance(false); return; }
+    dx.current = 0;
+    var c = cardRef.current;
+    if (c) { c.style.transition = 'transform 0.25s cubic-bezier(.2,.8,.3,1)'; c.style.transform = 'none'; }
+    if (likeRef.current) likeRef.current.style.opacity = 0;
+    if (skipRef.current) skipRef.current.style.opacity = 0;
+  }
+
+  function cardOf(x) {
+    var tt = TIER_STYLES[x.t] || TIER_STYLES.Unranked;
+    return { item: x, tt: tt, thumb: thumbFor(x) || '' };
+  }
+  const inStack = (swipes % STACK) + 1;
+
+  function Grid(props) {
+    return (
+      <div style={S.grid}>
+        {props.items.map(function (x) {
+          var c = cardOf(x);
+          return (
+            <button key={x.u} style={S.gridCell} onClick={function () { setDetail(x); setView('detail'); }}>
+              <span style={S.gridThumb}>
+                {c.thumb ? <img src={c.thumb} alt="" style={S.gridImg} /> : null}
+                <span style={Object.assign({}, S.gridBadge, { background: c.tt.bg, color: c.tt.fg })}>{c.tt.label}</span>
+              </span>
+              <span style={S.gridTitle}>{x.ti}</span>
+              <span style={S.gridBrand}>{x.b}</span>
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (view === 'shelf') {
+    return (
+      <div style={S.page}>
+        <style>{globalCss}</style>
+        <div style={S.header}>
+          <button style={S.backBtn} onClick={function () { setView(order.length ? 'swipe' : 'empty'); setDetail(null); }}>
+            <Icon name="back" size={15} /> BACK
+          </button>
+          <span style={S.brandSub}>YOUR SHELF</span>
+        </div>
+        <div style={S.bigCount}>
+          <span style={S.bigNum}>{saved.length}</span>
+          <span style={S.bigLabel}>SAVED</span>
+        </div>
+        <div style={S.rule} />
+        {saved.length === 0 ? (
+          <div style={S.empty}><p style={S.emptyText}>Nothing saved yet.<br />Swipe right on what you love.</p></div>
+        ) : (
+          <div style={S.scroll}><Grid items={saved} /></div>
+        )}
+      </div>
+    );
+  }
+
+  if (view === 'detail' && detail) {
+    var dTier = TIER_STYLES[detail.t] || TIER_STYLES.Unranked;
+    var dMd = media(detail);
+    return (
+      <div style={S.page}>
+        <style>{globalCss}</style>
+        <button style={S.backBtn} onClick={function () { setView('shelf'); setDetail(null); }}>
+          <Icon name="back" size={15} /> BACK
+        </button>
+        <div style={S.detailMedia}>
+          {dMd.kind === 'link' || dMd.kind === 'none' ? (
+            <a href={detail.u} target="_blank" rel="noopener noreferrer" style={Object.assign({}, S.noFilm, { background: dTier.bg, color: dTier.fg })}>
+              <span style={S.noFilmKicker}>NO FILM ON FILE</span>
+              <span style={S.noFilmBrand}>{detail.b}</span>
+              <span style={S.noFilmCta}>VIEW THE WORK &#8599;</span>
+            </a>
+          ) : (
+            <iframe style={S.iframe} src={embedFor(detail, false)} title={detail.ti} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
+          )}
+        </div>
+        <div style={S.cardTop}>
+          <span style={Object.assign({}, S.tierBadge, { background: dTier.bg, color: dTier.fg })}>{dTier.label}</span>
+          <span style={S.yearBadge}>{detail.y}</span>
+        </div>
+        <h1 style={S.title}>{detail.ti}</h1>
+        <p style={S.brand}>{detail.b}</p>
+        <p style={S.agency}>{detail.a}</p>
+      </div>
+    );
+  }
+
+  if (view === 'milestone') {
+    return (
+      <div style={S.page}>
+        <style>{globalCss}</style>
+        <div style={S.brandRow}>
+          <span style={S.brandMark}>LTWM</span>
+          <span style={S.brandSub}>SHUFFLE</span>
+        </div>
+        <div style={S.display}>Sixteen<br />watched<br />today.</div>
+        <p style={S.lead}>{roundSaved.length === 1 ? 'One kept for the shelf.' : 'You kept ' + roundSaved.length + ' for the shelf.'}</p>
+        <div style={S.rule} />
+        <div style={S.scroll}>
+          {roundSaved.length ? <Grid items={roundSaved.slice(-6)} /> : <p style={S.emptyText}>You saved nothing this round. Ruthless.</p>}
+        </div>
+        <div style={S.rowBtns}>
+          <button style={S.primaryWide} onClick={function () { setView('swipe'); setRoundSaved([]); }}>SIXTEEN MORE</button>
+          <button style={S.ghostBtn} onClick={function () { setView('shelf'); }}>SHELF</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (view === 'empty' || !cur) {
+    return (
+      <div style={S.page}>
+        <style>{globalCss}</style>
+        <div style={S.brandRow}>
+          <span style={S.brandMark}>LTWM</span>
+          <span style={S.brandSub}>SHUFFLE</span>
+        </div>
+        <div style={S.centerCol}>
+          <div style={S.display}>You&#8217;ve seen<br />everything<br />here.</div>
+          <p style={S.lead}>Nothing left under this filter. Widen it, or start the archive over.</p>
+          <button style={S.primary} onClick={function () { rebuild('All', 'All', seen); }}>SHOW ALL YEARS &amp; TIERS</button>
+          <button style={S.ghostBtn} onClick={function () { saveStore(SEEN_KEY, []); setSeen([]); setSwipes(0); rebuild(tier, year, []); }}>CLEAR WATCH HISTORY</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={S.page}>
+      <style>{globalCss}</style>
+
+      <div style={S.header}>
+        <div style={S.brandRow}>
+          <span style={S.brandMark}>LTWM</span>
+          <span style={S.brandSub}>SHUFFLE</span>
+        </div>
+        <button style={S.shelfBtn} onClick={function () { setView('shelf'); }}>
+          <Icon name="heart" size={14} /> {saved.length}
+        </button>
+      </div>
+
+      <div style={S.chipRow}>
+        {TIER_KEYS.map(function (t) {
+          var on = tier === t;
+          return (
+            <button key={t} onClick={function () { rebuild(t, year, seen); }}
+              style={Object.assign({}, S.chip, on ? S.chipOn : S.chipOff)}>
+              {t === 'All' ? 'ALL TIERS' : TIER_STYLES[t].label}
+            </button>
+          );
+        })}
+      </div>
+
+      <div style={S.chipRowTight}>
+        {YEARS.map(function (y) {
+          var on = year === y;
+          return (
+            <button key={y} onClick={function () { rebuild(tier, y, seen); }}
+              style={Object.assign({}, S.yearChip, on ? S.yearChipOn : S.yearChipOff)}>
+              {y === 'All' ? 'ALL YEARS' : y}
+            </button>
+          );
+        })}
+      </div>
+
+      <div style={S.progressRow}>
+        <div style={S.progressTrack}>
+          <div style={Object.assign({}, S.progressFill, { width: Math.round(((swipes % STACK) / STACK) * 100) + '%' })} />
+        </div>
+        <span style={S.progressLabel}>{inStack} / {STACK} today</span>
+      </div>
+
+      <div style={S.stackWrap}>
+        {nxt ? (
+          <div style={S.cardBehind}>
+            {thumbFor(nxt) ? <img src={thumbFor(nxt)} alt="" style={S.behindImg} /> : null}
+          </div>
+        ) : null}
+
+        <div ref={cardRef} style={S.card}
+          onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}>
+
+          <div ref={likeRef} style={Object.assign({}, S.stamp, S.stampLike)}>SAVE</div>
+          <div ref={skipRef} style={Object.assign({}, S.stamp, S.stampSkip)}>SKIP</div>
+
+          {watching ? (
+            <div style={S.watchLayer}>
+              <div style={S.watchFrame}>
+                <iframe style={S.iframe} src={embedFor(cur, true)} title={cur.ti} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
+              </div>
+              <div style={S.watchBar}>
+                <span style={S.watchTitle}>{cur.ti}</span>
+                <button style={S.closeBtn} onClick={function () { setWatching(false); }}>
+                  <Icon name="x" size={13} /> CLOSE
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          <div style={S.mediaArea}>
+            {showPlay ? (
+              <button style={S.playWrap} onClick={openWatch}>
+                {thumb ? <img src={thumb} alt="" style={S.playImg} /> : null}
+                <span style={S.playScrim} />
+                <span style={S.playCircle}><Icon name="play" size={20} fill="#0A0A0A" /></span>
+                <span style={S.playLabel}>TAP TO WATCH</span>
+              </button>
+            ) : null}
+            {thumb === null ? (
+              <div style={S.loadingStill}><span style={S.loadingText}>LOADING STILL&#8230;</span></div>
+            ) : null}
+            {noFilm ? (
+              <a href={cur.u} target="_blank" rel="noopener noreferrer" style={Object.assign({}, S.noFilm, { background: tierStyle.bg, color: tierStyle.fg })}>
+                <span style={S.noFilmKicker}>NO FILM ON FILE</span>
+                <span style={S.noFilmBrand}>{cur.b}</span>
+                <span style={S.noFilmCta}>VIEW THE WORK &#8599;</span>
+              </a>
+            ) : null}
+          </div>
+
+          <div style={S.cardTop}>
+            <span style={Object.assign({}, S.tierBadge, { background: tierStyle.bg, color: tierStyle.fg })}>{tierStyle.label}</span>
+            <span style={S.yearBadge}>{cur.y}</span>
+          </div>
+
+          <div style={S.textArea}>
+            <h1 style={S.title}>{cur.ti}</h1>
+            <p style={S.brand}>{cur.b}</p>
+            <p style={S.agency}>{cur.a}</p>
+          </div>
+
+          {hint && swipes === 0 ? (
+            <div style={S.hint}>
+              <span style={S.hintText}>Sixteen in this stack. Drag, tap, or use <span style={S.hintKey}>&#8592;</span> <span style={S.hintKey}>&#8594;</span>.</span>
+              <button style={S.hintBtn} onClick={function () { setHint(false); }}>GOT IT</button>
+            </div>
+          ) : null}
+        </div>
+      </div>
+
+      <div style={S.footer}>
+        <div style={S.actionCol}>
+          <button className="btn-press" style={S.skipBtn} onClick={function () { advance(false); }} aria-label="Skip">
+            <Icon name="x" size={22} />
+          </button>
+          <span style={S.actionLabel}>SKIP</span>
+        </div>
+        <div style={S.actionCol}>
+          <button className="btn-press" style={S.undoBtn} onClick={undo} disabled={!history.length} aria-label="Undo">
+            <Icon name="undo" size={17} />
+          </button>
+          <span style={S.actionLabel}>UNDO</span>
+        </div>
+        <div style={S.actionCol}>
+          <button className="btn-press" style={S.saveBtn} onClick={function () { advance(true); }} aria-label="Save">
+            <Icon name="heart" size={22} />
+          </button>
+          <span style={S.actionLabel}>SAVE</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Icon(props) {
+  var size = props.size || 18;
+  var common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round' };
+  if (props.name === 'x') return <svg {...common}><path d="M18 6 6 18M6 6l12 12" /></svg>;
+  if (props.name === 'heart') return <svg {...common}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>;
+  if (props.name === 'undo') return <svg {...common}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>;
+  if (props.name === 'back') return <svg {...common}><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>;
+  if (props.name === 'play') return <svg width={size} height={size} viewBox="0 0 24 24" fill={props.fill || 'currentColor'}><polygon points="6 3 20 12 6 21 6 3" /></svg>;
+  return null;
+}
+
+const globalCss = [
+  '.btn-press:active { transform: scale(0.92); }',
+  'button:focus-visible, a:focus-visible { outline: 2px solid #D4FF3D; outline-offset: 2px; }',
+  'button:disabled { opacity: 0.4; cursor: default; }',
+  '::selection { background: #D4FF3D; color: #0A0A0A; }',
+  '::-webkit-scrollbar { display: none; }'
+].join('\n');
+
+const HEAD = "'Archivo Black', 'Arial Black', Helvetica, sans-serif";
+const BODY = "Archivo, Helvetica, Arial, sans-serif";
+const SERIF = "Georgia, 'Times New Roman', serif";
+
+const S = {
+  page: { minHeight: '100vh', maxWidth: 480, margin: '0 auto', background: '#0A0A0A', color: '#F5F5F0', fontFamily: BODY, display: 'flex', flexDirection: 'column', padding: '18px 16px 14px', overflow: 'hidden', userSelect: 'none' },
+  header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+  brandRow: { display: 'flex', alignItems: 'baseline', gap: 8 },
+  brandMark: { fontFamily: HEAD, fontSize: 18, letterSpacing: '0.02em' },
+  brandSub: { fontFamily: SERIF, fontStyle: 'italic', fontSize: 12, letterSpacing: '0.14em', color: '#D4FF3D' },
+  shelfBtn: { display: 'flex', alignItems: 'center', gap: 6, background: 'transparent', border: '1px solid #33332B', borderRadius: 999, color: '#F5F5F0', padding: '7px 13px', fontFamily: HEAD, fontSize: 12, cursor: 'pointer' },
+  backBtn: { display: 'flex', alignItems: 'center', gap: 7, background: 'transparent', border: 'none', color: '#CFCFC4', fontFamily: HEAD, fontSize: 11, letterSpacing: '0.1em', cursor: 'pointer', padding: 0, alignSelf: 'flex-start' },
+  chipRow: { display: 'flex', gap: 6, marginTop: 14, overflowX: 'auto' },
+  chipRowTight: { display: 'flex', gap: 6, marginTop: 7, overflowX: 'auto' },
+  chip: { fontFamily: HEAD, fontSize: 10, letterSpacing: '0.07em', padding: '7px 12px', borderRadius: 999, whiteSpace: 'nowrap', flexShrink: 0, cursor: 'pointer' },
+  chipOn: { background: '#D4FF3D', color: '#0A0A0A', border: '1.5px solid #D4FF3D' },
+  chipOff: { background: 'transparent', color: '#CFE36F', border: '1.5px solid #4A5527' },
+  yearChip: { fontFamily: BODY, fontWeight: 600, fontSize: 10, letterSpacing: '0.07em', padding: '6px 11px', borderRadius: 999, whiteSpace: 'nowrap', flexShrink: 0, cursor: 'pointer' },
+  yearChipOn: { background: '#F5F5F0', color: '#0A0A0A', border: '1px solid #F5F5F0' },
+  yearChipOff: { background: 'transparent', color: '#B6B6AB', border: '1px solid #33332B' },
+  progressRow: { display: 'flex', alignItems: 'center', gap: 10, marginTop: 14 },
+  progressTrack: { flex: 1, height: 3, background: '#26261F', overflow: 'hidden' },
+  progressFill: { height: '100%', background: '#D4FF3D', transition: 'width 0.25s ease' },
+  progressLabel: { fontFamily: SERIF, fontStyle: 'italic', fontSize: 12, color: '#A3A399', flexShrink: 0 },
+  stackWrap: { flex: 1, position: 'relative', marginTop: 14, minHeight: 0 },
+  cardBehind: { position: 'absolute', inset: 0, background: '#131310', border: '1px solid #22221C', borderRadius: 20, transform: 'scale(0.955) translateY(10px)', overflow: 'hidden' },
+  behindImg: { width: '100%', height: 202, objectFit: 'cover', opacity: 0.28, filter: 'grayscale(1)', display: 'block' },
+  card: { position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: '#16160F', border: '1px solid #2F2F26', borderRadius: 20, overflow: 'hidden', touchAction: 'pan-y' },
+  stamp: { position: 'absolute', top: 22, zIndex: 6, opacity: 0, fontFamily: HEAD, fontSize: 20, letterSpacing: '0.1em', padding: '6px 14px', border: '3px solid', pointerEvents: 'none' },
+  stampLike: { left: 18, color: '#D4FF3D', borderColor: '#D4FF3D', transform: 'rotate(-8deg)' },
+  stampSkip: { right: 18, color: '#FF6B5D', borderColor: '#FF6B5D', transform: 'rotate(8deg)' },
+  watchLayer: { position: 'absolute', inset: 0, zIndex: 8, background: '#000', display: 'flex', flexDirection: 'column' },
+  watchFrame: { flex: 1, minHeight: 0 },
+  watchBar: { display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', background: '#0A0A0A', borderTop: '1px solid #26261F' },
+  watchTitle: { fontFamily: HEAD, fontSize: 11, lineHeight: 1.25, textTransform: 'uppercase', flex: 1 },
+  closeBtn: { display: 'flex', alignItems: 'center', gap: 6, background: '#D4FF3D', color: '#0A0A0A', border: 'none', padding: '9px 13px', fontFamily: HEAD, fontSize: 10, letterSpacing: '0.1em', cursor: 'pointer', flexShrink: 0 },
+  mediaArea: { position: 'relative', height: 202, flexShrink: 0, background: '#000' },
+  playWrap: { width: '100%', height: '100%', padding: 0, border: 'none', background: '#101010', cursor: 'pointer', display: 'block', position: 'relative' },
+  playImg: { width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.9 },
+  playScrim: { position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,10,10,0.42), rgba(10,10,10,0.08) 45%, rgba(10,10,10,0.75))' },
+  playCircle: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', width: 54, height: 54, borderRadius: '50%', background: '#D4FF3D', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  playLabel: { position: 'absolute', left: 14, bottom: 12, fontFamily: HEAD, fontSize: 10, letterSpacing: '0.14em', color: '#D4FF3D' },
+  loadingStill: { width: '100%', height: '100%', display: 'flex', alignItems: 'flex-end', padding: '14px 16px', background: '#121210' },
+  loadingText: { fontFamily: BODY, fontSize: 10, letterSpacing: '0.16em', color: '#6F6F68' },
+  noFilm: { width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '14px 16px', textDecoration: 'none' },
+  noFilmKicker: { fontFamily: BODY, fontWeight: 600, fontSize: 10, letterSpacing: '0.16em', opacity: 0.65 },
+  noFilmBrand: { fontFamily: HEAD, fontSize: 30, lineHeight: 0.98, textTransform: 'uppercase', letterSpacing: '-0.015em' },
+  noFilmCta: { fontFamily: HEAD, fontSize: 10, letterSpacing: '0.14em' },
+  iframe: { width: '100%', height: '100%', border: 'none', display: 'block' },
+  cardTop: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 16px 0' },
+  tierBadge: { fontFamily: HEAD, fontSize: 10, letterSpacing: '0.09em', padding: '5px 10px' },
+  yearBadge: { fontFamily: SERIF, fontStyle: 'italic', fontSize: 13, color: '#A3A399' },
+  textArea: { padding: '12px 16px 16px', overflowY: 'auto', flex: 1, minHeight: 0 },
+  title: { fontFamily: HEAD, fontSize: 26, lineHeight: 1.06, margin: '0 0 10px', letterSpacing: '-0.01em', textTransform: 'uppercase', textWrap: 'pretty' },
+  brand: { fontFamily: SERIF, fontStyle: 'italic', fontSize: 15, margin: '0 0 5px', color: '#D4FF3D' },
+  agency: { fontFamily: BODY, fontSize: 11, margin: 0, color: '#A3A399', textTransform: 'uppercase', letterSpacing: '0.07em' },
+  hint: { position: 'absolute', left: 16, right: 16, bottom: 16, background: 'rgba(10,10,10,0.92)', border: '1px solid #3A3A30', padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12 },
+  hintText: { fontFamily: BODY, fontSize: 12, lineHeight: 1.45, color: '#D8D8CF' },
+  hintKey: { color: '#D4FF3D' },
+  hintBtn: { marginLeft: 'auto', background: '#D4FF3D', color: '#0A0A0A', border: 'none', padding: '7px 11px', fontFamily: HEAD, fontSize: 10, letterSpacing: '0.08em', cursor: 'pointer', flexShrink: 0 },
+  footer: { display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 26, marginTop: 16 },
+  actionCol: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7 },
+  actionLabel: { fontFamily: HEAD, fontSize: 9, letterSpacing: '0.12em', color: '#8F8F86' },
+  skipBtn: { width: 58, height: 58, borderRadius: '50%', background: '#1C1C17', color: '#FF6B5D', border: '2px solid #FF6B5D', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
+  saveBtn: { width: 58, height: 58, borderRadius: '50%', background: '#1C1C17', color: '#D4FF3D', border: '2px solid #D4FF3D', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
+  undoBtn: { width: 44, height: 44, borderRadius: '50%', background: 'transparent', color: '#CFCFC4', border: '1px solid #3A3A30', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
+  grid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 },
+  gridCell: { display: 'flex', flexDirection: 'column', gap: 8, background: 'transparent', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer' },
+  gridThumb: { position: 'relative', display: 'block', width: '100%', aspectRatio: '16 / 9', background: '#16160F', overflow: 'hidden' },
+  gridImg: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' },
+  gridBadge: { position: 'absolute', left: 0, top: 0, fontFamily: HEAD, fontSize: 8, letterSpacing: '0.1em', padding: '4px 6px' },
+  gridTitle: { display: 'block', fontFamily: HEAD, fontSize: 12, lineHeight: 1.2, color: '#F5F5F0', textTransform: 'uppercase' },
+  gridBrand: { display: 'block', fontFamily: SERIF, fontStyle: 'italic', fontSize: 12, color: '#A3A399', marginTop: -3 },
+  scroll: { flex: 1, overflowY: 'auto', marginTop: 14, minHeight: 0 },
+  rule: { height: 1, background: '#2A2A24', marginTop: 14 },
+  bigCount: { display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 18 },
+  bigNum: { fontFamily: HEAD, fontSize: 34, lineHeight: 1 },
+  bigLabel: { fontFamily: BODY, fontSize: 11, letterSpacing: '0.12em', color: '#A3A399', textTransform: 'uppercase' },
+  display: { fontFamily: HEAD, fontSize: 40, lineHeight: 0.98, textTransform: 'uppercase', marginTop: 26 },
+  lead: { fontFamily: SERIF, fontStyle: 'italic', fontSize: 15, color: '#CFCFC4', margin: '14px 0 0' },
+  centerCol: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 18 },
+  empty: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' },
+  emptyText: { fontFamily: SERIF, fontStyle: 'italic', fontSize: 16, lineHeight: 1.55, color: '#A3A399' },
+  rowBtns: { display: 'flex', gap: 10, marginTop: 14 },
+  primary: { background: '#D4FF3D', color: '#0A0A0A', border: 'none', padding: '15px 28px', fontFamily: HEAD, fontSize: 12, letterSpacing: '0.1em', cursor: 'pointer' },
+  primaryWide: { flex: 1, background: '#D4FF3D', color: '#0A0A0A', border: 'none', padding: '15px 20px', fontFamily: HEAD, fontSize: 12, letterSpacing: '0.1em', cursor: 'pointer', textAlign: 'left' },
+  ghostBtn: { background: 'transparent', border: '1px solid #33332B', color: '#F5F5F0', padding: '13px 20px', fontFamily: HEAD, fontSize: 11, letterSpacing: '0.1em', cursor: 'pointer' },
+  detailMedia: { marginTop: 16, height: 210, background: '#000', overflow: 'hidden' },
+};
